@@ -1,0 +1,776 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA223AF817618818000FE3E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF717618817000FE3E9 /* UIKit.framework */; };
+		FA223AFA17618825000FE3E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF917618825000FE3E9 /* Foundation.framework */; };
+		FA223AFC17618832000FE3E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFB17618832000FE3E9 /* CoreGraphics.framework */; };
+		FA223AFE17618839000FE3E9 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFD17618839000FE3E9 /* GLKit.framework */; };
+		FA223B0017618842000FE3E9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFF17618842000FE3E9 /* OpenGLES.framework */; };
+		FA223B0D1766B78A000FE3E9 /* uimac_openglwindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA223B091766B78A000FE3E9 /* uimac_openglwindow.mm */; };
+		FA223B0E1766B78A000FE3E9 /* uimac_renderingcontext.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA223B0B1766B78A000FE3E9 /* uimac_renderingcontext.mm */; };
+		FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */; };
+		FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164315AA7E180017DCD5 /* appios_main.mm */; };
+		FA9B164815AA7E180017DCD5 /* appios_viewcontroller.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164515AA7E180017DCD5 /* appios_viewcontroller.mm */; };
+		FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */; };
+		FA9B166015AA87F10017DCD5 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165D15AA87F10017DCD5 /* ViewController_iPad.xib */; };
+		FA9B166115AA87F10017DCD5 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */; };
+		FA9B166615AA8B200017DCD5 /* test_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164B15AA80C10017DCD5 /* test_shader.fsh */; };
+		FA9B166715AA8B200017DCD5 /* test_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164C15AA80C10017DCD5 /* test_shader.vsh */; };
+		FAA0734116F182D100015F1D /* libaft-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733B16F1826700015F1D /* libaft-ios.a */; };
+		FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733116F1826700015F1D /* libaft-macosx.a */; };
+		FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */; };
+		FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACBACA016FF5B7A008B2004 /* game_client.cpp */; };
+		FACBACA216FF5B7A008B2004 /* game_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACBACA016FF5B7A008B2004 /* game_client.cpp */; };
+		FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733316F1826700015F1D /* libagt-macosx.a */; };
+		FAF9E4C515C9CCFC00601463 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA04E1B015C4AFC100F7D2F1 /* Cocoa.framework */; };
+		FAF9E4DC15CB267F00601463 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF9E4BD15C9CC3F00601463 /* OpenGL.framework */; };
+		FAF9E4DD15CB27AC00601463 /* appmac_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA4CC9A215C4C08A0014BA87 /* appmac_appdelegate.mm */; };
+		FAF9E4DE15CB27B000601463 /* appmac_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */; };
+		FAF9E4DF15CB27DD00601463 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1D315C4B4D700F7D2F1 /* MainWindow.xib */; };
+		FAF9E4E015CB27E000601463 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1D115C4B4D700F7D2F1 /* InfoPlist.strings */; };
+		FAF9E4E115CB27E200601463 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1CF15C4B4D700F7D2F1 /* Credits.rtf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FAA0733016F1826700015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA833E2215A752430044283D;
+			remoteInfo = "aft-macosx";
+		};
+		FAA0733216F1826700015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAA6CDB215DDB28400F480F0;
+			remoteInfo = "agt-macosx";
+		};
+		FAA0733416F1826700015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA833E9715A755A50044283D;
+			remoteInfo = "aunit-macosx";
+		};
+		FAA0733616F1826700015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA833EBC15A75C350044283D;
+			remoteInfo = "test_aft-macosx";
+		};
+		FAA0733816F1826700015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA875BA015DF1B6C00C5E50B;
+			remoteInfo = "test_agt-macosx";
+		};
+		FAA0733A16F1826700015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA875BCA15E099D800C5E50B;
+			remoteInfo = "aft-ios";
+		};
+		FAA0733D16F182BB00015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA833E2115A752430044283D;
+			remoteInfo = "aft-macosx";
+		};
+		FAA0733F16F182C200015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA875BC915E099D800C5E50B;
+			remoteInfo = "aft-ios";
+		};
+		FAA0734216F1831E00015F1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FAA6CDB115DDB28400F480F0;
+			remoteInfo = "agt-macosx";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FA04E1B015C4AFC100F7D2F1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FA04E1B315C4AFC100F7D2F1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		FA04E1B415C4AFC100F7D2F1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FA04E1B515C4AFC100F7D2F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FA04E1D015C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = ../../../resources/mac/en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		FA04E1D215C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ../../../resources/mac/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA04E1D415C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../../../resources/mac/en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		FA223AF717618817000FE3E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		FA223AF917618825000FE3E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		FA223AFB17618832000FE3E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		FA223AFD17618839000FE3E9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
+		FA223AFF17618842000FE3E9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		FA223B081766B78A000FE3E9 /* uimac_openglwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uimac_openglwindow.h; path = ../../../src/ui/uimac/uimac_openglwindow.h; sourceTree = "<group>"; };
+		FA223B091766B78A000FE3E9 /* uimac_openglwindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = uimac_openglwindow.mm; path = ../../../src/ui/uimac/uimac_openglwindow.mm; sourceTree = "<group>"; };
+		FA223B0A1766B78A000FE3E9 /* uimac_renderingcontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uimac_renderingcontext.h; path = ../../../src/ui/uimac/uimac_renderingcontext.h; sourceTree = "<group>"; };
+		FA223B0B1766B78A000FE3E9 /* uimac_renderingcontext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = uimac_renderingcontext.mm; path = ../../../src/ui/uimac/uimac_renderingcontext.mm; sourceTree = "<group>"; };
+		FA4CC9A115C4C08A0014BA87 /* appmac_appdelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_appdelegate.h; path = ../../../src/app/appmac/appmac_appdelegate.h; sourceTree = "<group>"; };
+		FA4CC9A215C4C08A0014BA87 /* appmac_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_appdelegate.mm; path = ../../../src/app/appmac/appmac_appdelegate.mm; sourceTree = "<group>"; };
+		FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_main.mm; path = ../../../src/app/appmac/appmac_main.mm; sourceTree = "<group>"; };
+		FA4CC9A415C4C08A0014BA87 /* appmac_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_prefix.pch; path = ../../../src/app/appmac/appmac_prefix.pch; sourceTree = "<group>"; };
+		FA9B161615AA79B40017DCD5 /* wrangler-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wrangler-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA9B164115AA7E180017DCD5 /* appios_appdelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appios_appdelegate.h; path = ../../../src/app/appios/appios_appdelegate.h; sourceTree = "<group>"; };
+		FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appios_appdelegate.mm; path = ../../../src/app/appios/appios_appdelegate.mm; sourceTree = "<group>"; };
+		FA9B164315AA7E180017DCD5 /* appios_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appios_main.mm; path = ../../../src/app/appios/appios_main.mm; sourceTree = "<group>"; };
+		FA9B164415AA7E180017DCD5 /* appios_viewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appios_viewcontroller.h; path = ../../../src/app/appios/appios_viewcontroller.h; sourceTree = "<group>"; };
+		FA9B164515AA7E180017DCD5 /* appios_viewcontroller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appios_viewcontroller.mm; path = ../../../src/app/appios/appios_viewcontroller.mm; sourceTree = "<group>"; };
+		FA9B164B15AA80C10017DCD5 /* test_shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test_shader.fsh; path = ../../../shaders/test/test_shader.fsh; sourceTree = "<group>"; };
+		FA9B164C15AA80C10017DCD5 /* test_shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test_shader.vsh; path = ../../../shaders/test/test_shader.vsh; sourceTree = "<group>"; };
+		FA9B165B15AA87E40017DCD5 /* appios_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appios_prefix.pch; path = ../../../src/app/appios/appios_prefix.pch; sourceTree = "<group>"; };
+		FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../../../resources/ios/lang.en/InfoPlist.strings; sourceTree = "<group>"; };
+		FA9B165D15AA87F10017DCD5 /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = ../../../resources/ios/lang.en/ViewController_iPad.xib; sourceTree = "<group>"; };
+		FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPhone.xib; path = ../../../resources/ios/lang.en/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		FAA0732716F1826600015F1D /* aegis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aegis.xcodeproj; path = ../../../../aegis/proj/xcode/aegis/aegis.xcodeproj; sourceTree = "<group>"; };
+		FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		FACBAC9F16FF58E1008B2004 /* game_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_client.h; path = ../../../src/game/game_client.h; sourceTree = "<group>"; };
+		FACBACA016FF5B7A008B2004 /* game_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game_client.cpp; path = ../../../src/game/game_client.cpp; sourceTree = "<group>"; };
+		FAF9E4BD15C9CC3F00601463 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
+		FAF9E4C315C9CCFC00601463 /* wrangler-macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wrangler-macosx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA9B161315AA79B40017DCD5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA223B0017618842000FE3E9 /* OpenGLES.framework in Frameworks */,
+				FA223AFE17618839000FE3E9 /* GLKit.framework in Frameworks */,
+				FA223AFC17618832000FE3E9 /* CoreGraphics.framework in Frameworks */,
+				FA223AFA17618825000FE3E9 /* Foundation.framework in Frameworks */,
+				FA223AF817618818000FE3E9 /* UIKit.framework in Frameworks */,
+				FAA0734116F182D100015F1D /* libaft-ios.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAF9E4C015C9CCFC00601463 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
+				FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */,
+				FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */,
+				FAF9E4DC15CB267F00601463 /* OpenGL.framework in Frameworks */,
+				FAF9E4C515C9CCFC00601463 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA04E1B215C4AFC100F7D2F1 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA04E1B315C4AFC100F7D2F1 /* AppKit.framework */,
+				FA04E1B415C4AFC100F7D2F1 /* CoreData.framework */,
+				FA04E1B515C4AFC100F7D2F1 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		FA04E1CC15C4AFD000F7D2F1 /* appmac */ = {
+			isa = PBXGroup;
+			children = (
+				FA4CC9A115C4C08A0014BA87 /* appmac_appdelegate.h */,
+				FA4CC9A215C4C08A0014BA87 /* appmac_appdelegate.mm */,
+				FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */,
+				FA4CC9A415C4C08A0014BA87 /* appmac_prefix.pch */,
+			);
+			name = appmac;
+			sourceTree = "<group>";
+		};
+		FA04E1CD15C4B40200F7D2F1 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				FA04E1CE15C4B40A00F7D2F1 /* lang.en */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
+		FA04E1CE15C4B40A00F7D2F1 /* lang.en */ = {
+			isa = PBXGroup;
+			children = (
+				FA04E1CF15C4B4D700F7D2F1 /* Credits.rtf */,
+				FA04E1D115C4B4D700F7D2F1 /* InfoPlist.strings */,
+				FA04E1D315C4B4D700F7D2F1 /* MainWindow.xib */,
+			);
+			name = lang.en;
+			sourceTree = "<group>";
+		};
+		FA223B04176365C5000FE3E9 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				FA223B05176365CA000FE3E9 /* uimac */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		FA223B05176365CA000FE3E9 /* uimac */ = {
+			isa = PBXGroup;
+			children = (
+				FA223B081766B78A000FE3E9 /* uimac_openglwindow.h */,
+				FA223B091766B78A000FE3E9 /* uimac_openglwindow.mm */,
+				FA223B0A1766B78A000FE3E9 /* uimac_renderingcontext.h */,
+				FA223B0B1766B78A000FE3E9 /* uimac_renderingcontext.mm */,
+			);
+			name = uimac;
+			sourceTree = "<group>";
+		};
+		FA9B160615AA78B20017DCD5 = {
+			isa = PBXGroup;
+			children = (
+				FAA0732716F1826600015F1D /* aegis.xcodeproj */,
+				FA9B164F15AA82E10017DCD5 /* Resources */,
+				FA9B164915AA80470017DCD5 /* Shaders */,
+				FA9B160F15AA78BF0017DCD5 /* Source */,
+				FA9B161915AA79B40017DCD5 /* Frameworks */,
+				FA9B161715AA79B40017DCD5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA9B160F15AA78BF0017DCD5 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FA223B04176365C5000FE3E9 /* ui */,
+				FA9B161015AA78C50017DCD5 /* app */,
+				FA9B161115AA79210017DCD5 /* game */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		FA9B161015AA78C50017DCD5 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				FACBACA41705E30D008B2004 /* appgen */,
+				FA04E1CC15C4AFD000F7D2F1 /* appmac */,
+				FA9B164015AA7A0A0017DCD5 /* appios */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
+		FA9B161115AA79210017DCD5 /* game */ = {
+			isa = PBXGroup;
+			children = (
+				FACBAC9F16FF58E1008B2004 /* game_client.h */,
+				FACBACA016FF5B7A008B2004 /* game_client.cpp */,
+			);
+			name = game;
+			sourceTree = "<group>";
+		};
+		FA9B161715AA79B40017DCD5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA9B161615AA79B40017DCD5 /* wrangler-ios.app */,
+				FAF9E4C315C9CCFC00601463 /* wrangler-macosx.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA223AFF17618842000FE3E9 /* OpenGLES.framework */,
+				FA223AFD17618839000FE3E9 /* GLKit.framework */,
+				FA223AFB17618832000FE3E9 /* CoreGraphics.framework */,
+				FA223AF917618825000FE3E9 /* Foundation.framework */,
+				FA223AF717618817000FE3E9 /* UIKit.framework */,
+				FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */,
+				FAF9E4BD15C9CC3F00601463 /* OpenGL.framework */,
+				FA04E1B015C4AFC100F7D2F1 /* Cocoa.framework */,
+				FA04E1B215C4AFC100F7D2F1 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA9B164015AA7A0A0017DCD5 /* appios */ = {
+			isa = PBXGroup;
+			children = (
+				FA9B165B15AA87E40017DCD5 /* appios_prefix.pch */,
+				FA9B164315AA7E180017DCD5 /* appios_main.mm */,
+				FA9B164115AA7E180017DCD5 /* appios_appdelegate.h */,
+				FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */,
+				FA9B164415AA7E180017DCD5 /* appios_viewcontroller.h */,
+				FA9B164515AA7E180017DCD5 /* appios_viewcontroller.mm */,
+			);
+			name = appios;
+			sourceTree = "<group>";
+		};
+		FA9B164915AA80470017DCD5 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				FA9B164A15AA807B0017DCD5 /* test */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
+		FA9B164A15AA807B0017DCD5 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				FA9B164B15AA80C10017DCD5 /* test_shader.fsh */,
+				FA9B164C15AA80C10017DCD5 /* test_shader.vsh */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
+		FA9B164F15AA82E10017DCD5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA04E1CD15C4B40200F7D2F1 /* mac */,
+				FA9B165015AA83870017DCD5 /* ios */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FA9B165015AA83870017DCD5 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				FA9B165A15AA87780017DCD5 /* lang.en */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
+		FA9B165A15AA87780017DCD5 /* lang.en */ = {
+			isa = PBXGroup;
+			children = (
+				FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */,
+				FA9B165D15AA87F10017DCD5 /* ViewController_iPad.xib */,
+				FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */,
+			);
+			name = lang.en;
+			sourceTree = "<group>";
+		};
+		FAA0732816F1826600015F1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAA0733116F1826700015F1D /* libaft-macosx.a */,
+				FAA0733316F1826700015F1D /* libagt-macosx.a */,
+				FAA0733516F1826700015F1D /* libaunit-macosx.a */,
+				FAA0733716F1826700015F1D /* test_aft-macosx */,
+				FAA0733916F1826700015F1D /* test_agt-macosx */,
+				FAA0733B16F1826700015F1D /* libaft-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FACBACA41705E30D008B2004 /* appgen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = appgen;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA9B161515AA79B40017DCD5 /* wrangler-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA9B163D15AA79B40017DCD5 /* Build configuration list for PBXNativeTarget "wrangler-ios" */;
+			buildPhases = (
+				FA9B161215AA79B40017DCD5 /* Sources */,
+				FA9B161315AA79B40017DCD5 /* Frameworks */,
+				FA9B161415AA79B40017DCD5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAA0734016F182C200015F1D /* PBXTargetDependency */,
+			);
+			name = "wrangler-ios";
+			productName = "wrangler-ios";
+			productReference = FA9B161615AA79B40017DCD5 /* wrangler-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FAF9E4C215C9CCFC00601463 /* wrangler-macosx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAF9E4D815C9CCFC00601463 /* Build configuration list for PBXNativeTarget "wrangler-macosx" */;
+			buildPhases = (
+				FAF9E4BF15C9CCFC00601463 /* Sources */,
+				FAF9E4C015C9CCFC00601463 /* Frameworks */,
+				FAF9E4C115C9CCFC00601463 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAA0734316F1831E00015F1D /* PBXTargetDependency */,
+				FAA0733E16F182BB00015F1D /* PBXTargetDependency */,
+			);
+			name = "wrangler-macosx";
+			productName = "wrangler-macosx";
+			productReference = FAF9E4C315C9CCFC00601463 /* wrangler-macosx.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA9B160815AA78B20017DCD5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Sophic Studios";
+			};
+			buildConfigurationList = FA9B160B15AA78B20017DCD5 /* Build configuration list for PBXProject "wrangler" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FA9B160615AA78B20017DCD5;
+			productRefGroup = FA9B161715AA79B40017DCD5 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FAA0732816F1826600015F1D /* Products */;
+					ProjectRef = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				FA9B161515AA79B40017DCD5 /* wrangler-ios */,
+				FAF9E4C215C9CCFC00601463 /* wrangler-macosx */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FAA0733116F1826700015F1D /* libaft-macosx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libaft-macosx.a";
+			remoteRef = FAA0733016F1826700015F1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAA0733316F1826700015F1D /* libagt-macosx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libagt-macosx.a";
+			remoteRef = FAA0733216F1826700015F1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAA0733516F1826700015F1D /* libaunit-macosx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libaunit-macosx.a";
+			remoteRef = FAA0733416F1826700015F1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAA0733716F1826700015F1D /* test_aft-macosx */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "test_aft-macosx";
+			remoteRef = FAA0733616F1826700015F1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAA0733916F1826700015F1D /* test_agt-macosx */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "test_agt-macosx";
+			remoteRef = FAA0733816F1826700015F1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAA0733B16F1826700015F1D /* libaft-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libaft-ios.a";
+			remoteRef = FAA0733A16F1826700015F1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA9B161415AA79B40017DCD5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA9B166615AA8B200017DCD5 /* test_shader.fsh in Resources */,
+				FA9B166715AA8B200017DCD5 /* test_shader.vsh in Resources */,
+				FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */,
+				FA9B166015AA87F10017DCD5 /* ViewController_iPad.xib in Resources */,
+				FA9B166115AA87F10017DCD5 /* ViewController_iPhone.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAF9E4C115C9CCFC00601463 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAF9E4E115CB27E200601463 /* Credits.rtf in Resources */,
+				FAF9E4E015CB27E000601463 /* InfoPlist.strings in Resources */,
+				FAF9E4DF15CB27DD00601463 /* MainWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA9B161215AA79B40017DCD5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */,
+				FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */,
+				FA9B164815AA7E180017DCD5 /* appios_viewcontroller.mm in Sources */,
+				FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAF9E4BF15C9CCFC00601463 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAF9E4DD15CB27AC00601463 /* appmac_appdelegate.mm in Sources */,
+				FAF9E4DE15CB27B000601463 /* appmac_main.mm in Sources */,
+				FACBACA216FF5B7A008B2004 /* game_client.cpp in Sources */,
+				FA223B0D1766B78A000FE3E9 /* uimac_openglwindow.mm in Sources */,
+				FA223B0E1766B78A000FE3E9 /* uimac_renderingcontext.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FAA0733E16F182BB00015F1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "aft-macosx";
+			targetProxy = FAA0733D16F182BB00015F1D /* PBXContainerItemProxy */;
+		};
+		FAA0734016F182C200015F1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "aft-ios";
+			targetProxy = FAA0733F16F182C200015F1D /* PBXContainerItemProxy */;
+		};
+		FAA0734316F1831E00015F1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "agt-macosx";
+			targetProxy = FAA0734216F1831E00015F1D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FA04E1CF15C4B4D700F7D2F1 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA04E1D015C4B4D700F7D2F1 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		FA04E1D115C4B4D700F7D2F1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA04E1D215C4B4D700F7D2F1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FA04E1D315C4B4D700F7D2F1 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA04E1D415C4B4D700F7D2F1 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA9B160D15AA78B20017DCD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_INCLUDE)",
+					"$(CONFIGURATION_BUILD_DIR)/**",
+				);
+			};
+			name = Debug;
+		};
+		FA9B160E15AA78B20017DCD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_INCLUDE)",
+					"$(CONFIGURATION_BUILD_DIR)/**",
+				);
+			};
+			name = Release;
+		};
+		FA9B163E15AA79B40017DCD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../../../src/app/appios/appios_prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/**";
+				INFOPLIST_FILE = "wrangler-ios/wrangler-ios-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/sophicstudios-hkvxoeryygpwbegtrlqfijavrndt/Build/Products/Debug\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FA9B163F15AA79B40017DCD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../../../src/app/appios/appios_prefix.pch;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/**";
+				INFOPLIST_FILE = "wrangler-ios/wrangler-ios-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/sophicstudios-hkvxoeryygpwbegtrlqfijavrndt/Build/Products/Debug\"",
+				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		FAF9E4D915C9CCFC00601463 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../../../src/app/appmac/appmac_prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "wrangler-macosx/wrangler-macosx-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FAF9E4DA15C9CCFC00601463 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../../../src/app/appmac/appmac_prefix.pch;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "wrangler-macosx/wrangler-macosx-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA9B160B15AA78B20017DCD5 /* Build configuration list for PBXProject "wrangler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA9B160D15AA78B20017DCD5 /* Debug */,
+				FA9B160E15AA78B20017DCD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA9B163D15AA79B40017DCD5 /* Build configuration list for PBXNativeTarget "wrangler-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA9B163E15AA79B40017DCD5 /* Debug */,
+				FA9B163F15AA79B40017DCD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAF9E4D815C9CCFC00601463 /* Build configuration list for PBXNativeTarget "wrangler-macosx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAF9E4D915C9CCFC00601463 /* Debug */,
+				FAF9E4DA15C9CCFC00601463 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA9B160815AA78B20017DCD5 /* Project object */;
+}
