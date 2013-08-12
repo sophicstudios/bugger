@@ -1,5 +1,5 @@
-#ifndef INCLUDED_ATTA_UIMAC_OPENGLWINDOW_H
-#define INCLUDED_ATTA_UIMAC_OPENGLWINDOW_H
+#ifndef INCLUDED_ATTA_UIIOS_OPENGLWINDOW_H
+#define INCLUDED_ATTA_UIIOS_OPENGLWINDOW_H
 
 #include <uigen_glwindow.h>
 #include <agtg_renderingcontext.h>
@@ -9,14 +9,14 @@
 #include <aftt_datetime.h>
 #include <boost/function.hpp>
 
-namespace uimac {
+namespace uiios {
 
 class OpenGLWindow : public uigen::GLWindow
 {
 public:
     struct Impl;
 
-    OpenGLWindow(std::string const& title, agtm::Rect<float> const& frame);
+    OpenGLWindow(std::string const& title);
     
     virtual ~OpenGLWindow();
 

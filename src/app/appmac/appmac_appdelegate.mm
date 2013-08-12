@@ -1,12 +1,14 @@
-#import <appmac_appdelegate.h>
-
+#include <appmac_appdelegate.h>
+#include <uimac_openglwindow.h>
 #include <game_client.h>
-
-using namespace aegis;
+#include <agtm_rect.h>
+#include <agtm_point2d.h>
+#include <agtm_size2d.h>
 
 struct appmac_AppDelegateImpl
 {
-    wrangler::game::Client* client;
+    uimac::OpenGLWindow* window;
+    game::Client* client;
 };
 
 @implementation appmac_AppDelegate
@@ -46,9 +48,6 @@ struct appmac_AppDelegateImpl
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
     NSLog(@"applicationWillFinishLaunching: %@", notification);
-    
-    m_impl->client = new wrangler::game::Client();
-    [self createMainMenu];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
@@ -56,6 +55,11 @@ struct appmac_AppDelegateImpl
     // Insert code here to initialize your application
     NSLog(@"applicationDidFinishLaunching: %@", notification);
     
+    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(1024.0f, 768.0f));
+    m_impl->window = new uimac::OpenGLWindow("Wrangler", frame);
+    [self createMainMenu];
+    m_impl->client = new game::Client(*m_impl->window);
+
     m_impl->client->run();
 }
 
@@ -102,6 +106,7 @@ struct appmac_AppDelegateImpl
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
     NSLog(@"applicationWillTerminate: %@", notification);
+    m_impl->client->stop();
     delete m_impl->client;
 }
 

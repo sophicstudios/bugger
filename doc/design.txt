@@ -1,0 +1,42 @@
+Game Title: "Atta Ant!"
+
+Game description: Atta Ant is a realtime strategy game, where the player starts off with one queen leaf cutter ant and attempts to build a sustainable colony. If the queen dies, from either lack of food or a predator attack, the game is over. Players earn points the longer the colony survives and get access to different types of worker ants, leaf types and weapons as the game progresses, but also face challenging enemies and situations as well!
+
+Specific Objectives:
+	- grow fungi within the dwelling to feed the workers
+	- expand the dwelling tunnels to allow for more fungus development, and therefore more workers
+	- forage for food sources outside the dwelling to feed to the fungus
+	- protect the dwelling from rain and flooding
+	- keep away from predators, or fight them if they are hostile
+	- shuffle waste to help it decompose and prevent parasites from forming that destroy the fungus
+	- keep track of the status of individual workers and give them nourishment to keep them alive.
+
+Actors:
+	Leafcutter ants
+		Queen (1 per game) - starts the colony, deposits the initial bit of fungus, gives birth to worker ants. If she dies, the game is over.
+		Workers (multiple)
+			Larvae (babies) - growth stage for all types of workers. Feeds off fungus to turn into a worker.
+			Minims (gardeners) - the smallest workers, they tend to the fungus gardens. They have no weapons
+			Minors (small soldiers) - slightly larger than minims, the first line of defense, constantly patrolling and attacking any enemies
+			Mediae (foragers) - cut leaves and bring them back to the next. Have no weapons, but move fast and can escape most predators.
+			Majors (soldiers/foragers) - largest workers, act as soldiers, defending the nest from intruders, clearing foraging trails and carrying bulky items back to the nest.
+
+
+Resources
+	Leaves - feeds the fungus, with different leaf types giving different levels of boost to the fungus.
+	Leaf sap - feeds the workers and the queen. No leaves = no ants.
+	Fungus - feeds the larvae. When it's gone, the queen can no longer give birth
+	Bacteria - makes the fungus more efficient (i.e. makes it last longer)
+
+Enemies/Threats
+	Waste - discarded from used fungus and must be transported out of the next, otherwise parasites grow
+	Parasites - grow off fungus waste and attack the fungus
+	Flies - lay eggs on the foraging ants, which can be accidentally transported back to the lair and give birth to parasites
+	Army ants - prey on colonies
+	Beetles - Will lay their own nests that send attackers into the ant colony
+	Small Birds - will land and eat up any foraging ants in the vicinity. Only defense is to run!
+
+Weapons
+	Mandibles - individual Minors and Majors can attack a predator and bite them to death.
+	A. alba (reptile) - feeds on enemies of the leaf cutter ants
+	Nasute termites - they emit a stream of chemicals that can entangle and kill ants. Leafcutters can grab them in their mandibles and direct the stream at their enemies (guns!)

@@ -1,15 +1,14 @@
-#ifndef INCLUDED_WRANGLER_UIMAC_OPENGLRENDERINGCONTEXT_H
-#define INCLUDED_WRANGLER_UIMAC_OPENGRENDERINGCONTEXT_H
+#ifndef INCLUDED_ATTA_UIMAC_OPENGLRENDERINGCONTEXT_H
+#define INCLUDED_ATTA_UIMAC_OPENGRENDERINGCONTEXT_H
 
 #include <AppKit/NSOpenGL.h>
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
 #include <agtg_renderingcontext.h>
 
-namespace wrangler {
 namespace uimac {
 
-class RenderingContext : public aegis::agtg::RenderingContext
+class RenderingContext : public agtg::RenderingContext
 {
 public:
     RenderingContext(NSOpenGLPixelFormat* pixelFormat);
@@ -22,6 +21,10 @@ public:
     
     virtual void postRender();
     
+    void lockContext();
+    
+    void unlockContext();
+    
     void setView(NSView* view);
     
     NSOpenGLContext* nativeContext() const;
@@ -30,7 +33,6 @@ private:
     NSOpenGLContext* m_context;
 };
 
-} // namespace
 } // namespace
 
 #endif // INCLUDED

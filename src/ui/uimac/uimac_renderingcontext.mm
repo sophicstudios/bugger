@@ -1,7 +1,6 @@
 #include <uimac_renderingcontext.h>
 #include <iostream>
 
-namespace wrangler {
 namespace uimac {
 
 RenderingContext::RenderingContext(NSOpenGLPixelFormat* pixelFormat)
@@ -54,5 +53,4 @@ NSOpenGLContext* RenderingContext::nativeContext() const
     return m_context;
 }
 
-} // namespace
 } // namespace

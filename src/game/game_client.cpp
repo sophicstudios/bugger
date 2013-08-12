@@ -1,185 +1,103 @@
 #include <game_client.h>
 #include <aftt_systemtime.h>
+#include <aftt_datetimeinterval.h>
+#include <agtg_colorrgba.h>
+
+#include <afts_platform.h>
+#if defined(AFTS_OS_IPHONE)
+
+#define RENDERER_OPENGLES
+#include <OpenGLES/ES1/gl.h>
+
+#elif defined(AFTS_OS_MACOS)
+
+#define RENDERER_OPENGL
 #include <OpenGL/gl.h>
+
+#endif // AFTS_OS
+
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
 #include <functional>
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
 
-namespace wrangler {
 namespace game {
 
-using namespace aegis;
+namespace {
 
-static const NUM_PARTICLES = 100;
-static const PARTICLE_CREATION_RATE = 10; // per second
-static const PARTICLE_ACCEL_RATE = 100; // feet/second
-static const MAX_SPEED = 20; // feet/second
-static const SECONDS_ALIVE = 1;
+static const size_t NUM_PARTICLES = 1000;
+static const float  PARTICLE_ACCEL_RATE = 800.0f; // feet/second
+static const float  MAX_SPEED = 1000.0f; // feet/second
+static float MAX_SPREAD = 360.0f; // angles
+static float PI = 3.14159265f;
+
+agtm::Vector2<float> g_sourcePosition;
 
 struct Particle
 {
     aftt::DatetimeInterval age;
+    aftt::DatetimeInterval maxAge;
+    float angle; // angles
     agtm::Vector2<float> velocity;
     agtm::Vector2<float> position;
     agtg::ColorRGBA<float> color;
 };
 
-class Client::Impl
+void initParticle(Particle& particle)
 {
-public:
-    Impl();
-    
-    ~Impl();
-    
-    void run();
-    
-    void onResize(aegis::agtm::Rect<float> const& bounds);
-    
-    void onDrawFrame(aegis::aftt::Datetime const& datetime);
+    // initialize age to zero
+    particle.age = aftt::DatetimeInterval();
 
-private:
-    void initializeOpenGL();
-    void initializeSource();
-    void drawScene(aegis::aftt::Datetime const& datetime);
-
-    uimac::OpenGLWindow* m_window;
-    aegis::aftt::Datetime m_prevTime;
+    float ageJitter = static_cast<float>(rand()) / RAND_MAX;
     
-    std::vector<Particle> m_particles;
-    agtm::Vector2<float> m_sourceLocation;
-    agtm::Vector2<float> m_particleDirection;
+    particle.maxAge = aftt::DatetimeInterval(
+        aftt::Seconds(0),
+        aftt::Nanoseconds(static_cast<int>(ageJitter * 500000000)));
+
+    float jitter = static_cast<float>(rand()) / RAND_MAX;
+    particle.angle = 90.0f - (MAX_SPREAD / 2.0f) + (jitter * MAX_SPREAD);
+
+    // initialize velocity to zero
+    particle.velocity = agtm::Vector2<float>(0.0f, 0.0f);
+    
+    // initialize location to source location
+    particle.position = g_sourcePosition;
+
+    // initialize color to red
+    particle.color = agtg::ColorRGBA<float>(
+        static_cast<float>(rand()) / RAND_MAX,
+        static_cast<float>(rand()) / RAND_MAX,
+        static_cast<float>(rand()) / RAND_MAX,
+        1.0f);
+}
+
+} // namespace
+
+struct Client::Impl
+{
+    void onDrawFrame(aftt::Datetime const& datetime);
+    void drawScene(aftt::Datetime const& datetime);
+
+    uigen::GLWindow* window;
+    aftt::Datetime prevTime;
+    
+    std::vector<Particle> particles;
+    agtm::Vector2<float> sourcePosition;
+    aftt::DatetimeInterval particleTimer;
+    bool paused;
 };
 
-Client::Impl::Impl()
-{
-    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(640.0f, 480.0f));
-    m_window = new uimac::OpenGLWindow("Wrangler", frame);
-    
-    m_window->context().makeCurrent();
-
-    initializeOpenGL();
-    initializeSource();
-    onResize(frame);
-}
-
-Client::Impl::~Impl()
-{
-    delete m_window;
-}
-
-void Client::Impl::initializeOpenGL()
-{
-    std::cout << "Client::initializeOpenGL" << std::endl;
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-        
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    glTranslatef(0.0f, 0.0f, -2.0f);
-    
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-}
-
-void Client::Impl::initializeSource()
-{
-    std::cout << "Client::initializeMesh" << std::endl;
-}
-
-void Client::Impl::run()
-{
-    boost::function<void (agtm::Rect<float> const&)> resizeHandler
-        = boost::bind(&Impl::onResize, this, _1);
-
-    m_window->registerResizeEventHandler(resizeHandler);
-
-    boost::function<void (aftt::Datetime const&)> displayRefreshHandler
-        = boost::bind(&Impl::onDrawFrame, this, _1);
-
-    m_window->registerDisplayRefreshHandler(displayRefreshHandler);
-
-    m_window->show();
-    
-    m_prevTime = aftt::SystemTime::nowAsDatetimeUTC();
-    
-    m_window->startDisplayTimer();
-}
-
-void Client::Impl::onResize(agtm::Rect<float> const& bounds)
-{
-    std::cout << "Client::onResize bounds: " << bounds << std::endl;
-    
-    m_window->context().preRender();
-    
-    GLdouble width = static_cast<GLdouble>(bounds.width());
-    GLdouble height = static_cast<GLdouble>(bounds.height());
-    GLdouble aspect = width / height;
-    GLdouble right = aspect * (width * 2);
-    GLdouble left = -right;
-    GLdouble top = height / 2;
-    GLdouble bottom = -top;
-    GLdouble near = -1.0;
-    GLdouble far = 5.0;
-    
-    std::cout << "width: " << width << std::endl;
-    std::cout << "height: " << height << std::endl;
-    std::cout << "left: " << left << std::endl;
-    std::cout << "right: " << right << std::endl;
-    std::cout << "top: " << top << std::endl;
-    std::cout << "bottom: " << bottom << std::endl;
-    
-    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    //glFrustum(left, right, bottom, top, near, far);
-    glOrtho(left, right, bottom, top, near, far);
-    
-    glMatrixMode(GL_MODELVIEW);
-    
-    drawScene(m_prevTime);
-
-    m_window->context().postRender();
-}
-
-void Client::Impl::onDrawFrame(aftt::Datetime const& datetime)
-{
-    m_window->context().preRender();
-    drawScene(datetime);
-    m_window->context().postRender();
-}
-
-void Client::Impl::drawScene(aftt::Datetime const& datetime)
-{
-    aftt::DatetimeInterval elapsed = datetime - m_prevTime;
-
-    std::cout << "Client::drawScene ["
-        << " datetime: " << datetime
-        << " prev: " << m_prevTime
-        << " elapsed: " << elapsed
-        << " ]" << std::endl;
-
-    m_prevTime = datetime;    
-    
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glBegin(GL_TRIANGLES);
-        glColor3f(1.0f, 0.0f, 0.0f);
-        glVertex3f(-1.0f, -1.0f, 0.0f);
-        glColor3f(0.0f, 1.0f, 0.0f);
-        glVertex3f(1.0f, -1.0f, 0.0f);
-        glColor3f(0.0f, 0.0f, 1.0f);
-        glVertex3f(0.0f, 1.0f, 0.0f);
-    glEnd();
-}
-
-Client::Client()
+Client::Client(uigen::GLWindow& window)
 : m_impl(new Impl())
 {
+    m_impl->paused = false;
+    m_impl->window = &window;
+
+    g_sourcePosition = agtm::Vector2<float>(0.0f, 0.0f);
+    m_impl->particleTimer = aftt::DatetimeInterval(aftt::Seconds(0), aftt::Nanoseconds(0));
 }
 
 Client::~Client()
@@ -189,18 +107,143 @@ Client::~Client()
 
 void Client::run()
 {
-    m_impl->run();
+    std::cout << "Client::run" << std::endl;
+    if (!m_impl->paused) {
+        m_impl->window->show();
+
+        boost::function<void (aftt::Datetime const&)> displayRefreshHandler
+            = boost::bind(&Client::onDrawFrame, this, _1);
+
+        m_impl->window->registerDisplayRefreshHandler(displayRefreshHandler);
+        
+        m_impl->prevTime = aftt::SystemTime::nowAsDatetimeUTC();
+    }
+    
+    m_impl->window->startDisplayTimer();
 }
 
-void Client::onResize(agtm::Rect<float> const& bounds)
+void Client::pause()
 {
-    m_impl->onResize(bounds);
+    std::cout << "Client::pause" << std::endl;
+    
+    // stop the game timer, all game state threads and save the current state in case
+    // the game never comes back (on iOS devices, for example)
+
+    m_impl->window->stopDisplayTimer();
+}
+
+void Client::resume()
+{
+    std::cout << "Client::resume" << std::endl;
+    
+    // resume current state, reload resources if they were unloaded, restart game timers
+    // and resume action from where we left off
+    
+    m_impl->window->startDisplayTimer();
+}
+
+void Client::stop()
+{
+    std::cout << "Client::stop" << std::endl;
+    m_impl->window->stopDisplayTimer();
 }
 
 void Client::onDrawFrame(aftt::Datetime const& datetime)
 {
-    m_impl->onDrawFrame(datetime);
+    glMatrixMode(GL_MODELVIEW);
+
+    aftt::DatetimeInterval elapsed = datetime - m_impl->prevTime;
+    double elapsedSeconds = elapsed.totalSeconds();
+    m_impl->particleTimer += elapsed;
+    if (m_impl->particleTimer >= aftt::DatetimeInterval(aftt::Seconds(1), aftt::Nanoseconds(0))) {
+        m_impl->particleTimer -= aftt::DatetimeInterval(aftt::Seconds(1), aftt::Nanoseconds(0));
+    }
+
+    /*
+    std::cout << "Client::onDrawFrame ["
+        << " datetime: " << datetime
+        << " prev: " << m_prevTime
+        << " elapsed: " << elapsed
+        << " ]" << std::endl;
+    */
+    
+    m_impl->prevTime = datetime;
+
+    // clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // initialize the modelview matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+/* TEST TRIANGLE
+    GLfloat verticesTest[] = { -50.0f, -50.0f, 0.0f, 50.0f, -50.0f, 0.0f, 0.0f, 50.0f, 0.0f };
+    glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, verticesTest);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDisableClientState(GL_VERTEX_ARRAY);
+*/
+    
+    // for each particle in the particle list
+    typedef std::vector<Particle>::iterator ParticleIter;
+    GLfloat vertices[] = { -20.0f, -20.0f, 0.0f, 20.0f, -20.0f, 0.0f, 0.0f, 20.0f, 0.0f };
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+
+    for (ParticleIter it = m_impl->particles.begin(); it != m_impl->particles.end(); ++it) {
+        // save the current modelview matrix
+        glPushMatrix();
+
+        // calculate acceleration and increase velocity
+        float vel = it->velocity.length();
+        if (vel < MAX_SPEED) {
+            float dv = std::min(MAX_SPEED - vel, static_cast<float>(PARTICLE_ACCEL_RATE * elapsedSeconds));
+            float angle = it->angle * (PI / 180.0);
+            float dx = std::cos(angle) * dv;
+            float dy = std::sin(angle) * dv;
+            it->velocity += agtm::Vector2<float>(dx, dy);
+        }
+        
+        // update position based on current velocity
+        it->position += (it->velocity * elapsedSeconds); 
+        
+        // move the particle along its velocity vector
+        glTranslatef(it->position.x(), it->position.y(), 0.0f);
+        
+        // update the age
+        it->age += elapsed;
+        
+        // draw the particle
+        agtg::ColorRGBA<float>& color = it->color;
+        glColor4f(color.red(), color.green(), color.blue(), color.alpha());
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        
+        // restore the modelview matrix
+        glPopMatrix();
+        
+        if (it->age > it->maxAge) {
+            initParticle(*it);
+        }
+    }
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+
+    // fill the particle list based on the particle rate
+    if (m_impl->particles.size() < NUM_PARTICLES) {
+        double triggerTime = 1.0 / NUM_PARTICLES;
+        double particleTimerSeconds = m_impl->particleTimer.totalSeconds();
+        if (particleTimerSeconds >= triggerTime) {
+            size_t numParticles = particleTimerSeconds / triggerTime;
+            for (size_t i = 0; i < numParticles; ++i) {
+                Particle particle;
+                initParticle(particle);
+                m_impl->particles.push_back(particle);
+            }
+            
+            m_impl->particleTimer = aftt::DatetimeInterval(aftt::Seconds(0), aftt::Nanoseconds(0));
+        }
+    }
 }
 
-} // namespace
 } // namespace

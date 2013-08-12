@@ -6,10 +6,9 @@ int main(int argc, char *argv[])
     [NSApplication sharedApplication];
     
     @autoreleasepool {
-        appmac_AppDelegate* appDelegate = [[appmac_AppDelegate alloc] init];
+        appmac_AppDelegate* appDelegate = [[[appmac_AppDelegate alloc] init] autorelease];
         [NSApp setDelegate:appDelegate];
         [NSApp run];
-        [appDelegate release];
     }
     
     return 0;

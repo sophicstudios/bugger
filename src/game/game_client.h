@@ -1,27 +1,30 @@
 // game_client.h
-#ifndef INCLUDED_WRANGLER_GAME_CLIENT_H
-#define INCLUDED_WRANGLER_GAME_CLIENT_H
+#ifndef INCLUDED_ATTA_GAME_CLIENT_H
+#define INCLUDED_ATTA_GAME_CLIENT_H
 
-#include <uimac_openglwindow.h>
+#include <uigen_glwindow.h>
 #include <agtg_mesh.h>
 #include <agtm_rect.h>
 #include <aftt_datetime.h>
 
-namespace wrangler {
 namespace game {
 
 class Client
 {
 public:
-    Client();
+    Client(uigen::GLWindow& window);
     
     ~Client();
     
     void run();
     
-    void onResize(aegis::agtm::Rect<float> const& bounds);
+    void pause();
     
-    void onDrawFrame(aegis::aftt::Datetime const& datetime);
+    void resume();
+    
+    void stop();
+    
+    void onDrawFrame(aftt::Datetime const& datetime);
     
 private:
     Client(Client const&);
@@ -32,7 +35,6 @@ private:
     
 };
 
-} // namespace
 } // namespace
 
 #endif // INCLUDED

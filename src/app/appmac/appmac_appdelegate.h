@@ -1,4 +1,5 @@
-// appmac_appdelegate.h
+#ifndef INCLUDED_ATTA_APPMAC_APPDELEGATE_H
+#define INCLUDED_ATTA_APPMAC_APPDELEGATE_H
 
 struct appmac_AppDelegateImpl;
 
@@ -10,3 +11,5 @@ struct appmac_AppDelegateImpl;
 - (void) dealloc;
 
 @end
+
+#endif // INCLUDED

@@ -1,11 +1,14 @@
+#ifndef INCLUDED_ATTA_APPIOS_APPDELEGATE_H
+#define INCLUDED_ATTA_APPIOS_APPDELEGATE_H
+
 #import <UIKit/UIKit.h>
 
-@class appios_ViewController;
+struct appios_AppDelegateImpl;
 
-@interface appios_AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) appios_ViewController *viewController;
+@interface appios_AppDelegate : UIResponder <UIApplicationDelegate> {
+    appios_AppDelegateImpl* m_impl;
+}
 
 @end
+
+#endif // INCLUDED
