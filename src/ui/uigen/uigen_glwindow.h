@@ -14,6 +14,7 @@ class GLWindow
 {
 public:
     typedef boost::function<void (agtm::Rect<float> const&)> ResizeEventHandler;
+    typedef boost::function<void ()> KeyEventHandler;
     typedef boost::function<void (agtui::MouseEvent const&)> MouseEventHandler;
     typedef boost::function<void (agtui::TouchEvent const&)> TouchEventHandler;
     typedef boost::function<void (aftt::Datetime const&)> DisplayRefreshHandler;
@@ -35,6 +36,8 @@ public:
     virtual agtg::RenderingContext& context() = 0;
     
     virtual void registerResizeEventHandler(ResizeEventHandler const& handler) = 0;
+    
+    virtual void registerKeyEventHandler(KeyEventHandler const& handler) = 0;
     
     virtual void registerMouseEventHandler(MouseEventHandler const& handler) = 0;
     

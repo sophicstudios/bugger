@@ -49,6 +49,7 @@ struct OpenGLWindow::Impl
     double timeFreq;
     uint64_t baseTime;
     uigen::GLWindow::ResizeEventHandler sizeHandler;
+    uigen::GLWindow::KeyEventHandler keyHandler;
     uigen::GLWindow::MouseEventHandler mouseHandler;
     uigen::GLWindow::DisplayRefreshHandler displayRefreshHandler;
 };
@@ -143,14 +144,7 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     m_impl->timeFreq = CVGetHostClockFrequency();
     
     m_impl->renderingContext->makeCurrent();
-    
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
         
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    
     m_impl->onViewResize(m_impl->bounds);
 }
 
@@ -196,6 +190,11 @@ agtg::RenderingContext& OpenGLWindow::context()
 void OpenGLWindow::registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler)
 {
     m_impl->sizeHandler = handler;
+}
+
+void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
+{
+    m_impl->keyHandler = handler;
 }
 
 void OpenGLWindow::registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler)
@@ -263,11 +262,17 @@ void OpenGLWindow::Impl::onViewDraw(agtm::Rect<float> const& dirtyRect)
 void OpenGLWindow::Impl::onViewMouseEvent(agtui::MouseEvent const& event)
 {
     std::cout << "Impl::onViewMouseEvent" << std::endl;
+    if (mouseHandler) {
+        mouseHandler(event);
+    }
 }
 
 void OpenGLWindow::Impl::onViewKeyEvent()
 {
     std::cout << "Impl::onViewKeyEvent" << std::endl;
+    if (keyHandler) {
+        keyHandler();
+    }
 }
 
 CVReturn OpenGLWindow::Impl::onDisplayRefresh(

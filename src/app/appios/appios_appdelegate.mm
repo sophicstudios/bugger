@@ -33,7 +33,23 @@ struct appios_AppDelegateImpl
     std::cout << "appios_AppDelegate::didFinishLaunchingWithOptions" << std::endl;
     
     m_impl->window = new uiios::OpenGLWindow("Wrangler");
-    m_impl->client = new game::Client(*m_impl->window);
+
+    CFBundleRef bundle = CFBundleGetMainBundle();
+
+    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(bundle);
+    CFStringRef tmp = CFStringCreateWithCString(NULL, "images/antsprites.png", kCFStringEncodingUTF8);
+    CFURLRef imageURL = CFURLCreateCopyAppendingPathComponent(NULL, resourcesURL, tmp, FALSE);
+
+    aftu::URL antspritesURL = util::Convert::toURL(imageURL);
+
+    CFRelease(tmp);
+    CFRelease(resourcesURL);
+    CFRelease(imageURL);
+    
+    aftfs::LocalFilesystem filesystem;
+    game::Client::ImagePtr image(new util::ImagePNG(filesystem, antspritesURL));
+    
+    m_impl->client = new game::Client(*m_impl->window, image);
 
     return YES;
 }

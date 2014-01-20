@@ -60,6 +60,7 @@ struct OpenGLWindow::Impl
     double timeFreq;
     uint64_t baseTime;
     uigen::GLWindow::ResizeEventHandler sizeHandler;
+    uigen::GLWindow::KeyEventHandler keyHandler;
     uigen::GLWindow::TouchEventHandler touchHandler;
     uigen::GLWindow::DisplayRefreshHandler displayRefreshHandler;    
 };
@@ -147,6 +148,11 @@ agtg::RenderingContext& OpenGLWindow::context()
 void OpenGLWindow::registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler)
 {
     m_impl->sizeHandler = handler;
+}
+
+void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
+{
+    m_impl->keyHandler = handler;
 }
 
 void OpenGLWindow::registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler)

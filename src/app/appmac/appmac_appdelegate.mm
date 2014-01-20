@@ -1,9 +1,14 @@
-#include <appmac_appdelegate.h>
-#include <uimac_openglwindow.h>
-#include <game_client.h>
-#include <agtm_rect.h>
-#include <agtm_point2d.h>
-#include <agtm_size2d.h>
+#import <appmac_appdelegate.h>
+#import <uimac_openglwindow.h>
+#import <game_client.h>
+#import <util_imagepng.h>
+#import <util_convert.h>
+#import <aftfs_localfilesystem.h>
+#import <agtm_rect.h>
+#import <agtm_point2d.h>
+#import <agtm_size2d.h>
+#import <CoreFoundation/CoreFoundation.h>
+#import <CoreFoundation/CFURL.h>
 
 struct appmac_AppDelegateImpl
 {
@@ -55,10 +60,27 @@ struct appmac_AppDelegateImpl
     // Insert code here to initialize your application
     NSLog(@"applicationDidFinishLaunching: %@", notification);
     
-    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(1024.0f, 768.0f));
+    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(320.0f, 320.0f));
     m_impl->window = new uimac::OpenGLWindow("Wrangler", frame);
     [self createMainMenu];
-    m_impl->client = new game::Client(*m_impl->window);
+
+    CFBundleRef bundle = CFBundleGetMainBundle();
+
+    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(bundle);
+    CFStringRef tmp = CFStringCreateWithCString(NULL, "images/antsprites.png", kCFStringEncodingUTF8);
+    CFURLRef imageURL = CFURLCreateCopyAppendingPathComponent(NULL, resourcesURL, tmp, FALSE);
+
+    aftu::URL antspritesURL = util::Convert::toURL(imageURL);
+
+    CFRelease(tmp);
+    CFRelease(resourcesURL);
+    CFRelease(imageURL);
+    
+    aftfs::LocalFilesystem filesystem;
+    game::Client::ImagePtr image(new util::ImagePNG(filesystem, antspritesURL));
+    
+
+    m_impl->client = new game::Client(*m_impl->window, image);
 
     m_impl->client->run();
 }

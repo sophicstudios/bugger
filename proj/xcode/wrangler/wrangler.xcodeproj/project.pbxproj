@@ -21,6 +21,9 @@
 		FA2318EC179327EF0050DE3A /* libaft-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733B16F1826700015F1D /* libaft-ios.a */; };
 		FA2318ED179327F50050DE3A /* libagt-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318D8178DD5EA0050DE3A /* libagt-ios.a */; };
 		FA2318EF179328140050DE3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318EE179328140050DE3A /* QuartzCore.framework */; };
+		FA695139187F9F1800254593 /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA695138187F9F1800254593 /* libpng16.16.dylib */; };
+		FA69513C1882FA0400254593 /* util_imagepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA69513B1882FA0400254593 /* util_imagepng.cpp */; };
+		FA69513D1882FA0400254593 /* util_imagepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA69513B1882FA0400254593 /* util_imagepng.cpp */; };
 		FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */; };
 		FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164315AA7E180017DCD5 /* appios_main.mm */; };
 		FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */; };
@@ -30,6 +33,10 @@
 		FA9B166715AA8B200017DCD5 /* test_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164C15AA80C10017DCD5 /* test_shader.vsh */; };
 		FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733116F1826700015F1D /* libaft-macosx.a */; };
 		FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */; };
+		FAA8DB76185AB6FB00B6B263 /* util_convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */; };
+		FAA8DB77185AB6FB00B6B263 /* util_convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */; };
+		FABDD7C917E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */; };
+		FABDD7CA17E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */; };
 		FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACBACA016FF5B7A008B2004 /* game_client.cpp */; };
 		FACBACA216FF5B7A008B2004 /* game_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACBACA016FF5B7A008B2004 /* game_client.cpp */; };
 		FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733316F1826700015F1D /* libagt-macosx.a */; };
@@ -40,6 +47,8 @@
 		FAF9E4DF15CB27DD00601463 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1D315C4B4D700F7D2F1 /* MainWindow.xib */; };
 		FAF9E4E015CB27E000601463 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1D115C4B4D700F7D2F1 /* InfoPlist.strings */; };
 		FAF9E4E115CB27E200601463 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1CF15C4B4D700F7D2F1 /* Credits.rtf */; };
+		FAFB3A6217C120AC002510F9 /* images in Resources */ = {isa = PBXBuildFile; fileRef = FAFB3A6117C120AC002510F9 /* images */; };
+		FAFB3A6317C120AC002510F9 /* images in Resources */ = {isa = PBXBuildFile; fileRef = FAFB3A6117C120AC002510F9 /* images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +166,9 @@
 		FA4CC9A215C4C08A0014BA87 /* appmac_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_appdelegate.mm; path = ../../../src/app/appmac/appmac_appdelegate.mm; sourceTree = "<group>"; };
 		FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_main.mm; path = ../../../src/app/appmac/appmac_main.mm; sourceTree = "<group>"; };
 		FA4CC9A415C4C08A0014BA87 /* appmac_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_prefix.pch; path = ../../../src/app/appmac/appmac_prefix.pch; sourceTree = "<group>"; };
+		FA695138187F9F1800254593 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = ../../../../../../../../../opt/local/lib/libpng16.16.dylib; sourceTree = "<group>"; };
+		FA69513A1882F9A600254593 /* util_imagepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_imagepng.h; path = ../../../src/util/util_imagepng.h; sourceTree = "<group>"; };
+		FA69513B1882FA0400254593 /* util_imagepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_imagepng.cpp; path = ../../../src/util/util_imagepng.cpp; sourceTree = "<group>"; };
 		FA9B161615AA79B40017DCD5 /* wrangler-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wrangler-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA9B164115AA7E180017DCD5 /* appios_appdelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appios_appdelegate.h; path = ../../../src/app/appios/appios_appdelegate.h; sourceTree = "<group>"; };
 		FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appios_appdelegate.mm; path = ../../../src/app/appios/appios_appdelegate.mm; sourceTree = "<group>"; };
@@ -171,10 +183,15 @@
 		FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPhone.xib; path = ../../../resources/ios/lang.en/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		FAA0732716F1826600015F1D /* aegis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aegis.xcodeproj; path = ../../../../aegis/proj/xcode/aegis/aegis.xcodeproj; sourceTree = "<group>"; };
 		FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		FAA8DB74185AAD2100B6B263 /* util_convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_convert.h; path = ../../../src/util/util_convert.h; sourceTree = "<group>"; };
+		FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_convert.cpp; path = ../../../src/util/util_convert.cpp; sourceTree = "<group>"; };
+		FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_bundlefilesystem.cpp; path = ../../../src/util/util_bundlefilesystem.cpp; sourceTree = "<group>"; };
 		FACBAC9F16FF58E1008B2004 /* game_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_client.h; path = ../../../src/game/game_client.h; sourceTree = "<group>"; };
 		FACBACA016FF5B7A008B2004 /* game_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game_client.cpp; path = ../../../src/game/game_client.cpp; sourceTree = "<group>"; };
 		FAF9E4BD15C9CC3F00601463 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		FAF9E4C315C9CCFC00601463 /* wrangler-macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wrangler-macosx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAFB3A6117C120AC002510F9 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../resources/images; sourceTree = "<group>"; };
+		FAFB3A6517C1334E002510F9 /* util_bundlefilesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_bundlefilesystem.h; path = ../../../src/util/util_bundlefilesystem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA695139187F9F1800254593 /* libpng16.16.dylib in Frameworks */,
 				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
 				FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */,
 				FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */,
@@ -304,6 +322,7 @@
 		FA9B160F15AA78BF0017DCD5 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				FAFB3A6417C1330E002510F9 /* util */,
 				FA223B04176365C5000FE3E9 /* ui */,
 				FA9B161015AA78C50017DCD5 /* app */,
 				FA9B161115AA79210017DCD5 /* game */,
@@ -323,7 +342,6 @@
 		FA9B161115AA79210017DCD5 /* game */ = {
 			isa = PBXGroup;
 			children = (
-				FAFB3A4A17ADE21C002510F9 /* resources */,
 				FAFB3A4917ADE214002510F9 /* enemies */,
 				FAFB3A4217ADE207002510F9 /* actors */,
 				FACBAC9F16FF58E1008B2004 /* game_client.h */,
@@ -344,6 +362,7 @@
 		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA695138187F9F1800254593 /* libpng16.16.dylib */,
 				FA223AFF17618842000FE3E9 /* OpenGLES.framework */,
 				FA223AFD17618839000FE3E9 /* GLKit.framework */,
 				FA223AFB17618832000FE3E9 /* CoreGraphics.framework */,
@@ -390,6 +409,7 @@
 		FA9B164F15AA82E10017DCD5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FAFB3A6117C120AC002510F9 /* images */,
 				FA04E1CD15C4B40200F7D2F1 /* mac */,
 				FA9B165015AA83870017DCD5 /* ios */,
 			);
@@ -443,11 +463,17 @@
 			name = enemies;
 			sourceTree = "<group>";
 		};
-		FAFB3A4A17ADE21C002510F9 /* resources */ = {
+		FAFB3A6417C1330E002510F9 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				FAFB3A6517C1334E002510F9 /* util_bundlefilesystem.h */,
+				FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */,
+				FAA8DB74185AAD2100B6B263 /* util_convert.h */,
+				FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */,
+				FA69513A1882F9A600254593 /* util_imagepng.h */,
+				FA69513B1882FA0400254593 /* util_imagepng.cpp */,
 			);
-			name = resources;
+			name = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,6 +504,7 @@
 			buildPhases = (
 				FAF9E4BF15C9CCFC00601463 /* Sources */,
 				FAF9E4C015C9CCFC00601463 /* Frameworks */,
+				FA69513E188342CD00254593 /* ShellScript */,
 				FAF9E4C115C9CCFC00601463 /* Resources */,
 			);
 			buildRules = (
@@ -593,6 +620,7 @@
 				FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */,
 				FA9B166015AA87F10017DCD5 /* ViewController_iPad.xib in Resources */,
 				FA9B166115AA87F10017DCD5 /* ViewController_iPhone.xib in Resources */,
+				FAFB3A6217C120AC002510F9 /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,10 +631,27 @@
 				FAF9E4E115CB27E200601463 /* Credits.rtf in Resources */,
 				FAF9E4E015CB27E000601463 /* InfoPlist.strings in Resources */,
 				FAF9E4DF15CB27DD00601463 /* MainWindow.xib in Resources */,
+				FAFB3A6317C120AC002510F9 /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FA69513E188342CD00254593 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/tcsh;
+			shellScript = "touch -m ${PROJECT_DIR}/../../../resources/images";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FA9B161215AA79B40017DCD5 /* Sources */ = {
@@ -619,6 +664,9 @@
 				FA2318E8178E3BAC0050DE3A /* uiios_openglwindow.mm in Sources */,
 				FA2318EB178E47A80050DE3A /* uiios_renderingcontext.mm in Sources */,
 				FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */,
+				FABDD7C917E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */,
+				FAA8DB76185AB6FB00B6B263 /* util_convert.cpp in Sources */,
+				FA69513C1882FA0400254593 /* util_imagepng.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +680,9 @@
 				FA223B0D1766B78A000FE3E9 /* uimac_openglwindow.mm in Sources */,
 				FA223B0E1766B78A000FE3E9 /* uimac_renderingcontext.mm in Sources */,
 				FA2318E0178E203A0050DE3A /* uigen_glwindow.cpp in Sources */,
+				FABDD7CA17E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */,
+				FAA8DB77185AB6FB00B6B263 /* util_convert.cpp in Sources */,
+				FA69513D1882FA0400254593 /* util_imagepng.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,23 +742,31 @@
 		FA9B160D15AA78B20017DCD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
 					"$(BOOST_INCLUDE)",
 					"$(CONFIGURATION_BUILD_DIR)/**",
 				);
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 			};
 			name = Debug;
 		};
 		FA9B160E15AA78B20017DCD5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
 					"$(BOOST_INCLUDE)",
 					"$(CONFIGURATION_BUILD_DIR)/**",
 				);
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 			};
 			name = Release;
 		};
@@ -770,7 +829,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -782,17 +840,14 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "wrangler-macosx/wrangler-macosx-Info.plist";
-				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -801,22 +856,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../../src/app/appmac/appmac_prefix.pch;
-				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "wrangler-macosx/wrangler-macosx-Info.plist";
-				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

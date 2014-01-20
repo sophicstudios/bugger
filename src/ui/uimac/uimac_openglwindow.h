@@ -34,6 +34,8 @@ public:
     
     virtual void registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler);
     
+    virtual void registerKeyEventHandler(KeyEventHandler const& handler);
+
     virtual void registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler);
     
     virtual void registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler);

@@ -28,11 +28,11 @@ namespace game {
 
 namespace {
 
-static const size_t NUM_PARTICLES = 1000;
+static const size_t NUM_PARTICLES = 20;
 static const float  PARTICLE_ACCEL_RATE = 800.0f; // feet/second
 static const float  MAX_SPEED = 1000.0f; // feet/second
 static float MAX_SPREAD = 360.0f; // angles
-static float PI = 3.14159265f;
+//static float PI = 3.14159265f;
 
 agtm::Vector2<float> g_sourcePosition;
 
@@ -55,7 +55,7 @@ void initParticle(Particle& particle)
     
     particle.maxAge = aftt::DatetimeInterval(
         aftt::Seconds(0),
-        aftt::Nanoseconds(static_cast<int>(ageJitter * 500000000)));
+        aftt::Nanoseconds(static_cast<int>(ageJitter * 900000000)));
 
     float jitter = static_cast<float>(rand()) / RAND_MAX;
     particle.angle = 90.0f - (MAX_SPREAD / 2.0f) + (jitter * MAX_SPREAD);
@@ -78,6 +78,16 @@ void initParticle(Particle& particle)
 
 struct Client::Impl
 {
+    Impl()
+    : window(NULL),
+      paused(false),
+      texture(0),
+      frame(0),
+      direction(0),
+      sourcePosition(agtm::Vector2<float>(0.0f, 0.0f)),
+      particleTimer(aftt::DatetimeInterval(aftt::Seconds(0), aftt::Nanoseconds(0)))
+    {}
+    
     void onDrawFrame(aftt::Datetime const& datetime);
     void drawScene(aftt::Datetime const& datetime);
 
@@ -88,16 +98,24 @@ struct Client::Impl
     agtm::Vector2<float> sourcePosition;
     aftt::DatetimeInterval particleTimer;
     bool paused;
+    
+    Client::ImagePtr image;
+    GLuint texture;
+    int frame;
+    int direction;
 };
 
-Client::Client(uigen::GLWindow& window)
+Client::Client(uigen::GLWindow& window, ImagePtr const& image)
 : m_impl(new Impl())
 {
-    m_impl->paused = false;
     m_impl->window = &window;
+    m_impl->image = image;
 
-    g_sourcePosition = agtm::Vector2<float>(0.0f, 0.0f);
-    m_impl->particleTimer = aftt::DatetimeInterval(aftt::Seconds(0), aftt::Nanoseconds(0));
+    glGenTextures(1, &m_impl->texture);
+    glBindTexture(GL_TEXTURE_2D, m_impl->texture);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_impl->image->width(), m_impl->image->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, &(m_impl->image->data()[0]));
 }
 
 Client::~Client()
@@ -110,6 +128,11 @@ void Client::run()
     std::cout << "Client::run" << std::endl;
     if (!m_impl->paused) {
         m_impl->window->show();
+        
+        boost::function<void (agtui::MouseEvent const&)> mouseEventHandler
+            = boost::bind(&Client::onMouseEvent, this, _1);
+        
+        m_impl->window->registerMouseEventHandler(mouseEventHandler);
 
         boost::function<void (aftt::Datetime const&)> displayRefreshHandler
             = boost::bind(&Client::onDrawFrame, this, _1);
@@ -153,44 +176,66 @@ void Client::onDrawFrame(aftt::Datetime const& datetime)
     glMatrixMode(GL_MODELVIEW);
 
     aftt::DatetimeInterval elapsed = datetime - m_impl->prevTime;
-    double elapsedSeconds = elapsed.totalSeconds();
+    //double elapsedSeconds = elapsed.totalSeconds();
     m_impl->particleTimer += elapsed;
-    if (m_impl->particleTimer >= aftt::DatetimeInterval(aftt::Seconds(1), aftt::Nanoseconds(0))) {
-        m_impl->particleTimer -= aftt::DatetimeInterval(aftt::Seconds(1), aftt::Nanoseconds(0));
+    int nanoseconds = 1000000000 / 10;
+    aftt::DatetimeInterval frameTime = aftt::DatetimeInterval(aftt::Seconds(0), aftt::Nanoseconds(nanoseconds));
+    if (m_impl->particleTimer >= frameTime) {
+        m_impl->particleTimer -= frameTime;
+        
+        m_impl->frame = ((m_impl->frame + 1) % 3) + (m_impl->direction * 3);
     }
 
-    /*
-    std::cout << "Client::onDrawFrame ["
-        << " datetime: " << datetime
-        << " prev: " << m_prevTime
-        << " elapsed: " << elapsed
-        << " ]" << std::endl;
-    */
-    
     m_impl->prevTime = datetime;
 
     // clear the screen
+    glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // initialize the modelview matrix
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-/* TEST TRIANGLE
-    GLfloat verticesTest[] = { -50.0f, -50.0f, 0.0f, 50.0f, -50.0f, 0.0f, 0.0f, 50.0f, 0.0f };
-    glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, verticesTest);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDisableClientState(GL_VERTEX_ARRAY);
-*/
-    
     // for each particle in the particle list
     typedef std::vector<Particle>::iterator ParticleIter;
-    GLfloat vertices[] = { -20.0f, -20.0f, 0.0f, 20.0f, -20.0f, 0.0f, 0.0f, 20.0f, 0.0f };
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
 
+    GLfloat vertices[] = {
+        -16.0f, -16.0f, 0.0f,
+         16.0f, -16.0f, 0.0f,
+        -16.0f,  16.0f, 0.0f,
+         16.0f,  16.0f, 0.0f
+    };
+
+    GLfloat frameWidth = 1.0f / 8.0f;
+    GLfloat frameX = m_impl->frame * frameWidth;
+    
+    // texture coords are flipped vertically
+    GLfloat texCoords[] = {
+        frameX, 1.0f,
+        frameX + frameWidth, 1.0f,
+        frameX, 0.0f,
+        frameX + frameWidth, 0.0f
+    };
+    
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    glEnable(GL_CULL_FACE);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindTexture(GL_TEXTURE_2D, m_impl->texture);
+    glEnable(GL_TEXTURE_2D);
+    glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    glPushMatrix();
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glPopMatrix();
+    
+    /*
     for (ParticleIter it = m_impl->particles.begin(); it != m_impl->particles.end(); ++it) {
         // save the current modelview matrix
         glPushMatrix();
@@ -215,9 +260,9 @@ void Client::onDrawFrame(aftt::Datetime const& datetime)
         it->age += elapsed;
         
         // draw the particle
-        agtg::ColorRGBA<float>& color = it->color;
-        glColor4f(color.red(), color.green(), color.blue(), color.alpha());
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        //agtg::ColorRGBA<float>& color = it->color;
+        //glColor4f(color.red(), color.green(), color.blue(), color.alpha());
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         
         // restore the modelview matrix
         glPopMatrix();
@@ -226,9 +271,12 @@ void Client::onDrawFrame(aftt::Datetime const& datetime)
             initParticle(*it);
         }
     }
+    */
     
     glDisableClientState(GL_VERTEX_ARRAY);
-
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_TEXTURE_2D);
+    
     // fill the particle list based on the particle rate
     if (m_impl->particles.size() < NUM_PARTICLES) {
         double triggerTime = 1.0 / NUM_PARTICLES;
@@ -243,6 +291,15 @@ void Client::onDrawFrame(aftt::Datetime const& datetime)
             
             m_impl->particleTimer = aftt::DatetimeInterval(aftt::Seconds(0), aftt::Nanoseconds(0));
         }
+    }
+}
+
+void Client::onMouseEvent(agtui::MouseEvent const& event)
+{
+    std::cout << "mouse event: " << event << std::endl;
+    if (event.type() == agtui::MouseEvent::Type_MOUSEDOWN) {
+        m_impl->direction = m_impl->direction == 0 ? 1 : 0;
+        std::cout << "direction: " << m_impl->direction << std::endl;
     }
 }
 
