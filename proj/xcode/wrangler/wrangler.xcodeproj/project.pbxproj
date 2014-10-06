@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA14A0A419DF6F9A0058A4CA /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA14A0A319DF6F9A0058A4CA /* libpng16.a */; };
 		FA223AF817618818000FE3E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF717618817000FE3E9 /* UIKit.framework */; };
 		FA223AFA17618825000FE3E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF917618825000FE3E9 /* Foundation.framework */; };
 		FA223AFC17618832000FE3E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFB17618832000FE3E9 /* CoreGraphics.framework */; };
@@ -21,7 +22,6 @@
 		FA2318EC179327EF0050DE3A /* libaft-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733B16F1826700015F1D /* libaft-ios.a */; };
 		FA2318ED179327F50050DE3A /* libagt-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318D8178DD5EA0050DE3A /* libagt-ios.a */; };
 		FA2318EF179328140050DE3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318EE179328140050DE3A /* QuartzCore.framework */; };
-		FA695139187F9F1800254593 /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA695138187F9F1800254593 /* libpng16.16.dylib */; };
 		FA69513C1882FA0400254593 /* util_imagepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA69513B1882FA0400254593 /* util_imagepng.cpp */; };
 		FA69513D1882FA0400254593 /* util_imagepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA69513B1882FA0400254593 /* util_imagepng.cpp */; };
 		FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */; };
@@ -49,6 +49,8 @@
 		FAF9E4E115CB27E200601463 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA04E1CF15C4B4D700F7D2F1 /* Credits.rtf */; };
 		FAFB3A6217C120AC002510F9 /* images in Resources */ = {isa = PBXBuildFile; fileRef = FAFB3A6117C120AC002510F9 /* images */; };
 		FAFB3A6317C120AC002510F9 /* images in Resources */ = {isa = PBXBuildFile; fileRef = FAFB3A6117C120AC002510F9 /* images */; };
+		FAFD77BD1895887300734186 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFD77BC1895887200734186 /* boost.framework */; };
+		FAFD77BF1895B62D00734186 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFD77BE1895B62D00734186 /* boost.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +148,7 @@
 		FA04E1D015C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = ../../../resources/mac/en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FA04E1D215C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ../../../resources/mac/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA04E1D415C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../../../resources/mac/en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		FA14A0A319DF6F9A0058A4CA /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = ../../../../../../../../../opt/local/lib/libpng16.a; sourceTree = "<group>"; };
 		FA223AF717618817000FE3E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		FA223AF917618825000FE3E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		FA223AFB17618832000FE3E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
@@ -166,7 +169,6 @@
 		FA4CC9A215C4C08A0014BA87 /* appmac_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_appdelegate.mm; path = ../../../src/app/appmac/appmac_appdelegate.mm; sourceTree = "<group>"; };
 		FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_main.mm; path = ../../../src/app/appmac/appmac_main.mm; sourceTree = "<group>"; };
 		FA4CC9A415C4C08A0014BA87 /* appmac_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_prefix.pch; path = ../../../src/app/appmac/appmac_prefix.pch; sourceTree = "<group>"; };
-		FA695138187F9F1800254593 /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = ../../../../../../../../../opt/local/lib/libpng16.16.dylib; sourceTree = "<group>"; };
 		FA69513A1882F9A600254593 /* util_imagepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_imagepng.h; path = ../../../src/util/util_imagepng.h; sourceTree = "<group>"; };
 		FA69513B1882FA0400254593 /* util_imagepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_imagepng.cpp; path = ../../../src/util/util_imagepng.cpp; sourceTree = "<group>"; };
 		FA9B161615AA79B40017DCD5 /* wrangler-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wrangler-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,8 @@
 		FAF9E4C315C9CCFC00601463 /* wrangler-macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wrangler-macosx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAFB3A6117C120AC002510F9 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../resources/images; sourceTree = "<group>"; };
 		FAFB3A6517C1334E002510F9 /* util_bundlefilesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_bundlefilesystem.h; path = ../../../src/util/util_bundlefilesystem.h; sourceTree = "<group>"; };
+		FAFD77BC1895887200734186 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../../../../../sdks/boost_1_55_0/osx/framework/boost.framework; sourceTree = "<group>"; };
+		FAFD77BE1895B62D00734186 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../../../../../sdks/boost_1_55_0/ios/framework/boost.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +207,7 @@
 				FA2318ED179327F50050DE3A /* libagt-ios.a in Frameworks */,
 				FA2318EC179327EF0050DE3A /* libaft-ios.a in Frameworks */,
 				FA223B0017618842000FE3E9 /* OpenGLES.framework in Frameworks */,
+				FAFD77BF1895B62D00734186 /* boost.framework in Frameworks */,
 				FA223AFE17618839000FE3E9 /* GLKit.framework in Frameworks */,
 				FA223AFC17618832000FE3E9 /* CoreGraphics.framework in Frameworks */,
 				FA223AFA17618825000FE3E9 /* Foundation.framework in Frameworks */,
@@ -214,11 +219,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA695139187F9F1800254593 /* libpng16.16.dylib in Frameworks */,
+				FA14A0A419DF6F9A0058A4CA /* libpng16.a in Frameworks */,
 				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
 				FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */,
 				FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */,
 				FAF9E4DC15CB267F00601463 /* OpenGL.framework in Frameworks */,
+				FAFD77BD1895887300734186 /* boost.framework in Frameworks */,
 				FAF9E4C515C9CCFC00601463 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,7 +315,6 @@
 		FA9B160615AA78B20017DCD5 = {
 			isa = PBXGroup;
 			children = (
-				FA2318EE179328140050DE3A /* QuartzCore.framework */,
 				FAA0732716F1826600015F1D /* aegis.xcodeproj */,
 				FA9B164F15AA82E10017DCD5 /* Resources */,
 				FA9B164915AA80470017DCD5 /* Shaders */,
@@ -362,13 +367,16 @@
 		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FA695138187F9F1800254593 /* libpng16.16.dylib */,
+				FA14A0A319DF6F9A0058A4CA /* libpng16.a */,
+				FAFD77BE1895B62D00734186 /* boost.framework */,
+				FAFD77BC1895887200734186 /* boost.framework */,
 				FA223AFF17618842000FE3E9 /* OpenGLES.framework */,
 				FA223AFD17618839000FE3E9 /* GLKit.framework */,
 				FA223AFB17618832000FE3E9 /* CoreGraphics.framework */,
 				FA223AF917618825000FE3E9 /* Foundation.framework */,
 				FA223AF717618817000FE3E9 /* UIKit.framework */,
 				FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */,
+				FA2318EE179328140050DE3A /* QuartzCore.framework */,
 				FAF9E4BD15C9CC3F00601463 /* OpenGL.framework */,
 				FA04E1B015C4AFC100F7D2F1 /* Cocoa.framework */,
 				FA04E1B215C4AFC100F7D2F1 /* Other Frameworks */,
@@ -742,6 +750,7 @@
 		FA9B160D15AA78B20017DCD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -751,12 +760,14 @@
 					"$(CONFIGURATION_BUILD_DIR)/**",
 				);
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		FA9B160E15AA78B20017DCD5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -767,16 +778,20 @@
 					"$(CONFIGURATION_BUILD_DIR)/**",
 				);
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
 		FA9B163E15AA79B40017DCD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/fizban/development/sdks/boost_1_55_0/ios/framework,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -793,6 +808,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "wrangler-ios/wrangler-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -803,10 +819,13 @@
 		FA9B163F15AA79B40017DCD5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/fizban/development/sdks/boost_1_55_0/ios/framework,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../../src/app/appios/appios_prefix.pch;
@@ -816,6 +835,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "wrangler-ios/wrangler-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -830,6 +850,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/fizban/development/sdks/boost_1_55_0/osx/framework,
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -844,7 +868,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "wrangler-macosx/wrangler-macosx-Info.plist";
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
@@ -858,6 +885,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/fizban/development/sdks/boost_1_55_0/osx/framework,
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../../src/app/appmac/appmac_prefix.pch;
@@ -865,7 +896,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "wrangler-macosx/wrangler-macosx-Info.plist";
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
 				WRAPPER_EXTENSION = app;
