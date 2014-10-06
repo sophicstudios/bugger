@@ -62,6 +62,7 @@ struct appmac_AppDelegateImpl
     
     agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(320.0f, 320.0f));
     m_impl->window = new uimac::OpenGLWindow("Wrangler", frame);
+
     [self createMainMenu];
 
     CFBundleRef bundle = CFBundleGetMainBundle();

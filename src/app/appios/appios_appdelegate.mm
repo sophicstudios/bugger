@@ -1,7 +1,9 @@
 #import <appios_appdelegate.h>
 #import <uiios_openglwindow.h>
 #import <game_client.h>
+#import <util_convert.h>
 #import <aftt_date.h>
+#import <aftfs_localfilesystem.h>
 #import <iostream>
 
 struct appios_AppDelegateImpl
