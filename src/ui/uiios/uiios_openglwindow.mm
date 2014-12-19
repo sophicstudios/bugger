@@ -34,6 +34,8 @@
     uiios::OpenGLWindow::Impl* m_windowImpl;
 }
 
+//@property (nonatomic, strong) CADisplayLink* displayLink;
+
 - (id) initWithFrame:(CGRect)frame windowImpl:(uiios::OpenGLWindow::Impl*)windowImpl;
 - (void) windowBecameVisible:(NSNotification*)notification;
 - (void) windowBecameHidden:(NSNotification*)notification;
@@ -99,15 +101,16 @@ OpenGLWindow::OpenGLWindow(std::string const& title)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     
-    m_impl->displayLink = [CADisplayLink displayLinkWithTarget:m_impl->window selector:@selector(onDisplayLinkUpdate:)];
+    m_impl->displayLink = [[CADisplayLink displayLinkWithTarget:m_impl->window selector:@selector(onDisplayLinkUpdate:)] retain];
 }
 
 OpenGLWindow::~OpenGLWindow()
 {
     delete m_impl->renderingContext;
     
+    std::cout << "~OpenGLWindow displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
     [m_impl->displayLink release];
     [m_impl->viewController release];
     [m_impl->view release];
@@ -118,21 +121,39 @@ OpenGLWindow::~OpenGLWindow()
 
 void OpenGLWindow::show()
 {
+    std::cout << "OpenGLWindow::show()" << std::endl;
     [m_impl->window makeKeyAndVisible];
 }
 
 void OpenGLWindow::hide()
 {
+    std::cout << "OpenGLWindow::hide()" << std::endl;
 }
 
 void OpenGLWindow::startDisplayTimer()
 {
-    [m_impl->displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    std::cout << "OpenGLWindow::startDisplayTimer()" << std::endl;
+    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
+    [m_impl->displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
+}
+
+void OpenGLWindow::pauseDisplayTimer()
+{
+    [m_impl->displayLink setPaused:TRUE];
+}
+
+void OpenGLWindow::resumeDisplayTimer()
+{
+    [m_impl->displayLink setPaused:FALSE];
 }
 
 void OpenGLWindow::stopDisplayTimer()
 {
-    [m_impl->displayLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    std::cout << "OpenGLWindow::stopDisplayTimer()" << std::endl;
+    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
+    [m_impl->displayLink invalidate];
+    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
 }
 
 agtm::Rect<float> OpenGLWindow::bounds()
@@ -172,6 +193,8 @@ void OpenGLWindow::registerDisplayRefreshHandler(uigen::GLWindow::DisplayRefresh
 
 void OpenGLWindow::Impl::onDisplayLinkUpdate(CADisplayLink* displayLink)
 {
+    std::cout << "onDisplayLinkUpdate" << std::endl;
+    
     if (displayRefreshHandler) {
         //CFTimeInterval timestamp = [displayLink timestamp];
         aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();

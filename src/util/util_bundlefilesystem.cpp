@@ -26,6 +26,7 @@ struct BundleFilesystem::Priv
     CFBundleRef bundle;
     CFURLRef rootUrl;
     CFURLRef currentUrl;
+    CFURLRef resourcesUrl;
 };
 
 class BundleDirectoryEntry : public aftfs::DirectoryEntry
@@ -90,6 +91,8 @@ BundleFilesystem::BundleFilesystem()
     if (!m_priv->rootUrl) {
         throw aftu::Exception("Unable to get bundle root URL!");
     }
+    
+    m_priv->resourcesUrl = CFBundleCopyResourcesDirectoryURL(m_priv->bundle);
 }
 
 BundleFilesystem::BundleFilesystem(Root root)
@@ -168,6 +171,11 @@ aftfs::Filesystem::DirectoryEntryPtr BundleFilesystem::directoryEntry(aftu::URL 
         path = "/";
     }
     
+    if (url.isRelative()) {
+        aftu::URL baseUrl = Convert::toURL(m_priv->resourcesUrl);
+        path = baseUrl.path() + path;
+    }
+    
     struct stat info;
     std::memset(&info, 0, sizeof(struct stat));
     
@@ -179,6 +187,12 @@ aftfs::Filesystem::DirectoryEntryPtr BundleFilesystem::directoryEntry(aftu::URL 
 aftfs::Filesystem::FileReaderPtr BundleFilesystem::openFileReader(aftu::URL const& url, aftfs::Filesystem::Status* status)
 {
     std::string path = url.path();
+    
+    if (url.isRelative()) {
+        aftu::URL baseUrl = Convert::toURL(m_priv->resourcesUrl);
+        path = baseUrl.path() + path;
+    }
+    
     FILE* fileHandle = fopen(path.c_str(), "r");
     if (!fileHandle) {
         if (status) {

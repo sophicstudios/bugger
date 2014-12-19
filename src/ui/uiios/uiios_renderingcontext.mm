@@ -34,6 +34,7 @@ void RenderingContext::postRender()
     const GLenum discards[] = { GL_DEPTH_ATTACHMENT };
     glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
     glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, discards);
+    //glInvalidateFramebuffer(GL_FRAMEBUFFER, 1, discards);
     
     glBindRenderbuffer(GL_RENDERBUFFER, m_colorRenderBuffer);
     [m_context presentRenderbuffer:GL_RENDERBUFFER];

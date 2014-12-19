@@ -4,6 +4,7 @@
 #import <GLKit/GLKit.h>
 #import <QuartzCore/CAEAGLLayer.h>
 #import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 #import <agtg_renderingcontext.h>
 #import <agtm_size2d.h>
 

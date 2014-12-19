@@ -1,9 +1,8 @@
 #import <Cocoa/Cocoa.h>
 #import <Foundation/NSGeometry.h>
-#import <QuartzCore/CVDisplayLink.h>
-#import <QuartzCore/CVHostTime.h>
 #import <uimac_openglwindow.h>
 #import <uimac_renderingcontext.h>
+#import <uimac_displaytimer.h>
 #import <aftt_systemtime.h>
 #import <iostream>
 
@@ -45,28 +44,13 @@ struct OpenGLWindow::Impl
     agtm::Rect<float> bounds;
     NSOpenGLPixelFormat* pixelFormat;
     uimac::RenderingContext* renderingContext;
-    CVDisplayLinkRef displayLink;
-    double timeFreq;
-    uint64_t baseTime;
+    uimac::DisplayTimer* displayTimer;
     uigen::GLWindow::ResizeEventHandler sizeHandler;
     uigen::GLWindow::KeyEventHandler keyHandler;
     uigen::GLWindow::MouseEventHandler mouseHandler;
-    uigen::GLWindow::DisplayRefreshHandler displayRefreshHandler;
+    uigen::DisplayTimer::DisplayRefreshHandler displayRefreshHandler;
 };
 
-CVReturn displayLinkCallback(
-    CVDisplayLinkRef displayLink,
-    const CVTimeStamp *inNow,
-    const CVTimeStamp *inOutputTime,
-    CVOptionFlags flagsIn,
-    CVOptionFlags *flagsOut,
-    void *displayLinkContext)
-{
-    @autoreleasepool {
-        return reinterpret_cast<OpenGLWindow::Impl*>(displayLinkContext)->onDisplayRefresh(
-            displayLink, inNow, inOutputTime, flagsIn, flagsOut);
-    }
-}
 
 //////////
 // OpenGLWindow IMPLEMENTATION
@@ -121,28 +105,8 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     
     // setup the display link to get a timer linked
     // to the refresh rate of the active display
-    CVDisplayLinkCreateWithActiveCGDisplays(&m_impl->displayLink);
-    
-    double refreshPeriod = CVDisplayLinkGetActualOutputVideoRefreshPeriod(m_impl->displayLink);
-    
-    std::cout << "refreshPeriod: " << refreshPeriod << std::endl;
-    
-    CVReturn cvResult = CVDisplayLinkSetOutputCallback(
-        m_impl->displayLink, displayLinkCallback, m_impl);
+    m_impl->displayTimer = new uimac::DisplayTimer(*m_impl->renderingContext, m_impl->pixelFormat);
 
-    if (cvResult != kCVReturnSuccess) {
-        std::cout << "CVDisplayLinkSetOutputCallback failed ["
-            << " result: " << cvResult
-            << " ]" << std::endl;
-    }
-    
-    CGLContextObj cglContext = (CGLContextObj)[m_impl->renderingContext->nativeContext() CGLContextObj];
-    CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[m_impl->pixelFormat CGLPixelFormatObj];
-    
-    CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(m_impl->displayLink, cglContext, cglPixelFormat);
-    
-    m_impl->timeFreq = CVGetHostClockFrequency();
-    
     m_impl->renderingContext->makeCurrent();
         
     m_impl->onViewResize(m_impl->bounds);
@@ -152,6 +116,8 @@ OpenGLWindow::~OpenGLWindow()
 {
     [m_impl->pixelFormat release];
     [m_impl->window release];
+
+    delete m_impl->displayTimer;
 
     delete m_impl;
 }
@@ -165,16 +131,9 @@ void OpenGLWindow::hide()
 {
 }
 
-void OpenGLWindow::startDisplayTimer()
+uigen::DisplayTimer& OpenGLWindow::displayTimer()
 {
-    m_impl->baseTime = CVGetCurrentHostTime();
-    
-    CVDisplayLinkStart(m_impl->displayLink);
-}
-
-void OpenGLWindow::stopDisplayTimer()
-{
-    CVDisplayLinkStop(m_impl->displayLink);
+    return *m_impl->displayTimer;
 }
 
 agtm::Rect<float> OpenGLWindow::bounds()
@@ -205,11 +164,6 @@ void OpenGLWindow::registerMouseEventHandler(uigen::GLWindow::MouseEventHandler 
 void OpenGLWindow::registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler)
 {
     // no touch events currently
-}
-
-void OpenGLWindow::registerDisplayRefreshHandler(uigen::GLWindow::DisplayRefreshHandler const& handler)
-{
-    m_impl->displayRefreshHandler = handler;
 }
 
 void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
@@ -246,10 +200,10 @@ void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
     //    sizeHandler(rect);
     //}
     
-    if (displayRefreshHandler) {
-        aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();
-        displayRefreshHandler(now);
-    }
+    //if (displayRefreshHandler) {
+    //    aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();
+    //    displayRefreshHandler(now);
+    //}
     
     renderingContext->postRender();
 }
@@ -273,23 +227,6 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     if (keyHandler) {
         keyHandler();
     }
-}
-
-CVReturn OpenGLWindow::Impl::onDisplayRefresh(
-    CVDisplayLinkRef displayLink,
-    const CVTimeStamp *inNow,
-    const CVTimeStamp *inOutputTime,
-    CVOptionFlags flagsIn,
-    CVOptionFlags *flagsOut)
-{
-    if (displayRefreshHandler) {
-        aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();
-        renderingContext->preRender();
-        displayRefreshHandler(now);
-        renderingContext->postRender();
-    }
-    
-    return kCVReturnSuccess;
 }
 
 } // namespace

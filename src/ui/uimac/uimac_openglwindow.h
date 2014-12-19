@@ -1,5 +1,5 @@
-#ifndef INCLUDED_ATTA_UIMAC_OPENGLWINDOW_H
-#define INCLUDED_ATTA_UIMAC_OPENGLWINDOW_H
+#ifndef INCLUDED_UIMAC_OPENGLWINDOW_H
+#define INCLUDED_UIMAC_OPENGLWINDOW_H
 
 #include <uigen_glwindow.h>
 #include <agtg_renderingcontext.h>
@@ -7,7 +7,6 @@
 #include <agtm_point2d.h>
 #include <agtui_mouseevent.h>
 #include <aftt_datetime.h>
-#include <boost/function.hpp>
 
 namespace uimac {
 
@@ -23,10 +22,8 @@ public:
     virtual void show();
     
     virtual void hide();
-    
-    virtual void startDisplayTimer();
-    
-    virtual void stopDisplayTimer();
+
+    virtual uigen::DisplayTimer& displayTimer();
     
     virtual agtm::Rect<float> bounds();
 
@@ -39,8 +36,6 @@ public:
     virtual void registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler);
     
     virtual void registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler);
-
-    virtual void registerDisplayRefreshHandler(uigen::GLWindow::DisplayRefreshHandler const& handler);
 
 private:
     OpenGLWindow(OpenGLWindow const&);

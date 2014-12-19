@@ -26,6 +26,10 @@ public:
     
     virtual void startDisplayTimer();
     
+    virtual void pauseDisplayTimer();
+    
+    virtual void resumeDisplayTimer();
+    
     virtual void stopDisplayTimer();
     
     virtual agtm::Rect<float> bounds();

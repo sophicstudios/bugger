@@ -1,30 +1,25 @@
-// game_client.h
 #ifndef INCLUDED_ATTA_GAME_CLIENT_H
 #define INCLUDED_ATTA_GAME_CLIENT_H
 
 #include <uigen_glwindow.h>
-#include <util_imagepng.h>
-#include <agtg_mesh.h>
-#include <agtm_rect.h>
+#include <aftfs_filesystem.h>
 #include <aftt_datetime.h>
-#include <tr1/memory>
+#include <agtm_matrix4.h>
+#include <memory>
 
 namespace game {
+
+class Sprite;
 
 class Client
 {
 public:
-    typedef std::tr1::shared_ptr<util::ImagePNG> ImagePtr;
-
-    Client(uigen::GLWindow& window, ImagePtr const& image);
+    Client(std::shared_ptr<uigen::GLWindow> const& window,
+           std::shared_ptr<aftfs::Filesystem> const& filesystem);
     
     ~Client();
     
     void run();
-    
-    void pause();
-    
-    void resume();
     
     void stop();
     
@@ -33,11 +28,20 @@ public:
     void onMouseEvent(agtui::MouseEvent const& event);
     
 private:
+    typedef std::shared_ptr<Sprite> SpritePtr;
+    typedef std::vector<SpritePtr> SpriteList;
+    typedef std::vector<agtm::Matrix4<float> > PositionList;
+    typedef std::vector<PositionList> SpritePositionsList;
+
     Client(Client const&);
     Client& operator=(Client const&);
-    
-    class Impl;
-    Impl* m_impl;
+
+    std::shared_ptr<uigen::GLWindow> m_window;
+    aftt::Datetime m_prevTime;
+    SpriteList m_sprites;
+    SpritePositionsList m_spritePositionsList;
+
+    bool m_paused;
 };
 
 } // namespace

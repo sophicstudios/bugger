@@ -1,19 +1,20 @@
 #import <appmac_appdelegate.h>
 #import <uimac_openglwindow.h>
 #import <game_client.h>
-#import <util_imagepng.h>
 #import <util_convert.h>
 #import <aftfs_localfilesystem.h>
+#import <util_bundlefilesystem.h>
 #import <agtm_rect.h>
 #import <agtm_point2d.h>
 #import <agtm_size2d.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreFoundation/CFURL.h>
+#include <memory>
 
 struct appmac_AppDelegateImpl
 {
-    uimac::OpenGLWindow* window;
-    game::Client* client;
+    std::shared_ptr<uimac::OpenGLWindow> window;
+    std::shared_ptr<game::Client> client;
 };
 
 @implementation appmac_AppDelegate
@@ -57,33 +58,16 @@ struct appmac_AppDelegateImpl
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    // Insert code here to initialize your application
     NSLog(@"applicationDidFinishLaunching: %@", notification);
     
-    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(320.0f, 320.0f));
-    m_impl->window = new uimac::OpenGLWindow("Wrangler", frame);
+    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(568, 320));
+    m_impl->window = std::shared_ptr<uimac::OpenGLWindow>(new uimac::OpenGLWindow("Wrangler", frame));
 
     [self createMainMenu];
 
-    CFBundleRef bundle = CFBundleGetMainBundle();
+    std::shared_ptr<util::BundleFilesystem> filesystem(new util::BundleFilesystem());
 
-    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(bundle);
-    CFStringRef tmp = CFStringCreateWithCString(NULL, "images/antsprites.png", kCFStringEncodingUTF8);
-    CFURLRef imageURL = CFURLCreateCopyAppendingPathComponent(NULL, resourcesURL, tmp, FALSE);
-
-    aftu::URL antspritesURL = util::Convert::toURL(imageURL);
-
-    CFRelease(tmp);
-    CFRelease(resourcesURL);
-    CFRelease(imageURL);
-    
-    aftfs::LocalFilesystem filesystem;
-    game::Client::ImagePtr image(new util::ImagePNG(filesystem, antspritesURL));
-    
-
-    m_impl->client = new game::Client(*m_impl->window, image);
-
-    m_impl->client->run();
+    m_impl->client = std::shared_ptr<game::Client>(new game::Client(m_impl->window, filesystem));
 }
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification
@@ -94,6 +78,7 @@ struct appmac_AppDelegateImpl
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
     NSLog(@"applicationDidBecomeActive");
+    m_impl->client->run();
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification
@@ -104,6 +89,7 @@ struct appmac_AppDelegateImpl
 - (void)applicationDidResignActive:(NSNotification *)notification
 {
     NSLog(@"applicationDidResignActive");
+    m_impl->client->stop();
 }
 
 - (void)applicationWillHide:(NSNotification *)notification
@@ -129,8 +115,6 @@ struct appmac_AppDelegateImpl
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
     NSLog(@"applicationWillTerminate: %@", notification);
-    m_impl->client->stop();
-    delete m_impl->client;
 }
 
 @end
