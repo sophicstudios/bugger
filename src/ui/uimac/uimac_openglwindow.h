@@ -1,7 +1,7 @@
 #ifndef INCLUDED_UIMAC_OPENGLWINDOW_H
 #define INCLUDED_UIMAC_OPENGLWINDOW_H
 
-#include <uigen_glwindow.h>
+#include <agta_glwindow.h>
 #include <agtg_renderingcontext.h>
 #include <agtm_rect.h>
 #include <agtm_point2d.h>
@@ -10,7 +10,7 @@
 
 namespace uimac {
 
-class OpenGLWindow : public uigen::GLWindow
+class OpenGLWindow : public agta::GLWindow
 {
 public:
     struct Impl;
@@ -29,13 +29,13 @@ public:
 
     virtual agtg::RenderingContext& context();
     
-    virtual void registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler);
+    virtual void registerResizeEventHandler(agta::GLWindow::ResizeEventHandler const& handler);
     
     virtual void registerKeyEventHandler(KeyEventHandler const& handler);
 
-    virtual void registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler);
+    virtual void registerMouseEventHandler(agta::GLWindow::MouseEventHandler const& handler);
     
-    virtual void registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler);
+    virtual void registerTouchEventHandler(agta::GLWindow::TouchEventHandler const& handler);
 
 private:
     OpenGLWindow(OpenGLWindow const&);

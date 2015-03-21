@@ -12,18 +12,21 @@ namespace game {
 class Sprite
 {
 public:
-    Sprite(std::shared_ptr<agtr::Image> const& image);
+    Sprite();
+    
+    Sprite(std::shared_ptr<agtr::Image> const& image, GLuint program);
 
     virtual ~Sprite();
 
-    virtual void update(agtm::Matrix4<float> const& matrix);
+    virtual void render(agtm::Matrix4<float> const& matrix);
 
     GLuint texture() const;
     
 private:
-    static GLfloat s_vertices[];
-
+    GLuint m_vertexBuffer;
+    GLuint m_vertexArray;
     GLuint m_texture;
+    GLuint m_program;
     GLsizei m_width;
     GLsizei m_height;
     GLfloat m_frameWidth;

@@ -1,13 +1,13 @@
 #ifndef INCLUDED_UIMAC_DISPLAYTIMER_H
 #define INCLUDED_UIMAC_DISPLAYTIMER_H
 
-#include <uigen_displaytimer.h>
+#include <agta_displaytimer.h>
 
 namespace uimac {
 
 class RenderingContext;
 
-class DisplayTimer : public uigen::DisplayTimer
+class DisplayTimer : public agta::DisplayTimer
 {
 public:
     DisplayTimer(RenderingContext& renderingContext, NSOpenGLPixelFormat* pixelFormat);

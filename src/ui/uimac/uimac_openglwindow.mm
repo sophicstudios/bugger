@@ -45,10 +45,10 @@ struct OpenGLWindow::Impl
     NSOpenGLPixelFormat* pixelFormat;
     uimac::RenderingContext* renderingContext;
     uimac::DisplayTimer* displayTimer;
-    uigen::GLWindow::ResizeEventHandler sizeHandler;
-    uigen::GLWindow::KeyEventHandler keyHandler;
-    uigen::GLWindow::MouseEventHandler mouseHandler;
-    uigen::DisplayTimer::DisplayRefreshHandler displayRefreshHandler;
+    agta::GLWindow::ResizeEventHandler sizeHandler;
+    agta::GLWindow::KeyEventHandler keyHandler;
+    agta::GLWindow::MouseEventHandler mouseHandler;
+    agta::DisplayTimer::DisplayRefreshHandler displayRefreshHandler;
 };
 
 
@@ -108,8 +108,6 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     m_impl->displayTimer = new uimac::DisplayTimer(*m_impl->renderingContext, m_impl->pixelFormat);
 
     m_impl->renderingContext->makeCurrent();
-        
-    m_impl->onViewResize(m_impl->bounds);
 }
 
 OpenGLWindow::~OpenGLWindow()
@@ -125,13 +123,15 @@ OpenGLWindow::~OpenGLWindow()
 void OpenGLWindow::show()
 {
     [m_impl->window makeKeyAndOrderFront:NSApp];
+
+    m_impl->onViewResize(m_impl->bounds);
 }
 
 void OpenGLWindow::hide()
 {
 }
 
-uigen::DisplayTimer& OpenGLWindow::displayTimer()
+agta::DisplayTimer& OpenGLWindow::displayTimer()
 {
     return *m_impl->displayTimer;
 }
@@ -146,7 +146,7 @@ agtg::RenderingContext& OpenGLWindow::context()
     return *m_impl->renderingContext;
 }
 
-void OpenGLWindow::registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler)
+void OpenGLWindow::registerResizeEventHandler(agta::GLWindow::ResizeEventHandler const& handler)
 {
     m_impl->sizeHandler = handler;
 }
@@ -156,12 +156,12 @@ void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
     m_impl->keyHandler = handler;
 }
 
-void OpenGLWindow::registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler)
+void OpenGLWindow::registerMouseEventHandler(agta::GLWindow::MouseEventHandler const& handler)
 {
     m_impl->mouseHandler = handler;
 }
 
-void OpenGLWindow::registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler)
+void OpenGLWindow::registerTouchEventHandler(agta::GLWindow::TouchEventHandler const& handler)
 {
     // no touch events currently
 }
@@ -169,43 +169,9 @@ void OpenGLWindow::registerTouchEventHandler(uigen::GLWindow::TouchEventHandler 
 void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
 {
     std::cout << "Impl::onViewResize" << std::endl;
-    
-    renderingContext->preRender();
-    bounds = rect;
-    
-    GLfloat width = static_cast<GLfloat>(bounds.width());
-    GLfloat height = static_cast<GLfloat>(bounds.height());
-
-    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
-
-    std::cout << "width: " << width << std::endl;
-    std::cout << "height: " << height << std::endl;
-
-    GLfloat right = width / 2;
-    GLfloat left = -right;
-    GLfloat top = height / 2;
-    GLfloat bottom = -top;
-    
-    std::cout << "left: " << left << std::endl;
-    std::cout << "right: " << right << std::endl;
-    std::cout << "top: " << top << std::endl;
-    std::cout << "bottom: " << bottom << std::endl;
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    glOrtho(left, right, bottom, top, -1.0f, 1.0f);
-
-    //if (sizeHandler) {
-    //    sizeHandler(rect);
-    //}
-    
-    //if (displayRefreshHandler) {
-    //    aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();
-    //    displayRefreshHandler(now);
-    //}
-    
-    renderingContext->postRender();
+    if (sizeHandler) {
+        sizeHandler(rect);
+    }
 }
 
 void OpenGLWindow::Impl::onViewDraw(agtm::Rect<float> const& dirtyRect)

@@ -14,15 +14,13 @@
 		FA223B0017618842000FE3E9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFF17618842000FE3E9 /* OpenGLES.framework */; };
 		FA223B0D1766B78A000FE3E9 /* uimac_openglwindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA223B091766B78A000FE3E9 /* uimac_openglwindow.mm */; };
 		FA223B0E1766B78A000FE3E9 /* uimac_renderingcontext.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA223B0B1766B78A000FE3E9 /* uimac_renderingcontext.mm */; };
-		FA2318DF178E203A0050DE3A /* uigen_glwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2318DE178E203A0050DE3A /* uigen_glwindow.cpp */; };
-		FA2318E0178E203A0050DE3A /* uigen_glwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA2318DE178E203A0050DE3A /* uigen_glwindow.cpp */; };
 		FA2318E8178E3BAC0050DE3A /* uiios_openglwindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA2318E7178E3BAB0050DE3A /* uiios_openglwindow.mm */; };
 		FA2318EB178E47A80050DE3A /* uiios_renderingcontext.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA2318EA178E47A80050DE3A /* uiios_renderingcontext.mm */; };
 		FA2318EC179327EF0050DE3A /* libaft-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733B16F1826700015F1D /* libaft-ios.a */; };
 		FA2318ED179327F50050DE3A /* libagt-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318D8178DD5EA0050DE3A /* libagt-ios.a */; };
 		FA2318EF179328140050DE3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318EE179328140050DE3A /* QuartzCore.framework */; };
-		FA3E4D2B1A1C252D00E58703 /* uigen_displaytimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3E4D291A1C252D00E58703 /* uigen_displaytimer.cpp */; };
-		FA3E4D2C1A1C252D00E58703 /* uigen_displaytimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3E4D291A1C252D00E58703 /* uigen_displaytimer.cpp */; };
+		FA50F6121A87FCE5002B9028 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = FA50F6111A87FCE5002B9028 /* shaders */; };
+		FA50F6131A87FCE5002B9028 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = FA50F6111A87FCE5002B9028 /* shaders */; };
 		FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */; };
 		FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164315AA7E180017DCD5 /* appios_main.mm */; };
 		FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */; };
@@ -160,18 +158,15 @@
 		FA223B0A1766B78A000FE3E9 /* uimac_renderingcontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uimac_renderingcontext.h; path = ../../../src/ui/uimac/uimac_renderingcontext.h; sourceTree = "<group>"; };
 		FA223B0B1766B78A000FE3E9 /* uimac_renderingcontext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = uimac_renderingcontext.mm; path = ../../../src/ui/uimac/uimac_renderingcontext.mm; sourceTree = "<group>"; };
 		FA2318DA178DF2700050DE3A /* uiios_openglwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uiios_openglwindow.h; path = ../../../src/ui/uiios/uiios_openglwindow.h; sourceTree = "<group>"; };
-		FA2318DD178E20200050DE3A /* uigen_glwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uigen_glwindow.h; path = ../../../src/ui/uigen/uigen_glwindow.h; sourceTree = "<group>"; };
-		FA2318DE178E203A0050DE3A /* uigen_glwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uigen_glwindow.cpp; path = ../../../src/ui/uigen/uigen_glwindow.cpp; sourceTree = "<group>"; };
 		FA2318E7178E3BAB0050DE3A /* uiios_openglwindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = uiios_openglwindow.mm; path = ../../../src/ui/uiios/uiios_openglwindow.mm; sourceTree = "<group>"; };
 		FA2318E9178E41910050DE3A /* uiios_renderingcontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uiios_renderingcontext.h; path = ../../../src/ui/uiios/uiios_renderingcontext.h; sourceTree = "<group>"; };
 		FA2318EA178E47A80050DE3A /* uiios_renderingcontext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = uiios_renderingcontext.mm; path = ../../../src/ui/uiios/uiios_renderingcontext.mm; sourceTree = "<group>"; };
 		FA2318EE179328140050DE3A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		FA3E4D291A1C252D00E58703 /* uigen_displaytimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uigen_displaytimer.cpp; path = ../../../src/ui/uigen/uigen_displaytimer.cpp; sourceTree = "<group>"; };
-		FA3E4D2A1A1C252D00E58703 /* uigen_displaytimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uigen_displaytimer.h; path = ../../../src/ui/uigen/uigen_displaytimer.h; sourceTree = "<group>"; };
 		FA4CC9A115C4C08A0014BA87 /* appmac_appdelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_appdelegate.h; path = ../../../src/app/appmac/appmac_appdelegate.h; sourceTree = "<group>"; };
 		FA4CC9A215C4C08A0014BA87 /* appmac_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_appdelegate.mm; path = ../../../src/app/appmac/appmac_appdelegate.mm; sourceTree = "<group>"; };
 		FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_main.mm; path = ../../../src/app/appmac/appmac_main.mm; sourceTree = "<group>"; };
 		FA4CC9A415C4C08A0014BA87 /* appmac_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_prefix.pch; path = ../../../src/app/appmac/appmac_prefix.pch; sourceTree = "<group>"; };
+		FA50F6111A87FCE5002B9028 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = ../../../resources/shaders; sourceTree = "<group>"; };
 		FA9B161615AA79B40017DCD5 /* bugger-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bugger-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA9B164115AA7E180017DCD5 /* appios_appdelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appios_appdelegate.h; path = ../../../src/app/appios/appios_appdelegate.h; sourceTree = "<group>"; };
 		FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appios_appdelegate.mm; path = ../../../src/app/appios/appios_appdelegate.mm; sourceTree = "<group>"; };
@@ -191,8 +186,6 @@
 		FABC66171A36B3E900D3EBCB /* game_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game_sprite.cpp; path = ../../../src/game/game_sprite.cpp; sourceTree = "<group>"; };
 		FABC66181A36B3E900D3EBCB /* game_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_sprite.h; path = ../../../src/game/game_sprite.h; sourceTree = "<group>"; };
 		FABC661F1A3BE9C400D3EBCB /* game_gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_gl.h; path = ../../../src/game/game_gl.h; sourceTree = "<group>"; };
-		FABC66211A3DE98500D3EBCB /* game_sprite.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = game_sprite.vsh; path = ../../../shaders/game/game_sprite.vsh; sourceTree = "<group>"; };
-		FABC66221A3E1EC800D3EBCB /* game_sprite.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = game_sprite.fsh; path = ../../../shaders/game/game_sprite.fsh; sourceTree = "<group>"; };
 		FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_bundlefilesystem.cpp; path = ../../../src/util/util_bundlefilesystem.cpp; sourceTree = "<group>"; };
 		FAC788681A16AB4E0037CA1C /* bugger-ios-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "bugger-ios-Info.plist"; path = "bugger-ios/bugger-ios-Info.plist"; sourceTree = "<group>"; };
 		FAC7886E1A16AB830037CA1C /* bugger-macosx-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "bugger-macosx-Info.plist"; path = "bugger-macosx/bugger-macosx-Info.plist"; sourceTree = "<group>"; };
@@ -280,7 +273,6 @@
 		FA223B04176365C5000FE3E9 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				FA2318DC178E1FCF0050DE3A /* uigen */,
 				FA2318D9178DF2320050DE3A /* uiios */,
 				FA223B05176365CA000FE3E9 /* uimac */,
 			);
@@ -309,17 +301,6 @@
 				FA2318EA178E47A80050DE3A /* uiios_renderingcontext.mm */,
 			);
 			name = uiios;
-			sourceTree = "<group>";
-		};
-		FA2318DC178E1FCF0050DE3A /* uigen */ = {
-			isa = PBXGroup;
-			children = (
-				FA2318DD178E20200050DE3A /* uigen_glwindow.h */,
-				FA2318DE178E203A0050DE3A /* uigen_glwindow.cpp */,
-				FA3E4D2A1A1C252D00E58703 /* uigen_displaytimer.h */,
-				FA3E4D291A1C252D00E58703 /* uigen_displaytimer.cpp */,
-			);
-			name = uigen;
 			sourceTree = "<group>";
 		};
 		FA9B160615AA78B20017DCD5 = {
@@ -405,7 +386,6 @@
 		FA9B164915AA80470017DCD5 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				FABC66201A3DE93B00D3EBCB /* game */,
 				FA9B164A15AA807B0017DCD5 /* test */,
 			);
 			name = Shaders;
@@ -423,6 +403,7 @@
 		FA9B164F15AA82E10017DCD5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA50F6111A87FCE5002B9028 /* shaders */,
 				FAFB3A6117C120AC002510F9 /* images */,
 				FA04E1CD15C4B40200F7D2F1 /* mac */,
 				FA9B165015AA83870017DCD5 /* ios */,
@@ -462,15 +443,6 @@
 				FAFB3A4817ADE207002510F9 /* libact-macosx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		FABC66201A3DE93B00D3EBCB /* game */ = {
-			isa = PBXGroup;
-			children = (
-				FABC66211A3DE98500D3EBCB /* game_sprite.vsh */,
-				FABC66221A3E1EC800D3EBCB /* game_sprite.fsh */,
-			);
-			name = game;
 			sourceTree = "<group>";
 		};
 		FAC45A8419E99F4B00329DAB /* ios */ = {
@@ -648,6 +620,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA50F6121A87FCE5002B9028 /* shaders in Resources */,
 				FA9B166615AA8B200017DCD5 /* test_shader.fsh in Resources */,
 				FA9B166715AA8B200017DCD5 /* test_shader.vsh in Resources */,
 				FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */,
@@ -664,6 +637,7 @@
 				FAF9E4E115CB27E200601463 /* Credits.rtf in Resources */,
 				FAF9E4E015CB27E000601463 /* InfoPlist.strings in Resources */,
 				FAF9E4DF15CB27DD00601463 /* MainWindow.xib in Resources */,
+				FA50F6131A87FCE5002B9028 /* shaders in Resources */,
 				FAFB3A6317C120AC002510F9 /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -694,9 +668,7 @@
 				FABC66191A36B3E900D3EBCB /* game_sprite.cpp in Sources */,
 				FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */,
 				FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */,
-				FA2318DF178E203A0050DE3A /* uigen_glwindow.cpp in Sources */,
 				FA2318E8178E3BAC0050DE3A /* uiios_openglwindow.mm in Sources */,
-				FA3E4D2B1A1C252D00E58703 /* uigen_displaytimer.cpp in Sources */,
 				FA2318EB178E47A80050DE3A /* uiios_renderingcontext.mm in Sources */,
 				FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */,
 				FABDD7C917E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */,
@@ -713,9 +685,7 @@
 				FAC788721A19352A0037CA1C /* uimac_displaytimer.mm in Sources */,
 				FACBACA216FF5B7A008B2004 /* game_client.cpp in Sources */,
 				FA223B0D1766B78A000FE3E9 /* uimac_openglwindow.mm in Sources */,
-				FA3E4D2C1A1C252D00E58703 /* uigen_displaytimer.cpp in Sources */,
 				FA223B0E1766B78A000FE3E9 /* uimac_renderingcontext.mm in Sources */,
-				FA2318E0178E203A0050DE3A /* uigen_glwindow.cpp in Sources */,
 				FABC661A1A36B3E900D3EBCB /* game_sprite.cpp in Sources */,
 				FABDD7CA17E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */,
 				FAA8DB77185AB6FB00B6B263 /* util_convert.cpp in Sources */,

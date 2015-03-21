@@ -5,6 +5,8 @@
 #include <aftfs_filesystem.h>
 #include <aftt_datetime.h>
 #include <agtm_matrix4.h>
+#include <agta_engine.h>
+#include <agta_componentmanager.h>
 #include <memory>
 
 namespace game {
@@ -22,24 +24,28 @@ public:
     void run();
     
     void stop();
-    
+
     void onDrawFrame(aftt::Datetime const& datetime);
+    
+    void onResizeEvent(agtm::Rect<float> const& rect);
     
     void onMouseEvent(agtui::MouseEvent const& event);
     
 private:
     typedef std::shared_ptr<Sprite> SpritePtr;
-    typedef std::vector<SpritePtr> SpriteList;
-    typedef std::vector<agtm::Matrix4<float> > PositionList;
-    typedef std::vector<PositionList> SpritePositionsList;
 
     Client(Client const&);
     Client& operator=(Client const&);
 
+    void doDraw(aftt::Datetime const& datetime);
+    
     std::shared_ptr<uigen::GLWindow> m_window;
     aftt::Datetime m_prevTime;
-    SpriteList m_sprites;
-    SpritePositionsList m_spritePositionsList;
+
+    SpritePtr m_sprite;
+
+    std::shared_ptr<agta::Engine> m_engine;
+    agta::ComponentManager<agtm::Matrix4<float> > m_positionComponents;
 
     bool m_paused;
 };
