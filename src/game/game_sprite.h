@@ -2,7 +2,6 @@
 #define INCLUDED_SOPHICSTUDIOS_GAME_SPRITE_H
 
 #include <game_gl.h>
-#include <agta_component.h>
 #include <agtm_matrix4.h>
 #include <agtr_image.h>
 #include <memory>
@@ -14,7 +13,7 @@ class Sprite
 public:
     Sprite();
     
-    Sprite(std::shared_ptr<agtr::Image> const& image, GLuint program);
+    Sprite(std::shared_ptr<agtr::Image> const& image);
 
     virtual ~Sprite();
 

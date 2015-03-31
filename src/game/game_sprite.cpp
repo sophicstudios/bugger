@@ -5,8 +5,8 @@ namespace game {
 
 struct Vertex
 {
-    float position[3],
-    float color[4]
+    float position[3];
+    float color[4];
 };
 
 static const Vertex s_vertices[] = {
@@ -72,7 +72,7 @@ void Sprite::render(agtm::Matrix4<float> const& matrix)
     //glVertexPointer(3, GL_FLOAT, 0, s_vertices);
     //glEnableClientState(GL_VERTEX_ARRAY);
 
-    glVertexAttribPointer(<#GLuint index#>, <#GLint size#>, <#GLenum type#>, <#GLboolean normalized#>, <#GLsizei stride#>, <#const GLvoid *pointer#>)
+    //glVertexAttribPointer(<#GLuint index#>, <#GLint size#>, <#GLenum type#>, <#GLboolean normalized#>, <#GLsizei stride#>, <#const GLvoid *pointer#>)
     //glPushMatrix();
     //glMultMatrixf(m.arr());
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

@@ -48,7 +48,6 @@ struct OpenGLWindow::Impl
     agta::GLWindow::ResizeEventHandler sizeHandler;
     agta::GLWindow::KeyEventHandler keyHandler;
     agta::GLWindow::MouseEventHandler mouseHandler;
-    agta::DisplayTimer::DisplayRefreshHandler displayRefreshHandler;
 };
 
 

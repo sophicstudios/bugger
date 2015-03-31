@@ -6,7 +6,7 @@
 #if defined(AFTS_OS_IPHONE)
 
 #define RENDERER_OPENGLES
-#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES2/gl.h>
 
 #elif defined(AFTS_OS_MACOS)
 

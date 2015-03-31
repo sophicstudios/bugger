@@ -14,7 +14,7 @@ public:
     
     virtual ~DisplayTimer();
 
-    virtual void registerDisplayRefreshHandler(uigen::DisplayTimer::DisplayRefreshHandler const& handler);
+    virtual void registerCallback(agta::DisplayTimer::Callback const& callback);
 
     virtual void start();
     

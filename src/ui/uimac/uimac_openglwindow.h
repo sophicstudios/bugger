@@ -23,7 +23,7 @@ public:
     
     virtual void hide();
 
-    virtual uigen::DisplayTimer& displayTimer();
+    virtual agta::DisplayTimer& displayTimer();
     
     virtual agtm::Rect<float> bounds();
 

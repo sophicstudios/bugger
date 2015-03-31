@@ -2,8 +2,9 @@
 #include <game_gl.h>
 #include <game_sprite.h>
 
-#include <uigen_displaytimer.h>
-
+#include <agta_platform.h>
+#include <agta_rendersystem.h>
+#include <agta_space.h>
 #include <agtg_colorrgba.h>
 #include <agtm_vector2.h>
 #include <agtm_matrix3.h>
@@ -155,20 +156,43 @@ bool createShaderProgram(GLuint* program, aftfs::Filesystem& filesystem,
 
 } // namespace
 
-Client::Client(std::shared_ptr<uigen::GLWindow> const& window,
+Client::Client(std::shared_ptr<agta::GLWindow> const& window,
                std::shared_ptr<aftfs::Filesystem> const& filesystem)
-: m_window(window),
-  m_paused(true),
-  m_positionComponents(100)
 {
+    // initialze the platform object
+    std::shared_ptr<agta::Platform> platform(new agta::Platform(filesystem, window));
+
+    // create the engine
+    m_engine = std::shared_ptr<agta::Engine>(new agta::Engine(platform));
+
+    // create the systems
+    std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem());
+
+    m_engine->registerSystem(renderSystem);
+
+    // create the main space and add it to the engine
+    std::shared_ptr<agta::Space> mainSpace(new agta::Space());
+
+    // create the component managers for the main space
+    //std::shared_ptr<agta::ComponentManager<agta::Transform2dComponent> > transform2dManager(
+    //    new agta::ComponentManager<agta::Transform2dComponent>());
+    
+
+    // register the component managers with the respective systems
+    //renderSystem->addTransform2dComponents(transform2dManager);
+    //renderSystem->registerVisual2dComponents(visual2dManager);
+
+    // create the entities and related components
+
     // create the image for the ant sprite
     aftu::URL imageUrl("images/antsprites.png");
     agtr::ImageLoaderPNG pngLoader;
     std::shared_ptr<agtr::Image> image = pngLoader.load(*filesystem, imageUrl);
 
     // create the Sprite object
-    m_sprite = SpritePtr(new Sprite(image));
+    //m_sprite = SpritePtr(new Sprite(image));
 
+    /*
     for (size_t i = 0; i < 10; ++i) {
         // create the entity position
         float x = rand() % static_cast<size_t>(window->bounds().width());
@@ -178,77 +202,67 @@ Client::Client(std::shared_ptr<uigen::GLWindow> const& window,
         // add the position to the entity
         m_positionComponents.addComponentForEntity(i, position);
     }
+    */
 
-    std::vector<std::pair<std::string, GLenum> > shaders;
-    shaders.push_back(std::make_pair("shaders/sprite.vsh", GL_VERTEX_SHADER));
-    shaders.push_back(std::make_pair("shaders/sprite.fsh", GL_FRAGMENT_SHADER));
+    //std::vector<std::pair<std::string, GLenum> > shaders;
+    //shaders.push_back(std::make_pair("shaders/sprite.vsh", GL_VERTEX_SHADER));
+    //shaders.push_back(std::make_pair("shaders/sprite.fsh", GL_FRAGMENT_SHADER));
 
-    GLuint program = 0;
-    if (!createShaderProgram(&program, *filesystem, shaders)) {
-        throw aftu::Exception("Unable to load shaders");
-    }
+    //GLuint program = 0;
+    //if (!createShaderProgram(&program, *filesystem, shaders)) {
+    //    throw aftu::Exception("Unable to load shaders");
+    //}
 
     // subscribe to mouse events
-    std::function<void (agtui::MouseEvent const&)> mouseEventHandler
-        = std::bind(&Client::onMouseEvent, this, std::placeholders::_1);
+    //std::function<void (agtui::MouseEvent const&)> mouseEventHandler
+    //    = std::bind(&Client::onMouseEvent, this, std::placeholders::_1);
     
-    m_window->registerMouseEventHandler(mouseEventHandler);
+    //m_window->registerMouseEventHandler(mouseEventHandler);
 
     // subscribe to display refresh updates
-    std::function<void (aftt::Datetime const&)> displayRefreshHandler
-        = std::bind(&Client::onDrawFrame, this, std::placeholders::_1);
+    //std::function<void (aftt::Datetime const&)> displayRefreshHandler
+    //    = std::bind(&Client::onDrawFrame, this, std::placeholders::_1);
 
-    m_window->displayTimer().registerDisplayRefreshHandler(displayRefreshHandler);
+    //m_window->displayTimer().registerDisplayRefreshHandler(displayRefreshHandler);
 
-    std::function<void (agtm::Rect<float> const&)> resizeEventHandler
-        = std::bind(&Client::onResizeEvent, this, std::placeholders::_1);
+    //std::function<void (agtm::Rect<float> const&)> resizeEventHandler
+    //    = std::bind(&Client::onResizeEvent, this, std::placeholders::_1);
 
-    m_window->registerResizeEventHandler(resizeEventHandler);
+    //m_window->registerResizeEventHandler(resizeEventHandler);
     
     // show the window
-    m_window->show();
+    window->show();
 }
 
 Client::~Client()
-{
-    if (!m_paused) {
-        m_window->displayTimer().stop();
-    }
-}
+{}
 
 void Client::run()
 {
     std::cout << "Client::run" << std::endl;
-    if (m_paused) {
-        m_paused = false;
-
-        m_prevTime = aftt::SystemTime::nowAsDatetimeUTC();
-
-        m_window->displayTimer().start();
-    }
+    m_engine->run();
 }
 
 void Client::stop()
 {
     std::cout << "Client::stop" << std::endl;
-    if (!m_paused) {
-        m_paused = true;
-
-        m_window->displayTimer().stop();
-    }
+    m_engine->stop();
 }
 
+/*
 void Client::onDrawFrame(aftt::Datetime const& datetime)
 {
     std::cout << "Client::onDrawFrame" << std::endl;
     
-    m_window->context().preRender();
+    //m_window->context().preRender();
 
-    doDraw(datetime);
+    //doDraw(datetime);
     
-    m_window->context().postRender();
+    //m_window->context().postRender();
 }
+*/
 
+/*
 void Client::onResizeEvent(agtm::Rect<float> const& rect)
 {
     std::cout << "Client::onResizeEvent" << std::endl;
@@ -282,14 +296,16 @@ void Client::onResizeEvent(agtm::Rect<float> const& rect)
 
     m_window->context().postRender();
 }
+*/
 
+/*
 void Client::onMouseEvent(agtui::MouseEvent const& event)
 {
     std::cout << "Client:onMouseEvent: " << event << std::endl;
-    if (event.type() == agtui::MouseEvent::Type_MOUSEDOWN) {
-    }
 }
+*/
 
+/*
 void Client::doDraw(aftt::Datetime const& datetime)
 {
     std::cout << "Client::doDraw" << std::endl;
@@ -312,14 +328,6 @@ void Client::doDraw(aftt::Datetime const& datetime)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // update input
-
-    // update post input transformations
-
-    // update physics
-
-    // update post physics transformations
-
     // update render objects
     glBindTexture(GL_TEXTURE_2D, m_sprite->texture());
     for (size_t i = 0; i < 10; ++i) {
@@ -327,5 +335,6 @@ void Client::doDraw(aftt::Datetime const& datetime)
         m_sprite->render(position);
     }
 }
+*/
 
 } // namespace
