@@ -1,11 +1,10 @@
-#include <uimac_displaytimer.h>
-#include <uimac_renderingcontext.h>
-#include <aftt_datetime.h>
-#include <aftt_systemtime.h>
-#include <aftu_exception.h>
-#include <iostream>
-
+#import <uimac_displaytimer.h>
+#import <uimac_renderingcontext.h>
+#import <aftt_datetime.h>
+#import <aftt_systemtime.h>
+#import <aftu_exception.h>
 #import <QuartzCore/QuartzCore.h>
+#import <iostream>
 
 namespace uimac {
 
@@ -33,6 +32,8 @@ CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
             context->callback();
         }
     }
+
+    return kCVReturnSuccess;
 }
 
 DisplayTimer::DisplayTimer(RenderingContext& renderingContext, NSOpenGLPixelFormat* pixelFormat)

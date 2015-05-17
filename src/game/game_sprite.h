@@ -1,7 +1,7 @@
 #ifndef INCLUDED_SOPHICSTUDIOS_GAME_SPRITE_H
 #define INCLUDED_SOPHICSTUDIOS_GAME_SPRITE_H
 
-#include <game_gl.h>
+#include <agtg_gl.h>
 #include <agtm_matrix4.h>
 #include <agtr_image.h>
 #include <memory>

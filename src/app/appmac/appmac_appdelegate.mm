@@ -9,7 +9,7 @@
 #import <agtm_size2d.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreFoundation/CFURL.h>
-#include <memory>
+#import <memory>
 
 struct appmac_AppDelegateImpl
 {
@@ -23,15 +23,11 @@ struct appmac_AppDelegateImpl
 {
     self = [super init];
     
-    m_impl = new appmac_AppDelegateImpl();
-
     return self;
 }
 
 - (void)dealloc
 {
-    delete m_impl;
-    
     [super dealloc];
 }
 
@@ -60,6 +56,8 @@ struct appmac_AppDelegateImpl
 {
     NSLog(@"applicationDidFinishLaunching: %@", notification);
     
+    m_impl = new appmac_AppDelegateImpl();
+
     agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(568, 320));
     m_impl->window = std::shared_ptr<uimac::OpenGLWindow>(new uimac::OpenGLWindow("Wrangler", frame));
 
@@ -115,6 +113,8 @@ struct appmac_AppDelegateImpl
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
     NSLog(@"applicationWillTerminate: %@", notification);
+
+    delete m_impl;
 }
 
 @end

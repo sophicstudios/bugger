@@ -1,15 +1,17 @@
-#version 110
+#version 410
 
-attribute vec2 position;
-attribute vec4 inputColor;
+uniform mat4 projectionMatrix;
+uniform mat4 modelViewMatrix;
 
-varying vec4 outputColor;
-varying vec2 texcoord;
+in vec3 position;
+// attribute vec4 inputColor;
 
+// varying vec4 outputColor;
+// varying vec2 texcoord;
 void main()
 {
-    gl_Position = vec4(position, 0.0, 1.0);
-    texcoord = position * vec2(0.5) + vec2(0.5);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    // texcoord = position * vec2(0.5) + vec2(0.5);
 }
 
 

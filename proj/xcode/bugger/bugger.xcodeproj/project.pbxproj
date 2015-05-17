@@ -21,6 +21,7 @@
 		FA2318EF179328140050DE3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318EE179328140050DE3A /* QuartzCore.framework */; };
 		FA50F6121A87FCE5002B9028 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = FA50F6111A87FCE5002B9028 /* shaders */; };
 		FA50F6131A87FCE5002B9028 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = FA50F6111A87FCE5002B9028 /* shaders */; };
+		FA963E201AE29A5A00E0C312 /* libact-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB3A4817ADE207002510F9 /* libact-macosx.a */; };
 		FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */; };
 		FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164315AA7E180017DCD5 /* appios_main.mm */; };
 		FA9B165F15AA87F10017DCD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */; };
@@ -28,6 +29,7 @@
 		FA9B166115AA87F10017DCD5 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */; };
 		FA9B166615AA8B200017DCD5 /* test_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164B15AA80C10017DCD5 /* test_shader.fsh */; };
 		FA9B166715AA8B200017DCD5 /* test_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164C15AA80C10017DCD5 /* test_shader.vsh */; };
+		FA9EA5A61AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9EA5A51AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib */; };
 		FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733116F1826700015F1D /* libaft-macosx.a */; };
 		FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */; };
 		FAA8DB76185AB6FB00B6B263 /* util_convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */; };
@@ -69,6 +71,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = FA2318A9178DD1CD0050DE3A;
 			remoteInfo = "agt-ios";
+		};
+		FA963E1A1AE29A4E00E0C312 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FA3B862317A9333C0042C241;
+			remoteInfo = "act-macosx";
 		};
 		FAA0733016F1826700015F1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -179,13 +188,13 @@
 		FA9B165C15AA87F10017DCD5 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../../../resources/ios/lang.en/InfoPlist.strings; sourceTree = "<group>"; };
 		FA9B165D15AA87F10017DCD5 /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPad.xib; path = ../../../resources/ios/lang.en/ViewController_iPad.xib; sourceTree = "<group>"; };
 		FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController_iPhone.xib; path = ../../../resources/ios/lang.en/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		FA9EA5A51AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.12.0.dylib; path = ../../../../../../../../../usr/local/lib/libGLEW.1.12.0.dylib; sourceTree = "<group>"; };
 		FAA0732716F1826600015F1D /* aegis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aegis.xcodeproj; path = ../../../../aegis/proj/xcode/aegis/aegis.xcodeproj; sourceTree = "<group>"; };
 		FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		FAA8DB74185AAD2100B6B263 /* util_convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_convert.h; path = ../../../src/util/util_convert.h; sourceTree = "<group>"; };
 		FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_convert.cpp; path = ../../../src/util/util_convert.cpp; sourceTree = "<group>"; };
 		FABC66171A36B3E900D3EBCB /* game_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game_sprite.cpp; path = ../../../src/game/game_sprite.cpp; sourceTree = "<group>"; };
 		FABC66181A36B3E900D3EBCB /* game_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_sprite.h; path = ../../../src/game/game_sprite.h; sourceTree = "<group>"; };
-		FABC661F1A3BE9C400D3EBCB /* game_gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_gl.h; path = ../../../src/game/game_gl.h; sourceTree = "<group>"; };
 		FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_bundlefilesystem.cpp; path = ../../../src/util/util_bundlefilesystem.cpp; sourceTree = "<group>"; };
 		FAC788681A16AB4E0037CA1C /* bugger-ios-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "bugger-ios-Info.plist"; path = "bugger-ios/bugger-ios-Info.plist"; sourceTree = "<group>"; };
 		FAC7886E1A16AB830037CA1C /* bugger-macosx-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "bugger-macosx-Info.plist"; path = "bugger-macosx/bugger-macosx-Info.plist"; sourceTree = "<group>"; };
@@ -227,6 +236,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA963E201AE29A5A00E0C312 /* libact-macosx.a in Frameworks */,
+				FA9EA5A61AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib in Frameworks */,
 				FAED4A771A0F2A4D00B1B685 /* libz.dylib in Frameworks */,
 				FAED4A711A0E70B400B1B685 /* libpng.dylib in Frameworks */,
 				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
@@ -342,7 +353,6 @@
 				FACBACA016FF5B7A008B2004 /* game_client.cpp */,
 				FABC66181A36B3E900D3EBCB /* game_sprite.h */,
 				FABC66171A36B3E900D3EBCB /* game_sprite.cpp */,
-				FABC661F1A3BE9C400D3EBCB /* game_gl.h */,
 			);
 			name = game;
 			sourceTree = "<group>";
@@ -359,6 +369,7 @@
 		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA9EA5A51AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib */,
 				FAED4A761A0F2A4D00B1B685 /* libz.dylib */,
 				FAED4A741A0F2A2B00B1B685 /* libz.dylib */,
 				FAED4A721A0E70CB00B1B685 /* libpng.a */,
@@ -515,6 +526,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FA963E1B1AE29A4E00E0C312 /* PBXTargetDependency */,
 				FAA0734316F1831E00015F1D /* PBXTargetDependency */,
 				FAA0733E16F182BB00015F1D /* PBXTargetDependency */,
 			);
@@ -700,6 +712,11 @@
 			name = "agt-ios";
 			targetProxy = FA2318D4178DD5EA0050DE3A /* PBXContainerItemProxy */;
 		};
+		FA963E1B1AE29A4E00E0C312 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "act-macosx";
+			targetProxy = FA963E1A1AE29A4E00E0C312 /* PBXContainerItemProxy */;
+		};
 		FAA0733E16F182BB00015F1D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "aft-macosx";
@@ -758,7 +775,10 @@
 					/opt/local/include,
 					/usr/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					/usr/local/lib,
+				);
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -777,7 +797,10 @@
 					/opt/local/include,
 					/usr/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					/usr/local/lib,
+				);
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;

@@ -1,10 +1,10 @@
 #include <game_client.h>
-#include <game_gl.h>
 #include <game_sprite.h>
 
 #include <agta_platform.h>
 #include <agta_rendersystem.h>
 #include <agta_space.h>
+#include <agtg_orthographiccamera.h>
 #include <agtg_colorrgba.h>
 #include <agtm_vector2.h>
 #include <agtm_matrix3.h>
@@ -165,13 +165,33 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
     // create the engine
     m_engine = std::shared_ptr<agta::Engine>(new agta::Engine(platform));
 
-    // create the systems
-    std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem());
+    // create the main space and add it to the engine
+    std::shared_ptr<agta::Space> space(new agta::Space());
+
+    std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(window->bounds()));
+    space->addCamera(camera);
+
+    m_engine->addSpace("mainspace", space);
+
+    //***** PHYSICS SYSTEM *****
+    // A PhysicsSystem works on entities with components of type:
+    //    TransformComponent, PhysicsComponent
+
+    //EntityTypeMap<agta::TransformComponent, agta::PhysicsComponent> transformPhysicsEntityMap;
+
+    //std::shared_ptr<agta::System> physicsSystem(new agta::PhysicsSystem(platform));
+
+    //***** RENDER SYSTEM *****
+    // A RenderSystem works on entities with components of type:
+    // TransformComponent, VisualComponent
+
+    //EntityTypeMap<agta::TransformComponent, agta::VisualComponent> transformVisualEntityMap;
+
+    std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem(platform));
 
     m_engine->registerSystem(renderSystem);
 
-    // create the main space and add it to the engine
-    std::shared_ptr<agta::Space> mainSpace(new agta::Space());
+    //std::shared_ptr<agta::Space> mainSpace(new agta::Space());
 
     // create the component managers for the main space
     //std::shared_ptr<agta::ComponentManager<agta::Transform2dComponent> > transform2dManager(
@@ -185,9 +205,9 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
     // create the entities and related components
 
     // create the image for the ant sprite
-    aftu::URL imageUrl("images/antsprites.png");
-    agtr::ImageLoaderPNG pngLoader;
-    std::shared_ptr<agtr::Image> image = pngLoader.load(*filesystem, imageUrl);
+    //aftu::URL imageUrl("images/antsprites.png");
+    //agtr::ImageLoaderPNG pngLoader;
+    //std::shared_ptr<agtr::Image> image = pngLoader.load(*filesystem, imageUrl);
 
     // create the Sprite object
     //m_sprite = SpritePtr(new Sprite(image));
@@ -204,32 +224,16 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
     }
     */
 
-    //std::vector<std::pair<std::string, GLenum> > shaders;
-    //shaders.push_back(std::make_pair("shaders/sprite.vsh", GL_VERTEX_SHADER));
-    //shaders.push_back(std::make_pair("shaders/sprite.fsh", GL_FRAGMENT_SHADER));
+    //std::function<void (agtm::Rect<float> const&, agtg::RenderingContext&)> resizeEventHandler
+    //    = std::bind(&RenderSystem::onResizeEvent, this, std::placeholders::_1, std::placeholders::_2);
 
-    //GLuint program = 0;
-    //if (!createShaderProgram(&program, *filesystem, shaders)) {
-    //    throw aftu::Exception("Unable to load shaders");
-    //}
+    //platform->glWindow()->registerResizeEventHandler(resizeEventHandler);
 
-    // subscribe to mouse events
-    //std::function<void (agtui::MouseEvent const&)> mouseEventHandler
-    //    = std::bind(&Client::onMouseEvent, this, std::placeholders::_1);
-    
-    //m_window->registerMouseEventHandler(mouseEventHandler);
+    //std::function<void (agtg::RenderingContext&)> drawEventHandler
+    //    = std::bind(&Client::onDrawEvent, this, std::placeholders::_1);
 
-    // subscribe to display refresh updates
-    //std::function<void (aftt::Datetime const&)> displayRefreshHandler
-    //    = std::bind(&Client::onDrawFrame, this, std::placeholders::_1);
+    platform->glWindow()->registerDrawEventHandler(std::bind(&Client::onDrawFrame, this, std::placeholders::_1));
 
-    //m_window->displayTimer().registerDisplayRefreshHandler(displayRefreshHandler);
-
-    //std::function<void (agtm::Rect<float> const&)> resizeEventHandler
-    //    = std::bind(&Client::onResizeEvent, this, std::placeholders::_1);
-
-    //m_window->registerResizeEventHandler(resizeEventHandler);
-    
     // show the window
     window->show();
 }
@@ -240,63 +244,20 @@ Client::~Client()
 void Client::run()
 {
     std::cout << "Client::run" << std::endl;
-    m_engine->run();
+    m_engine->update();
 }
 
 void Client::stop()
 {
     std::cout << "Client::stop" << std::endl;
-    m_engine->stop();
 }
 
-/*
-void Client::onDrawFrame(aftt::Datetime const& datetime)
+void Client::onDrawFrame(agtg::RenderingContext& renderingContext)
 {
     std::cout << "Client::onDrawFrame" << std::endl;
-    
-    //m_window->context().preRender();
 
-    //doDraw(datetime);
-    
-    //m_window->context().postRender();
+    m_engine->update();
 }
-*/
-
-/*
-void Client::onResizeEvent(agtm::Rect<float> const& rect)
-{
-    std::cout << "Client::onResizeEvent" << std::endl;
-
-    m_window->context().preRender();
-
-    GLfloat width = static_cast<GLfloat>(rect.width());
-    GLfloat height = static_cast<GLfloat>(rect.height());
-
-    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
-
-    std::cout << "width: " << width << std::endl;
-    std::cout << "height: " << height << std::endl;
-
-    GLfloat right = width;
-    GLfloat left = 0;
-    GLfloat top = height;
-    GLfloat bottom = 0;
-    
-    std::cout << "left: " << left << std::endl;
-    std::cout << "right: " << right << std::endl;
-    std::cout << "top: " << top << std::endl;
-    std::cout << "bottom: " << bottom << std::endl;
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    glOrtho(left, right, bottom, top, -1.0f, 1.0f);
-
-    doDraw(m_prevTime);
-
-    m_window->context().postRender();
-}
-*/
 
 /*
 void Client::onMouseEvent(agtui::MouseEvent const& event)

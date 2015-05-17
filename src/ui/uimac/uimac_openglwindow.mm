@@ -1,9 +1,13 @@
-#import <Cocoa/Cocoa.h>
-#import <Foundation/NSGeometry.h>
 #import <uimac_openglwindow.h>
 #import <uimac_renderingcontext.h>
 #import <uimac_displaytimer.h>
+#import <agtg_gl.h>
 #import <aftt_systemtime.h>
+#import <aftu_exception.h>
+#import <Cocoa/Cocoa.h>
+#import <Foundation/NSGeometry.h>
+#import <string>
+#import <vector>
 #import <iostream>
 
 // uimac_OpenGLView
@@ -46,6 +50,7 @@ struct OpenGLWindow::Impl
     uimac::RenderingContext* renderingContext;
     uimac::DisplayTimer* displayTimer;
     agta::GLWindow::ResizeEventHandler sizeHandler;
+    agta::GLWindow::DrawEventHandler drawHandler;
     agta::GLWindow::KeyEventHandler keyHandler;
     agta::GLWindow::MouseEventHandler mouseHandler;
 };
@@ -73,18 +78,47 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     
     [m_impl->window setTitle:[NSString stringWithUTF8String: title.c_str()]];
     [m_impl->window setReleasedWhenClosed:YES];
-    
+
     // setup pixel format and rendering context
-    NSOpenGLPixelFormatAttribute attrs[] = {
-        NSOpenGLPFADoubleBuffer,
-        NSOpenGLPFADepthSize, 32,
-        0            
-    };
-    
-    m_impl->pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
+    std::vector<NSOpenGLPixelFormatAttribute> attrs;
+    attrs.push_back(NSOpenGLPFADoubleBuffer);
+    attrs.push_back(NSOpenGLPFADepthSize);
+    attrs.push_back(32);
+
+    attrs.push_back(NSOpenGLPFAOpenGLProfile);
+
+    bool oldVersionCheck = false;
+
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= 101000 // OSX Yosemite has hardware support for 4.1
+    attrs.push_back(NSOpenGLProfileVersion4_1Core);
+#elif MAC_OS_X_VERSION_MAX_ALLOWED >= 1090 // OX Mavericks should use 3.2 (4.1 falls back to software)
+    attrs.push_back(NSOpenGLProfileVersion3_2Core);
+#else
+    attrs.push_back(NSOpenGLProfileVersionLegacy);
+    oldVersionCheck = true;
+#endif
+
+    attrs.push_back(0);
+
+    m_impl->pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:&(attrs[0])];
     if (!m_impl->pixelFormat) {
-        std::cerr << "Could not allocate pixel format" << std::endl;
+        std::cerr << "Could not allocate pixel format! MAC_OS_X_VERSION_MAX_ALLOWED: " << MAC_OS_X_VERSION_MAX_ALLOWED << std::endl;
+        throw std::exception();
     }
+
+    if (oldVersionCheck) {
+        const GLubyte* glVersion = glGetString(GL_VERSION);
+        std::cout << "OpenGL version (glGetString): " << glVersion << std::endl;
+    } else {
+        GLint glMajorVersion;
+        GLint glMinorVersion;
+
+        glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
+        glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
+
+        std::cout << "OpenGL version: " << glMajorVersion << "." << glMinorVersion << std::endl;
+    }
+
     
     m_impl->renderingContext = new uimac::RenderingContext(m_impl->pixelFormat);
 
@@ -150,6 +184,11 @@ void OpenGLWindow::registerResizeEventHandler(agta::GLWindow::ResizeEventHandler
     m_impl->sizeHandler = handler;
 }
 
+void OpenGLWindow::registerDrawEventHandler(agta::GLWindow::DrawEventHandler const& handler)
+{
+    m_impl->drawHandler = handler;
+}
+
 void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
 {
     m_impl->keyHandler = handler;
@@ -169,13 +208,16 @@ void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
 {
     std::cout << "Impl::onViewResize" << std::endl;
     if (sizeHandler) {
-        sizeHandler(rect);
+        sizeHandler(rect, *renderingContext);
     }
 }
 
 void OpenGLWindow::Impl::onViewDraw(agtm::Rect<float> const& dirtyRect)
 {
     std::cout << "Impl::onViewDraw" << std::endl;
+    if (drawHandler) {
+        drawHandler(*renderingContext);
+    }
 }
 
 void OpenGLWindow::Impl::onViewMouseEvent(agtui::MouseEvent const& event)

@@ -1,5 +1,5 @@
-#include <uimac_renderingcontext.h>
-#include <iostream>
+#import <uimac_renderingcontext.h>
+#import <iostream>
 
 namespace uimac {
 

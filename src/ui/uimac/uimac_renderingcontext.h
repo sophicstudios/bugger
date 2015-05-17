@@ -1,9 +1,8 @@
 #ifndef INCLUDED_UIMAC_OPENGLRENDERINGCONTEXT_H
 #define INCLUDED_UIMAC_OPENGLRENDERINGCONTEXT_H
 
+#include <agtg_gl.h>
 #include <AppKit/NSOpenGL.h>
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/gl.h>
 #include <agtg_renderingcontext.h>
 
 namespace uimac {

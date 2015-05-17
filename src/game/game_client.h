@@ -25,9 +25,9 @@ public:
     
     void stop();
 
-    //void onDrawFrame(aftt::Datetime const& datetime);
+    void onDrawFrame(agtg::RenderingContext& renderingContext);
     
-    //void onResizeEvent(agtm::Rect<float> const& rect);
+    void onResizeEvent(agtm::Rect<float> const& rect);
     
     //void onMouseEvent(agtui::MouseEvent const& event);
     

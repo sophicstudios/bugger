@@ -23,8 +23,8 @@ Sprite::Sprite(std::shared_ptr<agtr::Image> const& image)
   m_frame(0)
 {
     glGenBuffers(1, &m_vertexBuffer);
-    glBindBuffer(GL_VERTEX_ARRAY, m_vertexBuffer);
-    glBufferData(GL_VERTEX_ARRAY, sizeof(s_vertices), s_vertices, GL_STATIC_DRAW);
+    //glBindBuffer(GL_VERTEX_ARRAY, m_vertexBuffer);
+    //glBufferData(GL_VERTEX_ARRAY, sizeof(s_vertices), s_vertices, GL_STATIC_DRAW);
 
     //glGenVertexArraysAPPLE(1, &m_vertexArray);
     //glBindVertexArrayAPPLE(m_vertexArray);
@@ -42,7 +42,7 @@ Sprite::Sprite(std::shared_ptr<agtr::Image> const& image)
 Sprite::~Sprite()
 {
     glDeleteTextures(1, &m_texture);
-    glDeleteVertexArraysAPPLE(1, &m_vertexArray);
+    glDeleteVertexArrays(1, &m_vertexArray);
     glDeleteBuffers(1, &m_vertexBuffer);
 }
 
@@ -53,17 +53,17 @@ GLuint Sprite::texture() const
 
 void Sprite::render(agtm::Matrix4<float> const& matrix)
 {
-    agtm::Matrix4<float> m = agtm::MatrixUtil::transpose(matrix);
-    GLfloat frameX = m_frame * m_frameWidth;
-    GLfloat frameRight = frameX + m_frameWidth;
+    //agtm::Matrix4<float> m = agtm::MatrixUtil::transpose(matrix);
+    //GLfloat frameX = m_frame * m_frameWidth;
+    //GLfloat frameRight = frameX + m_frameWidth;
 
     // texture coords are flipped vertically
-    GLfloat texCoords[] = {
-        frameX, 1.0f,
-        frameRight, 1.0f,
-        frameX, 0.0f,
-        frameRight, 0.0f
-    };
+    //GLfloat texCoords[] = {
+    //    frameX, 1.0f,
+    //    frameRight, 1.0f,
+    //    frameX, 0.0f,
+    //    frameRight, 0.0f
+    //};
 
     //glEnable(GL_TEXTURE_2D);
     //glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
@@ -75,7 +75,7 @@ void Sprite::render(agtm::Matrix4<float> const& matrix)
     //glVertexAttribPointer(<#GLuint index#>, <#GLint size#>, <#GLenum type#>, <#GLboolean normalized#>, <#GLsizei stride#>, <#const GLvoid *pointer#>)
     //glPushMatrix();
     //glMultMatrixf(m.arr());
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     //glPopMatrix();
 
     //glDisableClientState(GL_VERTEX_ARRAY);

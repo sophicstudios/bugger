@@ -30,6 +30,8 @@ public:
     virtual agtg::RenderingContext& context();
     
     virtual void registerResizeEventHandler(agta::GLWindow::ResizeEventHandler const& handler);
+
+    virtual void registerDrawEventHandler(agta::GLWindow::DrawEventHandler const& handler);
     
     virtual void registerKeyEventHandler(KeyEventHandler const& handler);
 
