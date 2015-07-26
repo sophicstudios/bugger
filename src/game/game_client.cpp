@@ -165,13 +165,31 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
     // create the engine
     m_engine = std::shared_ptr<agta::Engine>(new agta::Engine(platform));
 
+    // create the EventSystem and add it to the engine
+    std::shared_ptr<agta::System> eventSystem(new agta::EventSystem());
+    m_engine->registerSystem(eventSystem);
+
+    // create the RenderSystem and add it to the engine
+    std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem(platform));
+    m_engine->registerSystem(renderSystem);
+
     // create the main space and add it to the engine
     std::shared_ptr<agta::Space> space(new agta::Space());
+    m_engine->addSpace("mainspace", space);
+
+    // create the ECSView widget
+
+    // create a Box sizer to control the ECSView size
+
+    // add the ECSView to the sizer
+
+    // set the window's sizer
+
+    // create a GLView
+
+    // create the Box sizer to hold our GLViews
 
     std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(window->bounds()));
-    space->addCamera(camera);
-
-    m_engine->addSpace("mainspace", space);
 
     //***** PHYSICS SYSTEM *****
     // A PhysicsSystem works on entities with components of type:
@@ -187,9 +205,6 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
 
     //EntityTypeMap<agta::TransformComponent, agta::VisualComponent> transformVisualEntityMap;
 
-    std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem(platform));
-
-    m_engine->registerSystem(renderSystem);
 
     //std::shared_ptr<agta::Space> mainSpace(new agta::Space());
 
@@ -232,8 +247,6 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
     //std::function<void (agtg::RenderingContext&)> drawEventHandler
     //    = std::bind(&Client::onDrawEvent, this, std::placeholders::_1);
 
-    platform->glWindow()->registerDrawEventHandler(std::bind(&Client::onDrawFrame, this, std::placeholders::_1));
-
     // show the window
     window->show();
 }
@@ -244,19 +257,11 @@ Client::~Client()
 void Client::run()
 {
     std::cout << "Client::run" << std::endl;
-    m_engine->update();
 }
 
 void Client::stop()
 {
     std::cout << "Client::stop" << std::endl;
-}
-
-void Client::onDrawFrame(agtg::RenderingContext& renderingContext)
-{
-    std::cout << "Client::onDrawFrame" << std::endl;
-
-    m_engine->update();
 }
 
 /*
