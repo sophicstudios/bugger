@@ -63,7 +63,7 @@ struct appmac_AppDelegateImpl
 
     [self createMainMenu];
 
-    std::shared_ptr<util::BundleFilesystem> filesystem(new util::BundleFilesystem());
+    std::shared_ptr<aftfs::Filesystem> filesystem(new util::BundleFilesystem());
 
     m_impl->client = std::shared_ptr<game::Client>(new game::Client(m_impl->window, filesystem));
 }

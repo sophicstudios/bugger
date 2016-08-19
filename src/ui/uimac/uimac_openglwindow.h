@@ -1,7 +1,7 @@
 #ifndef INCLUDED_UIMAC_OPENGLWINDOW_H
 #define INCLUDED_UIMAC_OPENGLWINDOW_H
 
-#include <agta_glwindow.h>
+#include <agtui_glwindow.h>
 #include <agtg_renderingcontext.h>
 #include <agtm_rect.h>
 #include <agtm_point2d.h>
@@ -10,7 +10,7 @@
 
 namespace uimac {
 
-class OpenGLWindow : public agta::GLWindow
+class OpenGLWindow : public agtui::GLWindow
 {
 public:
     struct Impl;
@@ -23,21 +23,21 @@ public:
     
     virtual void hide();
 
-    virtual agta::DisplayTimer& displayTimer();
+    virtual agtui::GLWindow::DisplayTimerPtr displayTimer();
     
-    virtual agtm::Rect<float> bounds();
+    virtual agtm::Rect<float> bounds() const;
 
-    virtual agtg::RenderingContext& context();
+    virtual agtui::GLWindow::RenderingContextPtr renderingContext();
     
-    virtual void registerResizeEventHandler(agta::GLWindow::ResizeEventHandler const& handler);
+    virtual void registerResizeEventHandler(agtui::GLWindow::ResizeEventHandler const& handler);
 
-    virtual void registerDrawEventHandler(agta::GLWindow::DrawEventHandler const& handler);
+    virtual void registerDrawEventHandler(agtui::GLWindow::DrawEventHandler const& handler);
     
     virtual void registerKeyEventHandler(KeyEventHandler const& handler);
 
-    virtual void registerMouseEventHandler(agta::GLWindow::MouseEventHandler const& handler);
+    virtual void registerMouseEventHandler(agtui::GLWindow::MouseEventHandler const& handler);
     
-    virtual void registerTouchEventHandler(agta::GLWindow::TouchEventHandler const& handler);
+    virtual void registerTouchEventHandler(agtui::GLWindow::TouchEventHandler const& handler);
 
 private:
     OpenGLWindow(OpenGLWindow const&);

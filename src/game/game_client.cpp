@@ -4,15 +4,15 @@
 #include <agta_platform.h>
 #include <agta_rendersystem.h>
 #include <agta_space.h>
-#include <agtg_orthographiccamera.h>
+#include <agta_transformcomponent.h>
 #include <agtg_colorrgba.h>
-#include <agtm_vector2.h>
+#include <agtg_orthographiccamera.h>
 #include <agtm_matrix3.h>
+#include <agtm_vector2.h>
 #include <agtr_image.h>
 #include <agtr_imageloaderpng.h>
-
-#include <aftt_systemtime.h>
 #include <aftt_datetimeinterval.h>
+#include <aftt_systemtime.h>
 
 #include <iostream>
 #include <functional>
@@ -156,18 +156,18 @@ bool createShaderProgram(GLuint* program, aftfs::Filesystem& filesystem,
 
 } // namespace
 
-Client::Client(std::shared_ptr<agta::GLWindow> const& window,
-               std::shared_ptr<aftfs::Filesystem> const& filesystem)
+Client::Client(std::shared_ptr<agtui::GLWindow> window,
+               std::shared_ptr<aftfs::Filesystem> filesystem)
 {
-    // initialze the platform object
+    // initialize the platform object
     std::shared_ptr<agta::Platform> platform(new agta::Platform(filesystem, window));
 
     // create the engine
     m_engine = std::shared_ptr<agta::Engine>(new agta::Engine(platform));
 
     // create the EventSystem and add it to the engine
-    std::shared_ptr<agta::System> eventSystem(new agta::EventSystem());
-    m_engine->registerSystem(eventSystem);
+    //std::shared_ptr<agta::System> eventSystem(new agta::EventSystem());
+    //m_engine->registerSystem(eventSystem);
 
     // create the RenderSystem and add it to the engine
     std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem(platform));
@@ -175,7 +175,12 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
 
     // create the main space and add it to the engine
     std::shared_ptr<agta::Space> space(new agta::Space());
-    m_engine->addSpace("mainspace", space);
+    m_engine->addSpace("main", space);
+
+    std::shared_ptr<agtui::GLView> view(new agtui::GLView(window->renderingContext()));
+    window->addChild(view);
+
+    std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer());
 
     // create the ECSView widget
 
@@ -183,13 +188,17 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
 
     // add the ECSView to the sizer
 
+    // create a GLSurface widget
+    // the GLSurface is used to define the viewport for the camera. The
+    // camera will need to have knowledge of this viewport to calculate the
+    // correct projection matrix
+
+    // create the Box sizer to set the size of the GLSurface
+
     // set the window's sizer
 
-    // create a GLView
-
-    // create the Box sizer to hold our GLViews
-
-    std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(window->bounds()));
+    //std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(glSurface->bounds()));
+    //space->addCamera(camera);
 
     //***** PHYSICS SYSTEM *****
     // A PhysicsSystem works on entities with components of type:
@@ -205,19 +214,22 @@ Client::Client(std::shared_ptr<agta::GLWindow> const& window,
 
     //EntityTypeMap<agta::TransformComponent, agta::VisualComponent> transformVisualEntityMap;
 
-
-    //std::shared_ptr<agta::Space> mainSpace(new agta::Space());
-
     // create the component managers for the main space
-    //std::shared_ptr<agta::ComponentManager<agta::Transform2dComponent> > transform2dManager(
-    //    new agta::ComponentManager<agta::Transform2dComponent>());
+    typedef agta::ComponentPool<agta::TransformComponent> TransformComponents;
+    std::shared_ptr<TransformComponents> transformComponents(new TransformComponents(space));
     
-
     // register the component managers with the respective systems
-    //renderSystem->addTransform2dComponents(transform2dManager);
-    //renderSystem->registerVisual2dComponents(visual2dManager);
+    //renderSystem->registerTransform2dComponents(mainSpace, transform2dManager);
+    //renderSystem->registerVisual2dComponents(mainSpace, visual2dManager);
 
     // create the entities and related components
+    agta::Entity circle = space->createEntity();
+
+    agta::TransformComponent& pos = transformComponents->createComponent(circle);
+    pos.x(10);
+    pos.y(20);
+
+    space->destroyEntity(circle);
 
     // create the image for the ant sprite
     //aftu::URL imageUrl("images/antsprites.png");

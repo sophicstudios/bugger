@@ -130,7 +130,7 @@ aftfs::Filesystem::Status BundleFilesystem::setCurrentDirectory(aftu::URL const&
     return aftfs::Filesystem::Status_UNKNOWN;
 }
 
-aftfs::Filesystem::Status BundleFilesystem::listDirectory(std::vector<aftu::URL>& results)
+aftfs::Filesystem::Status BundleFilesystem::listCurrentDirectory(std::vector<aftu::URL>& results)
 {
     aftu::URL baseUrl = Convert::toURL(m_priv->rootUrl);
     std::string path = baseUrl.path();

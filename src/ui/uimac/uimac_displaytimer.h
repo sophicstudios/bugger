@@ -1,20 +1,20 @@
 #ifndef INCLUDED_UIMAC_DISPLAYTIMER_H
 #define INCLUDED_UIMAC_DISPLAYTIMER_H
 
-#include <agta_displaytimer.h>
+#include <agtui_displaytimer.h>
 
 namespace uimac {
 
 class RenderingContext;
 
-class DisplayTimer : public agta::DisplayTimer
+class DisplayTimer : public agtui::DisplayTimer
 {
 public:
     DisplayTimer(RenderingContext& renderingContext, NSOpenGLPixelFormat* pixelFormat);
     
     virtual ~DisplayTimer();
 
-    virtual void registerCallback(agta::DisplayTimer::Callback const& callback);
+    virtual void registerCallback(agtui::DisplayTimer::Callback const& callback);
 
     virtual void start();
     

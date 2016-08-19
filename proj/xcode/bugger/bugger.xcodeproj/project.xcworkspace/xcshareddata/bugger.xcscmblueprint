@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C741E2DB8AB713EF46F01B211D247686EE2B6003",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4FF4B845B162774BA50AEC44D699D9110EE32EDB" : 0,
+    "C741E2DB8AB713EF46F01B211D247686EE2B6003" : 0,
+    "547A7CFBD5F0A850C99F405659B662B03DA54A62" : 0,
+    "6499F8DCAF18B3B4854DF49F4066976C3301F5A4" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "6D2FA29B-1853-4922-A184-17B31A6C9972",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4FF4B845B162774BA50AEC44D699D9110EE32EDB" : "aegis",
+    "C741E2DB8AB713EF46F01B211D247686EE2B6003" : "bugger",
+    "547A7CFBD5F0A850C99F405659B662B03DA54A62" : "sdks\/libpng",
+    "6499F8DCAF18B3B4854DF49F4066976C3301F5A4" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "bugger",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "proj\/xcode\/bugger\/bugger.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:lyell\/aegis.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4FF4B845B162774BA50AEC44D699D9110EE32EDB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/git.code.sf.net\/p\/libpng\/code",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "547A7CFBD5F0A850C99F405659B662B03DA54A62"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lyell\/sophicstudios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6499F8DCAF18B3B4854DF49F4066976C3301F5A4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:lyell\/bugger.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C741E2DB8AB713EF46F01B211D247686EE2B6003"
+    }
+  ]
+}

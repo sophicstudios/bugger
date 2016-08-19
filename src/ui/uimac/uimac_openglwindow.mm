@@ -47,12 +47,12 @@ struct OpenGLWindow::Impl
     NSWindow* window;
     agtm::Rect<float> bounds;
     NSOpenGLPixelFormat* pixelFormat;
-    uimac::RenderingContext* renderingContext;
-    uimac::DisplayTimer* displayTimer;
-    agta::GLWindow::ResizeEventHandler sizeHandler;
-    agta::GLWindow::DrawEventHandler drawHandler;
-    agta::GLWindow::KeyEventHandler keyHandler;
-    agta::GLWindow::MouseEventHandler mouseHandler;
+    std::shared_ptr<uimac::RenderingContext> renderingContext;
+    std::shared_ptr<uimac::DisplayTimer> displayTimer;
+    agtui::GLWindow::ResizeEventHandler sizeHandler;
+    agtui::GLWindow::DrawEventHandler drawHandler;
+    agtui::GLWindow::KeyEventHandler keyHandler;
+    agtui::GLWindow::MouseEventHandler mouseHandler;
 };
 
 
@@ -120,7 +120,7 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     }
 
     
-    m_impl->renderingContext = new uimac::RenderingContext(m_impl->pixelFormat);
+    m_impl->renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_impl->pixelFormat));
 
     NSRect contentRect = [m_impl->window contentRectForFrameRect:windowFrame];
     
@@ -138,7 +138,7 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     
     // setup the display link to get a timer linked
     // to the refresh rate of the active display
-    m_impl->displayTimer = new uimac::DisplayTimer(*m_impl->renderingContext, m_impl->pixelFormat);
+    m_impl->displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(*m_impl->renderingContext, m_impl->pixelFormat));
 
     m_impl->renderingContext->makeCurrent();
 }
@@ -147,8 +147,6 @@ OpenGLWindow::~OpenGLWindow()
 {
     [m_impl->pixelFormat release];
     [m_impl->window release];
-
-    delete m_impl->displayTimer;
 
     delete m_impl;
 }
@@ -164,27 +162,27 @@ void OpenGLWindow::hide()
 {
 }
 
-agta::DisplayTimer& OpenGLWindow::displayTimer()
+agtui::GLWindow::DisplayTimerPtr OpenGLWindow::displayTimer()
 {
-    return *m_impl->displayTimer;
+    return m_impl->displayTimer;
 }
 
-agtm::Rect<float> OpenGLWindow::bounds()
+agtm::Rect<float> OpenGLWindow::bounds() const
 {
     return m_impl->bounds;
 }
 
-agtg::RenderingContext& OpenGLWindow::context()
+agtui::GLWindow::RenderingContextPtr OpenGLWindow::renderingContext()
 {
-    return *m_impl->renderingContext;
+    return m_impl->renderingContext;
 }
 
-void OpenGLWindow::registerResizeEventHandler(agta::GLWindow::ResizeEventHandler const& handler)
+void OpenGLWindow::registerResizeEventHandler(agtui::GLWindow::ResizeEventHandler const& handler)
 {
     m_impl->sizeHandler = handler;
 }
 
-void OpenGLWindow::registerDrawEventHandler(agta::GLWindow::DrawEventHandler const& handler)
+void OpenGLWindow::registerDrawEventHandler(agtui::GLWindow::DrawEventHandler const& handler)
 {
     m_impl->drawHandler = handler;
 }
@@ -194,12 +192,12 @@ void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
     m_impl->keyHandler = handler;
 }
 
-void OpenGLWindow::registerMouseEventHandler(agta::GLWindow::MouseEventHandler const& handler)
+void OpenGLWindow::registerMouseEventHandler(agtui::GLWindow::MouseEventHandler const& handler)
 {
     m_impl->mouseHandler = handler;
 }
 
-void OpenGLWindow::registerTouchEventHandler(agta::GLWindow::TouchEventHandler const& handler)
+void OpenGLWindow::registerTouchEventHandler(agtui::GLWindow::TouchEventHandler const& handler)
 {
     // no touch events currently
 }
@@ -208,7 +206,7 @@ void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
 {
     std::cout << "Impl::onViewResize" << std::endl;
     if (sizeHandler) {
-        sizeHandler(rect, *renderingContext);
+        sizeHandler(rect);
     }
 }
 
@@ -216,7 +214,7 @@ void OpenGLWindow::Impl::onViewDraw(agtm::Rect<float> const& dirtyRect)
 {
     std::cout << "Impl::onViewDraw" << std::endl;
     if (drawHandler) {
-        drawHandler(*renderingContext);
+        drawHandler();
     }
 }
 

@@ -29,41 +29,9 @@
             timestampString = "451660997.693409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
-            landmarkName = "Client::Client(std::shared_ptr&lt;agta::GLWindow&gt; const&amp; window, std::shared_ptr&lt;aftfs::Filesystem&gt; const&amp; filesystem)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../src/game/game_client.cpp"
-            timestampString = "451660997.693409"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "163"
             endingLineNumber = "163"
-            landmarkName = "Client::Client(std::shared_ptr&lt;agta::GLWindow&gt; const&amp; window, std::shared_ptr&lt;aftfs::Filesystem&gt; const&amp; filesystem)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../src/game/game_client.cpp"
-            timestampString = "451961034.623614"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
-            landmarkName = "Client::run()"
+            landmarkName = "Client::Client(std::shared_ptr&lt;agtui::GLWindow&gt; window, std::shared_ptr&lt;aftfs::Filesystem&gt; filesystem)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -143,7 +111,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
             endingLineNumber = "171"
-            landmarkName = "Client::Client(std::shared_ptr&lt;agta::GLWindow&gt; const&amp; window, std::shared_ptr&lt;aftfs::Filesystem&gt; const&amp; filesystem)"
+            landmarkName = "Client::Client(std::shared_ptr&lt;agtui::GLWindow&gt; window, std::shared_ptr&lt;aftfs::Filesystem&gt; filesystem)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -217,13 +185,253 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../../../aegis/src/agt/agtui/agtui_window.t.cpp"
-            timestampString = "453519629.258427"
+            filePath = "../../../../aegis/src/aunit/aunit_describe.cpp"
+            timestampString = "466401028.52014"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "TestWindow::runTest()"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "Describe::Describe(std::string const&amp; name, std::function&lt;void ()&gt; const&amp; func)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/aft/aft.t.cpp"
+            timestampString = "465576120.992634"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "5"
+            endingLineNumber = "5"
+            landmarkName = "main(int argc, char** argv)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/aunit/aunit_testmanager.cpp"
+            timestampString = "482988157.507886"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "TestManager::run(Reporter&amp; reporter)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Library/Developer/Xcode/DerivedData/bugger-agtikfrcqjthtzhehogayrmtxtiw/Build/Products/Debug/usr/local/include/aunit_expect.h"
+            timestampString = "466479418.367701"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "toEqual(T const&amp; value)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "aunit::Expect&lt;unsigned int&gt;::toEqual(unsigned int const&amp;)"
+                  moduleName = "test_aft-macosx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fizban/Library/Developer/Xcode/DerivedData/bugger-agtikfrcqjthtzhehogayrmtxtiw/Build/Products/Debug/usr/local/include/aunit_expect.h"
+                  timestampString = "466512704.978936"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "aunit::Expect&lt;bool&gt;::toEqual(bool const&amp;)"
+                  moduleName = "test_aft-macosx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fizban/Library/Developer/Xcode/DerivedData/bugger-agtikfrcqjthtzhehogayrmtxtiw/Build/Products/Debug/usr/local/include/aunit_expect.h"
+                  timestampString = "466512704.979331"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/aft/aftio/aftio_permission.cpp"
+            timestampString = "469920231.513691"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "Permission::operator&amp;=(Write write)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/agt/agtui/agtui_boxsizer.cpp"
+            timestampString = "481429310.977665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "BoxSizer::insert(std::shared_ptr&lt;agtui::Widget&gt; widget, size_t position, BoxSizer::Flags flags)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/aunit/aunit_describe.cpp"
+            timestampString = "481856994.040852"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "it(std::string const&amp; name, std::function&lt;void ()&gt; const&amp; func)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/aft/aftu/aftu_stringref.t.cpp"
+            timestampString = "482466480.571303"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "d(&quot;aftu_stringref&quot;, [] { it(&quot;Default Construction&quot;, [&amp;] { StringRef&lt;char&gt; emptyref; expect(emptyref.isEmpty()).toBeTrue(); expect(emptyref.size()).toEqual(0); expect(emptyref.begin()).toEqual(emptyref.end()); }); it(&quot;C string Construction&quot;, [&amp;] { StringRef&lt;char&gt; cstringref(TestStrings&lt;char&gt;::S1); expect(cstringref.isEmpty()).non().toBeTrue(); expect(cstringref.size()).toEqual(std::char_traits&lt;char&gt;::length(TestStrings&lt;char&gt;::S1)); expect(&amp;cstringref.begin()[0]).toEqual(&amp;TestStrings&lt;char&gt;::S1[0]); expect(&amp;cstringref.end()[0]).toEqual(&amp;TestStrings&lt;char&gt;::S1[std::char_traits&lt;char&gt;::length(TestStrings&lt;char&gt;::S1)]); }); it(&quot;basic_string Construction&quot;, [&amp;] { StringRef&lt;std::basic_string&lt;char&gt; &gt; stlstringref(TestStrings&lt;char&gt;::S2); expect(stlstringref.isEmpty()).non().toBeTrue(); expect(stlstringref.size()).toEqual(TestStrings&lt;char&gt;::S2.size()); expect(&amp;(*stlstringref.begin())).toEqual(&amp;(*TestStrings&lt;char&gt;::S2.begin())); expect(&amp;(*stlstringref.end())).toEqual(&amp;(*TestStrings&lt;char&gt;::S2.end())); }); it(&quot;Comparison&quot;, [&amp;] { StringRef&lt;char&gt; cstringref(TestStrings&lt;char&gt;::S1); expect(cstringref).toEqual(TestStrings&lt;char&gt;::S1); StringRef&lt;std::basic_string&lt;char&gt; &gt; stlstringref(TestStrings&lt;char&gt;::S2); expect(stlstringref).toEqual(TestStrings&lt;char&gt;::S2); }); })"
+            landmarkType = "6">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/aft/aftio/aftio_permission.t.cpp"
+            timestampString = "482507511.172582"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "d(&quot;aftio_permission&quot;, [] { it(&quot;Default Construction&quot;, [&amp;] { Permission p; expect(p.read()).non().toBeTrue(); expect(p.write()).non().toBeTrue(); expect(p.execute()).non().toBeTrue(); }); it(&quot;Enum Construction&quot;, [&amp;] { Permission p1(Permission::Type_READ); expect(p1.read()).toBeTrue(); expect(p1.write()).non().toBeTrue(); expect(p1.execute()).non().toBeTrue(); Permission p2(Permission::Type_READ | Permission::Type_WRITE); expect(p2.read()).toBeTrue(); expect(p2.write()).toBeTrue(); expect(p2.execute()).non().toBeTrue(); }); it(&quot;R/W/E Construction&quot;, [&amp;] { Permission p1(Permission::Read(true), Permission::Write(true), Permission::Execute(false)); expect(p1.read()).toBeTrue(); expect(p1.write()).toBeTrue(); expect(p1.execute()).non().toBeTrue(); }); it(&quot;|= operator (R/W/E)&quot;, [&amp;] { Permission p; Permission::Read read(false); Permission::Write write(false); Permission::Execute execute(false); p |= read; expect(p.read()).non().toBeTrue(); p |= write; expect(p.write()).non().toBeTrue(); p |= execute; expect(p.execute()).non().toBeTrue(); read = Permission::Read(true); write = Permission::Write(true); execute = Permission::Execute(true); p |= read; expect(p.read()).toBeTrue(); p |= write; expect(p.write()).toBeTrue(); p |= execute; expect(p.execute()).toBeTrue(); }); it(&quot;|= operator (Permission)&quot;, [&amp;] { Permission p1(false, false, false); Permission p2(true, true, true); p1 |= p2; expect(p1.read()).toBeTrue(); expect(p1.write()).toBeTrue(); expect(p1.execute()).toBeTrue(); }); it(&quot;&amp;= operator (R/W/E)&quot;, [&amp;] { Permission p; Permission::Read read(true); Permission::Write write(true); Permission::Execute execute(true); p &amp;= read; expect(p.read()).non().toBeTrue(); p &amp;= write; expect(p.write()).non().toBeTrue(); p &amp;= execute; expect(p.execute()).non().toBeTrue(); p.read(true); p.write(true); p.execute(true); p &amp;= read; expect(p.read()).toBeTrue(); p &amp;= write; expect(p.write()).toBeTrue(); p &amp;= execute; expect(p.execute()).toBeTrue(); }); it(&quot;&amp;= operator (Permission)&quot;, [&amp;] { Permission p1(false, true, false); Permission p2(true, false, true); p1 &amp;= p2; expect(p1.read()).non().toBeTrue(); expect(p1.write()).non().toBeTrue(); expect(p1.execute()).non().toBeTrue(); }); it(&quot;| operator&quot;, [&amp;] { Permission p1(true, false, false); Permission p2(false, true, false); Permission p3 = p1 | p2; expect(p3.read()).toBeTrue(); expect(p3.write()).toBeTrue(); expect(p3.execute()).non().toBeTrue(); }); it(&quot;&amp; operator&quot;, [&amp;] { Permission p1(true, false, false); Permission p2(true, true, true); Permission p3 = p1 &amp; p2; expect(p3.read()).toBeTrue(); expect(p3.write()).non().toBeTrue(); expect(p3.execute()).non().toBeTrue(); }); })"
+            landmarkType = "6">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../aegis/src/agt/agtui/agtui_boxsizer.t.cpp"
+            timestampString = "487378196.880232"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "d(&quot;agtui_boxsizer&quot;, [] { it(&quot;size&quot;, [&amp;] { // Create the test widgets std::shared_ptr&lt;A&gt; a(new A()); std::shared_ptr&lt;B&gt; b(new B()); // Create the Box Sizer, with vertical orientation agtui::BoxSizer sizer(agtui::BoxSizer::Direction_VERTICAL); // Add the test widtets, giving equal size to each sizer.insert(a, 0, BoxSizer::Flags().sizeMode(BoxSizer::SizeMode_RELATIVE).size(1)); sizer.insert(b, 1, BoxSizer::Flags().sizeMode(BoxSizer::SizeMode_RELATIVE).size(1)); sizer.size(agtm::Size2d&lt;float&gt;(100, 100)); expect(a-&gt;size()).toEqual(agtm::Size2d&lt;float&gt;(10, 50)); expect(b-&gt;size()).toEqual(agtm::Size2d&lt;float&gt;(100, 50)); }); })"
+            landmarkType = "6">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../src/game/game_client.cpp"
+            timestampString = "490671823.691869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "Client::Client(std::shared_ptr&lt;agtui::GLWindow&gt; window, std::shared_ptr&lt;aftfs::Filesystem&gt; filesystem)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../src/game/game_client.cpp"
+            timestampString = "490671860.791326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "Client::Client(std::shared_ptr&lt;agtui::GLWindow&gt; window, std::shared_ptr&lt;aftfs::Filesystem&gt; filesystem)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../src/game/game_client.cpp"
+            timestampString = "490671891.081629"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "Client::Client(std::shared_ptr&lt;agtui::GLWindow&gt; window, std::shared_ptr&lt;aftfs::Filesystem&gt; filesystem)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../src/game/game_client.cpp"
+            timestampString = "490671995.470533"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "Client::Client(std::shared_ptr&lt;agtui::GLWindow&gt; window, std::shared_ptr&lt;aftfs::Filesystem&gt; filesystem)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

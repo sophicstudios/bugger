@@ -27,7 +27,7 @@ public:
     
     virtual aftfs::Filesystem::Status setCurrentDirectory(aftu::URL const& url);
     
-    virtual aftfs::Filesystem::Status listDirectory(std::vector<aftu::URL>& results);
+    virtual aftfs::Filesystem::Status listCurrentDirectory(std::vector<aftu::URL>& results);
     
     virtual aftfs::Filesystem::Status listDirectory(std::vector<aftu::URL>& results, aftu::URL const& url);
     

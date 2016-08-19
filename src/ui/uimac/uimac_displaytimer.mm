@@ -10,7 +10,7 @@ namespace uimac {
 
 struct DisplayLinkContext
 {
-    agta::DisplayTimer::Callback callback;
+    agtui::DisplayTimer::Callback callback;
 };
 
 struct DisplayTimer::Impl
@@ -79,7 +79,7 @@ DisplayTimer::~DisplayTimer()
     }
 }
 
-void DisplayTimer::registerCallback(agta::DisplayTimer::Callback const& callback)
+void DisplayTimer::registerCallback(agtui::DisplayTimer::Callback const& callback)
 {
     m_impl->context.callback = callback;
 }

@@ -1,23 +1,20 @@
 #ifndef INCLUDED_ATTA_GAME_CLIENT_H
 #define INCLUDED_ATTA_GAME_CLIENT_H
 
-#include <aftfs_filesystem.h>
-#include <aftt_datetime.h>
-#include <agtm_matrix4.h>
-#include <agta_engine.h>
 #include <agta_componentmanager.h>
-#include <agta_glwindow.h>
+#include <agta_engine.h>
+#include <agtui_glwindow.h>
+#include <aftfs_filesystem.h>
+
 #include <memory>
 
 namespace game {
 
-class Sprite;
-
 class Client
 {
 public:
-    Client(std::shared_ptr<agta::GLWindow> const& window,
-           std::shared_ptr<aftfs::Filesystem> const& filesystem);
+    Client(std::shared_ptr<agtui::GLWindow> window,
+           std::shared_ptr<aftfs::Filesystem> filesystem);
     
     ~Client();
     
