@@ -3,7 +3,7 @@
 
 #include <agta_componentmanager.h>
 #include <agta_engine.h>
-#include <agtui_glwindow.h>
+#include <agtui_window.h>
 #include <aftfs_filesystem.h>
 
 #include <memory>
@@ -13,7 +13,7 @@ namespace game {
 class Client
 {
 public:
-    Client(std::shared_ptr<agtui::GLWindow> window,
+    Client(std::shared_ptr<agtui::Window> window,
            std::shared_ptr<aftfs::Filesystem> filesystem);
     
     ~Client();

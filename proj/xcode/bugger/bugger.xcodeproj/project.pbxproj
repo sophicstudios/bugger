@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -78,6 +78,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FA3B862317A9333C0042C241;
 			remoteInfo = "act-macosx";
+		};
+		FA9795A91DA9393300094B1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAA0732716F1826600015F1D /* aegis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA9795981D9FFFF800094B1B;
+			remoteInfo = "test_act-macosx";
 		};
 		FAA0733016F1826700015F1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -446,12 +453,13 @@
 			children = (
 				FAA0733116F1826700015F1D /* libaft-macosx.a */,
 				FAA0733B16F1826700015F1D /* libaft-ios.a */,
+				FAFB3A4817ADE207002510F9 /* libact-macosx.a */,
 				FAA0733316F1826700015F1D /* libagt-macosx.a */,
 				FA2318D8178DD5EA0050DE3A /* libagt-ios.a */,
 				FAA0733516F1826700015F1D /* libaunit-macosx.a */,
 				FAA0733716F1826700015F1D /* test_aft-macosx */,
+				FA9795AA1DA9393300094B1B /* test_act-macosx */,
 				FAA0733916F1826700015F1D /* test_agt-macosx */,
-				FAFB3A4817ADE207002510F9 /* libact-macosx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -545,7 +553,7 @@
 				ORGANIZATIONNAME = "Sophic Studios";
 			};
 			buildConfigurationList = FA9B160B15AA78B20017DCD5 /* Build configuration list for PBXProject "bugger" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -574,6 +582,13 @@
 			fileType = archive.ar;
 			path = "libagt-ios.a";
 			remoteRef = FA2318D7178DD5EA0050DE3A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FA9795AA1DA9393300094B1B /* test_act-macosx */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "test_act-macosx";
+			remoteRef = FA9795A91DA9393300094B1B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FAA0733116F1826700015F1D /* libaft-macosx.a */ = {

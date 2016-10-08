@@ -58,8 +58,8 @@ struct appmac_AppDelegateImpl
     
     m_impl = new appmac_AppDelegateImpl();
 
-    agtm::Rect<float> frame(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(568, 320));
-    m_impl->window = std::shared_ptr<uimac::OpenGLWindow>(new uimac::OpenGLWindow("Wrangler", frame));
+    agtm::Rect<float> bounds(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(568, 320));
+    m_impl->window = std::shared_ptr<uimac::OpenGLWindow>(new uimac::OpenGLWindow("Bugger", bounds));
 
     [self createMainMenu];
 

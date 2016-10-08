@@ -4,9 +4,11 @@
 #include <agta_platform.h>
 #include <agta_rendersystem.h>
 #include <agta_space.h>
+#include <agta_surface.h>
 #include <agta_transformcomponent.h>
 #include <agtg_colorrgba.h>
 #include <agtg_orthographiccamera.h>
+#include <agtui_boxsizer.h>
 #include <agtm_matrix3.h>
 #include <agtm_vector2.h>
 #include <agtr_image.h>
@@ -156,7 +158,7 @@ bool createShaderProgram(GLuint* program, aftfs::Filesystem& filesystem,
 
 } // namespace
 
-Client::Client(std::shared_ptr<agtui::GLWindow> window,
+Client::Client(std::shared_ptr<agtui::Window> window,
                std::shared_ptr<aftfs::Filesystem> filesystem)
 {
     // initialize the platform object
@@ -177,16 +179,12 @@ Client::Client(std::shared_ptr<agtui::GLWindow> window,
     std::shared_ptr<agta::Space> space(new agta::Space());
     m_engine->addSpace("main", space);
 
-    std::shared_ptr<agtui::GLView> view(new agtui::GLView(window->renderingContext()));
-    window->addChild(view);
-
-    std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer());
-
-    // create the ECSView widget
-
-    // create a Box sizer to control the ECSView size
-
-    // add the ECSView to the sizer
+    std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer(agtui::BoxSizer::Direction_VERTICAL));
+    window->setSizer(sizer);
+    
+    // create the Surface widget
+    std::shared_ptr<agta::Surface> surface(new agta::Surface());
+    sizer->push_back(surface, agtui::BoxSizer::Flags().sizeMode(agtui::BoxSizer::SizeMode_RELATIVE).size(1.0f));
 
     // create a GLSurface widget
     // the GLSurface is used to define the viewport for the camera. The

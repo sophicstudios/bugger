@@ -6,9 +6,9 @@
 #import <aftu_exception.h>
 #import <Cocoa/Cocoa.h>
 #import <Foundation/NSGeometry.h>
+#import <iostream>
 #import <string>
 #import <vector>
-#import <iostream>
 
 // uimac_OpenGLView
 @interface uimac_OpenGLView : NSView {
@@ -49,10 +49,10 @@ struct OpenGLWindow::Impl
     NSOpenGLPixelFormat* pixelFormat;
     std::shared_ptr<uimac::RenderingContext> renderingContext;
     std::shared_ptr<uimac::DisplayTimer> displayTimer;
-    agtui::GLWindow::ResizeEventHandler sizeHandler;
-    agtui::GLWindow::DrawEventHandler drawHandler;
-    agtui::GLWindow::KeyEventHandler keyHandler;
-    agtui::GLWindow::MouseEventHandler mouseHandler;
+    agtui::Window::ResizeEventHandler resizeEventHandler;
+    agtui::Window::MouseEventHandler mouseEventHandler;
+    agtui::Window::KeyEventHandler keyEventHandler;
+    agtui::Window::DrawEventHandler drawEventHandler;
 };
 
 
@@ -62,6 +62,8 @@ struct OpenGLWindow::Impl
 OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& frame)
 : m_impl(new OpenGLWindow::Impl())
 {
+    m_impl->resizeEventHandler = std::bind(&OpenGLWindow::resizeEventHandler, this, std::placeholders::_1);
+    
     // create window and OpenGL view
     //NSRect screenRect = [[NSScreen mainScreen] visibleFrame]; // get dimensions of screen
     
@@ -84,7 +86,6 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     attrs.push_back(NSOpenGLPFADoubleBuffer);
     attrs.push_back(NSOpenGLPFADepthSize);
     attrs.push_back(32);
-
     attrs.push_back(NSOpenGLPFAOpenGLProfile);
 
     bool oldVersionCheck = false;
@@ -162,7 +163,12 @@ void OpenGLWindow::hide()
 {
 }
 
-agtui::GLWindow::DisplayTimerPtr OpenGLWindow::displayTimer()
+agtui::Window::RenderingContextPtr OpenGLWindow::renderingContext() const
+{
+    return m_impl->renderingContext;
+}
+
+agtui::Window::DisplayTimerPtr OpenGLWindow::displayTimer() const
 {
     return m_impl->displayTimer;
 }
@@ -172,65 +178,40 @@ agtm::Rect<float> OpenGLWindow::bounds() const
     return m_impl->bounds;
 }
 
-agtui::GLWindow::RenderingContextPtr OpenGLWindow::renderingContext()
+void OpenGLWindow::resizeEventHandler(agtm::Rect<float> const& bounds)
 {
-    return m_impl->renderingContext;
-}
-
-void OpenGLWindow::registerResizeEventHandler(agtui::GLWindow::ResizeEventHandler const& handler)
-{
-    m_impl->sizeHandler = handler;
-}
-
-void OpenGLWindow::registerDrawEventHandler(agtui::GLWindow::DrawEventHandler const& handler)
-{
-    m_impl->drawHandler = handler;
-}
-
-void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
-{
-    m_impl->keyHandler = handler;
-}
-
-void OpenGLWindow::registerMouseEventHandler(agtui::GLWindow::MouseEventHandler const& handler)
-{
-    m_impl->mouseHandler = handler;
-}
-
-void OpenGLWindow::registerTouchEventHandler(agtui::GLWindow::TouchEventHandler const& handler)
-{
-    // no touch events currently
+    onResize(bounds);
 }
 
 void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
 {
     std::cout << "Impl::onViewResize" << std::endl;
-    if (sizeHandler) {
-        sizeHandler(rect);
+    if (resizeEventHandler) {
+        resizeEventHandler(rect);
     }
 }
 
 void OpenGLWindow::Impl::onViewDraw(agtm::Rect<float> const& dirtyRect)
 {
     std::cout << "Impl::onViewDraw" << std::endl;
-    if (drawHandler) {
-        drawHandler();
+    if (drawEventHandler) {
+        drawEventHandler();
     }
 }
 
 void OpenGLWindow::Impl::onViewMouseEvent(agtui::MouseEvent const& event)
 {
     std::cout << "Impl::onViewMouseEvent" << std::endl;
-    if (mouseHandler) {
-        mouseHandler(event);
+    if (mouseEventHandler) {
+        mouseEventHandler(event);
     }
 }
 
 void OpenGLWindow::Impl::onViewKeyEvent()
 {
     std::cout << "Impl::onViewKeyEvent" << std::endl;
-    if (keyHandler) {
-        keyHandler();
+    if (keyEventHandler) {
+        keyEventHandler();
     }
 }
 

@@ -61,10 +61,11 @@ struct OpenGLWindow::Impl
     CADisplayLink* displayLink;
     double timeFreq;
     uint64_t baseTime;
-    uigen::GLWindow::ResizeEventHandler sizeHandler;
-    uigen::GLWindow::KeyEventHandler keyHandler;
-    uigen::GLWindow::TouchEventHandler touchHandler;
-    uigen::GLWindow::DisplayRefreshHandler displayRefreshHandler;    
+    uigen::GLWindow::ResizeEventHandler resizeEventHandler;
+    uigen::GLWindow::MouseEventHandler mouseEventHandler;
+    uigen::GLWindow::KeyEventHandler keyEventHandler;
+    uigen::GLWindow::TouchEventHandler touchEventHandler;
+    uigen::GLWindow::DisplayRefreshHandler displayRefreshHandler;
 };
 
 //////////
@@ -73,6 +74,7 @@ struct OpenGLWindow::Impl
 OpenGLWindow::OpenGLWindow(std::string const& title)
 : m_impl(new OpenGLWindow::Impl())
 {
+    m_impl->resizeEventHandler = std::bind(
     // get the screen bounds
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
