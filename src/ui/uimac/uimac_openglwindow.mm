@@ -159,7 +159,7 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     [m_impl->window setReleasedWhenClosed:YES];
 
     NSRect contentRect = [m_impl->window contentRectForFrameRect:windowFrame];
-    
+
     m_impl->glView = new uimac::OpenGLView(contentRect);
 
     [m_impl->window setOpaque:YES];
