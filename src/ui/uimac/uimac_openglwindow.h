@@ -1,7 +1,7 @@
 #ifndef INCLUDED_UIMAC_OPENGLWINDOW_H
 #define INCLUDED_UIMAC_OPENGLWINDOW_H
 
-#include <agtui_window.h>
+#include <agtui_glview.h>
 #include <agtg_renderingcontext.h>
 #include <agtm_rect.h>
 #include <agtm_point2d.h>
@@ -10,7 +10,7 @@
 
 namespace uimac {
 
-class OpenGLWindow : public agtui::Window
+class OpenGLWindow
 {
 public:
     struct Impl;
@@ -23,12 +23,8 @@ public:
     
     virtual void hide();
 
-    virtual agtm::Rect<float> bounds() const;
+    virtual std::shared_ptr<agtui::GLView> glView();
 
-    virtual agtui::Window::DisplayTimerPtr displayTimer() const;
-
-    virtual agtui::Window::RenderingContextPtr renderingContext() const;
-    
 private:
     OpenGLWindow(OpenGLWindow const&);
 

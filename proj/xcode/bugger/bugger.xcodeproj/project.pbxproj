@@ -300,12 +300,12 @@
 		FA223B05176365CA000FE3E9 /* uimac */ = {
 			isa = PBXGroup;
 			children = (
+				FAC788711A19352A0037CA1C /* uimac_displaytimer.h */,
+				FAC788701A19352A0037CA1C /* uimac_displaytimer.mm */,
 				FA223B081766B78A000FE3E9 /* uimac_openglwindow.h */,
 				FA223B091766B78A000FE3E9 /* uimac_openglwindow.mm */,
 				FA223B0A1766B78A000FE3E9 /* uimac_renderingcontext.h */,
 				FA223B0B1766B78A000FE3E9 /* uimac_renderingcontext.mm */,
-				FAC788711A19352A0037CA1C /* uimac_displaytimer.h */,
-				FAC788701A19352A0037CA1C /* uimac_displaytimer.mm */,
 			);
 			name = uimac;
 			sourceTree = "<group>";

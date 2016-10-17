@@ -27,9 +27,83 @@
 
 namespace uimac {
 
-// OpenGLWindow::Impl
-struct OpenGLWindow::Impl
+class OpenGLView : public agtui::GLView
 {
+public:
+    OpenGLView(NSRect bounds)
+    {
+        m_bounds = agtm::Rect<float>(
+            agtm::Point2d<float>(bounds.origin.x, bounds.origin.y),
+            agtm::Size2d<float>(bounds.size.width, bounds.size.height));
+        
+        // setup pixel format and rendering context
+        std::vector<NSOpenGLPixelFormatAttribute> attrs;
+        attrs.push_back(NSOpenGLPFADoubleBuffer);
+        attrs.push_back(NSOpenGLPFADepthSize);
+        attrs.push_back(32);
+        attrs.push_back(NSOpenGLPFAOpenGLProfile);
+
+        bool oldVersionCheck = false;
+
+        #if MAC_OS_X_VERSION_MAX_ALLOWED >= 101000 // OSX Yosemite has hardware support for 4.1
+            attrs.push_back(NSOpenGLProfileVersion4_1Core);
+        #elif MAC_OS_X_VERSION_MAX_ALLOWED >= 1090 // OSX Mavericks should use 3.2 (4.1 falls back to software)
+            attrs.push_back(NSOpenGLProfileVersion3_2Core);
+        #else
+            attrs.push_back(NSOpenGLProfileVersionLegacy);
+            oldVersionCheck = true;
+        #endif
+
+        attrs.push_back(0);
+
+        m_pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:&(attrs[0])];
+        if (!m_pixelFormat) {
+            std::cerr << "Could not allocate pixel format! MAC_OS_X_VERSION_MAX_ALLOWED: " << MAC_OS_X_VERSION_MAX_ALLOWED << std::endl;
+            throw std::exception();
+        }
+
+        if (oldVersionCheck) {
+            const GLubyte* glVersion = glGetString(GL_VERSION);
+            std::cout << "OpenGL version (glGetString): " << glVersion << std::endl;
+        } else {
+            GLint glMajorVersion;
+            GLint glMinorVersion;
+
+            glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
+            glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
+
+            std::cout << "OpenGL version: " << glMajorVersion << "." << glMinorVersion << std::endl;
+        }
+
+        m_renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_pixelFormat));
+
+        // setup the display link to get a timer linked
+        // to the refresh rate of the active display
+        m_displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(m_renderingContext->nativeContext(), m_pixelFormat));
+
+        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() windowImpl: m_impl];
+    }
+
+    virtual ~OpenGLView()
+    {
+        [m_pixelFormat release];
+        [m_view release];
+    }
+
+    uimac_OpenGLView* nativeView() const
+    {
+        return m_view;
+    }
+
+    virtual agtm::Rect<float> bounds() const
+    {
+        return m_bounds;
+    }
+
+    virtual DisplayTimerPtr displayTimer() const;
+    
+    virtual RenderingContextPtr renderingContext() const;
+
     void onViewResize(agtm::Rect<float> const& rect);
     
     void onViewDraw(agtm::Rect<float> const& dirtyRect);
@@ -44,15 +118,20 @@ struct OpenGLWindow::Impl
         CVOptionFlags flagsIn,
         CVOptionFlags *flagsOut);
 
+private:
+    uimac_OpenGLView* m_view;
+    agtm::Rect<float> m_bounds;
+    NSOpenGLPixelFormat* m_pixelFormat;
+    std::shared_ptr<uimac::RenderingContext> m_renderingContext;
+    std::shared_ptr<uimac::DisplayTimer> m_displayTimer;
+};
+
+// OpenGLWindow::Impl
+struct OpenGLWindow::Impl
+{
     NSWindow* window;
     agtm::Rect<float> bounds;
-    NSOpenGLPixelFormat* pixelFormat;
-    std::shared_ptr<uimac::RenderingContext> renderingContext;
-    std::shared_ptr<uimac::DisplayTimer> displayTimer;
-    agtui::Window::ResizeEventHandler resizeEventHandler;
-    agtui::Window::MouseEventHandler mouseEventHandler;
-    agtui::Window::KeyEventHandler keyEventHandler;
-    agtui::Window::DrawEventHandler drawEventHandler;
+    std::shared_ptr<uimac::OpenGLView> glView;
 };
 
 
@@ -62,8 +141,6 @@ struct OpenGLWindow::Impl
 OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& frame)
 : m_impl(new OpenGLWindow::Impl())
 {
-    m_impl->resizeEventHandler = std::bind(&OpenGLWindow::resizeEventHandler, this, std::placeholders::_1);
-    
     // create window and OpenGL view
     //NSRect screenRect = [[NSScreen mainScreen] visibleFrame]; // get dimensions of screen
     
@@ -81,72 +158,19 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     [m_impl->window setTitle:[NSString stringWithUTF8String: title.c_str()]];
     [m_impl->window setReleasedWhenClosed:YES];
 
-    // setup pixel format and rendering context
-    std::vector<NSOpenGLPixelFormatAttribute> attrs;
-    attrs.push_back(NSOpenGLPFADoubleBuffer);
-    attrs.push_back(NSOpenGLPFADepthSize);
-    attrs.push_back(32);
-    attrs.push_back(NSOpenGLPFAOpenGLProfile);
-
-    bool oldVersionCheck = false;
-
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= 101000 // OSX Yosemite has hardware support for 4.1
-    attrs.push_back(NSOpenGLProfileVersion4_1Core);
-#elif MAC_OS_X_VERSION_MAX_ALLOWED >= 1090 // OX Mavericks should use 3.2 (4.1 falls back to software)
-    attrs.push_back(NSOpenGLProfileVersion3_2Core);
-#else
-    attrs.push_back(NSOpenGLProfileVersionLegacy);
-    oldVersionCheck = true;
-#endif
-
-    attrs.push_back(0);
-
-    m_impl->pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:&(attrs[0])];
-    if (!m_impl->pixelFormat) {
-        std::cerr << "Could not allocate pixel format! MAC_OS_X_VERSION_MAX_ALLOWED: " << MAC_OS_X_VERSION_MAX_ALLOWED << std::endl;
-        throw std::exception();
-    }
-
-    if (oldVersionCheck) {
-        const GLubyte* glVersion = glGetString(GL_VERSION);
-        std::cout << "OpenGL version (glGetString): " << glVersion << std::endl;
-    } else {
-        GLint glMajorVersion;
-        GLint glMinorVersion;
-
-        glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
-        glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
-
-        std::cout << "OpenGL version: " << glMajorVersion << "." << glMinorVersion << std::endl;
-    }
-
-    
-    m_impl->renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_impl->pixelFormat));
-
     NSRect contentRect = [m_impl->window contentRectForFrameRect:windowFrame];
     
-    m_impl->bounds = agtm::Rect<float>(
-        agtm::Point2d<float>(contentRect.origin.x, contentRect.origin.y),
-        agtm::Size2d<float>(contentRect.size.width, contentRect.size.height));
-    
-    uimac_OpenGLView* view = [[[uimac_OpenGLView alloc] initWithFrame:contentRect
-        context:m_impl->renderingContext->nativeContext()
-        windowImpl: m_impl] autorelease];
-    
-    [m_impl->window setOpaque:YES];
-    [m_impl->window setContentView:view];
-    [m_impl->window makeFirstResponder:view];
-    
-    // setup the display link to get a timer linked
-    // to the refresh rate of the active display
-    m_impl->displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(*m_impl->renderingContext, m_impl->pixelFormat));
+    m_impl->glView = new uimac::OpenGLView(contentRect);
 
-    m_impl->renderingContext->makeCurrent();
+    [m_impl->window setOpaque:YES];
+    [m_impl->window setContentView:m_impl->glView->nativeView()];
+    [m_impl->window makeFirstResponder:m_impl->glView->nativeView()];
+    
+    m_impl->glView->renderingContext()->makeCurrent();
 }
 
 OpenGLWindow::~OpenGLWindow()
 {
-    [m_impl->pixelFormat release];
     [m_impl->window release];
 
     delete m_impl;
@@ -162,17 +186,6 @@ void OpenGLWindow::show()
 void OpenGLWindow::hide()
 {
 }
-
-agtui::Window::RenderingContextPtr OpenGLWindow::renderingContext() const
-{
-    return m_impl->renderingContext;
-}
-
-agtui::Window::DisplayTimerPtr OpenGLWindow::displayTimer() const
-{
-    return m_impl->displayTimer;
-}
-
 agtm::Rect<float> OpenGLWindow::bounds() const
 {
     return m_impl->bounds;

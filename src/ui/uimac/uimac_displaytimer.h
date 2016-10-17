@@ -10,7 +10,7 @@ class RenderingContext;
 class DisplayTimer : public agtui::DisplayTimer
 {
 public:
-    DisplayTimer(RenderingContext& renderingContext, NSOpenGLPixelFormat* pixelFormat);
+    DisplayTimer(NSOpenGLContext* openglContext, NSOpenGLPixelFormat* pixelFormat);
     
     virtual ~DisplayTimer();
 

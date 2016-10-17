@@ -13,7 +13,7 @@ namespace game {
 class Client
 {
 public:
-    Client(std::shared_ptr<agtui::Window> window,
+    Client(std::shared_ptr<agtui::GLView> glView,
            std::shared_ptr<aftfs::Filesystem> filesystem);
     
     ~Client();

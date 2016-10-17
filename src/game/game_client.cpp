@@ -158,11 +158,11 @@ bool createShaderProgram(GLuint* program, aftfs::Filesystem& filesystem,
 
 } // namespace
 
-Client::Client(std::shared_ptr<agtui::Window> window,
+Client::Client(std::shared_ptr<agtui::GLView> glView,
                std::shared_ptr<aftfs::Filesystem> filesystem)
 {
     // initialize the platform object
-    std::shared_ptr<agta::Platform> platform(new agta::Platform(filesystem, window));
+    std::shared_ptr<agta::Platform> platform(new agta::Platform(filesystem, glView));
 
     // create the engine
     m_engine = std::shared_ptr<agta::Engine>(new agta::Engine(platform));
@@ -186,14 +186,7 @@ Client::Client(std::shared_ptr<agtui::Window> window,
     std::shared_ptr<agta::Surface> surface(new agta::Surface());
     sizer->push_back(surface, agtui::BoxSizer::Flags().sizeMode(agtui::BoxSizer::SizeMode_RELATIVE).size(1.0f));
 
-    // create a GLSurface widget
-    // the GLSurface is used to define the viewport for the camera. The
-    // camera will need to have knowledge of this viewport to calculate the
-    // correct projection matrix
-
-    // create the Box sizer to set the size of the GLSurface
-
-    // set the window's sizer
+    window->addChild(surface);
 
     //std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(glSurface->bounds()));
     //space->addCamera(camera);

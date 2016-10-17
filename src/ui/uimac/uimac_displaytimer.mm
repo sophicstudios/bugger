@@ -1,5 +1,4 @@
 #import <uimac_displaytimer.h>
-#import <uimac_renderingcontext.h>
 #import <aftt_datetime.h>
 #import <aftt_systemtime.h>
 #import <aftu_exception.h>
@@ -36,7 +35,7 @@ CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
     return kCVReturnSuccess;
 }
 
-DisplayTimer::DisplayTimer(RenderingContext& renderingContext, NSOpenGLPixelFormat* pixelFormat)
+DisplayTimer::DisplayTimer(NSOpenGLContext* openglContext, NSOpenGLPixelFormat* pixelFormat)
 : m_impl(new DisplayTimer::Impl())
 {
     // setup the display link to get a timer with a refresh rate that works
@@ -62,7 +61,7 @@ DisplayTimer::DisplayTimer(RenderingContext& renderingContext, NSOpenGLPixelForm
     }
 
     // Get information about the display linked to the current rendering context
-    CGLContextObj cglContext = (CGLContextObj)[renderingContext.nativeContext() CGLContextObj];
+    CGLContextObj cglContext = (CGLContextObj)[openglContext CGLContextObj];
     CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[pixelFormat CGLPixelFormatObj];
 
     // Set the currently active display for the display link
