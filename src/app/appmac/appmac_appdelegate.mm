@@ -65,7 +65,7 @@ struct appmac_AppDelegateImpl
 
     std::shared_ptr<aftfs::Filesystem> filesystem(new util::BundleFilesystem());
 
-    m_impl->client = std::shared_ptr<game::Client>(new game::Client(m_impl->window, filesystem));
+    m_impl->client = std::shared_ptr<game::Client>(new game::Client(m_impl->window->glView(), filesystem));
 }
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification

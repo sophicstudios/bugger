@@ -1,13 +1,13 @@
 #include <game_client.h>
 #include <game_sprite.h>
 
-#include <agta_platform.h>
-#include <agta_rendersystem.h>
-#include <agta_space.h>
-#include <agta_surface.h>
-#include <agta_transformcomponent.h>
+#include <agte_platform.h>
+#include <agte_rendersystem.h>
+#include <agte_space.h>
+#include <agte_surface.h>
+#include <agte_orthographiccamera.h>
+#include <agtc_transformcomponent.h>
 #include <agtg_colorrgba.h>
-#include <agtg_orthographiccamera.h>
 #include <agtui_boxsizer.h>
 #include <agtm_matrix3.h>
 #include <agtm_vector2.h>
@@ -162,31 +162,31 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
                std::shared_ptr<aftfs::Filesystem> filesystem)
 {
     // initialize the platform object
-    std::shared_ptr<agta::Platform> platform(new agta::Platform(filesystem, glView));
+    std::shared_ptr<agte::Platform> platform(new agte::Platform(filesystem, glView));
 
     // create the engine
-    m_engine = std::shared_ptr<agta::Engine>(new agta::Engine(platform));
+    m_engine = std::shared_ptr<agte::Engine>(new agte::Engine(platform));
 
     // create the EventSystem and add it to the engine
     //std::shared_ptr<agta::System> eventSystem(new agta::EventSystem());
     //m_engine->registerSystem(eventSystem);
 
     // create the RenderSystem and add it to the engine
-    std::shared_ptr<agta::System> renderSystem(new agta::RenderSystem(platform));
+    std::shared_ptr<agte::System> renderSystem(new agte::RenderSystem(platform));
     m_engine->registerSystem(renderSystem);
 
     // create the main space and add it to the engine
-    std::shared_ptr<agta::Space> space(new agta::Space());
+    std::shared_ptr<agte::Space> space(new agte::Space());
     m_engine->addSpace("main", space);
 
     std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer(agtui::BoxSizer::Direction_VERTICAL));
-    window->setSizer(sizer);
+    glView->setSizer(sizer);
     
     // create the Surface widget
-    std::shared_ptr<agta::Surface> surface(new agta::Surface());
+    std::shared_ptr<agte::Surface> surface(new agte::Surface(glView->renderingContext()));
     sizer->push_back(surface, agtui::BoxSizer::Flags().sizeMode(agtui::BoxSizer::SizeMode_RELATIVE).size(1.0f));
 
-    window->addChild(surface);
+    glView->addChild(surface);
 
     //std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(glSurface->bounds()));
     //space->addCamera(camera);
@@ -206,7 +206,7 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     //EntityTypeMap<agta::TransformComponent, agta::VisualComponent> transformVisualEntityMap;
 
     // create the component managers for the main space
-    typedef agta::ComponentPool<agta::TransformComponent> TransformComponents;
+    typedef agte::ComponentPool<agtc::TransformComponent> TransformComponents;
     std::shared_ptr<TransformComponents> transformComponents(new TransformComponents(space));
     
     // register the component managers with the respective systems
@@ -214,9 +214,9 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     //renderSystem->registerVisual2dComponents(mainSpace, visual2dManager);
 
     // create the entities and related components
-    agta::Entity circle = space->createEntity();
+    agte::Entity circle = space->createEntity();
 
-    agta::TransformComponent& pos = transformComponents->createComponent(circle);
+    agtc::TransformComponent& pos = transformComponents->createComponent(circle);
     pos.x(10);
     pos.y(20);
 
@@ -251,7 +251,7 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     //    = std::bind(&Client::onDrawEvent, this, std::placeholders::_1);
 
     // show the window
-    window->show();
+    //window->show();
 }
 
 Client::~Client()

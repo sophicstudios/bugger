@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63A8E1B71DB46C7300BFFB2D /* libGLEW.1.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A8E1B61DB46C7300BFFB2D /* libGLEW.1.13.0.dylib */; };
 		FA223AF817618818000FE3E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF717618817000FE3E9 /* UIKit.framework */; };
 		FA223AFA17618825000FE3E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF917618825000FE3E9 /* Foundation.framework */; };
 		FA223AFC17618832000FE3E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFB17618832000FE3E9 /* CoreGraphics.framework */; };
@@ -29,7 +30,6 @@
 		FA9B166115AA87F10017DCD5 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9B165E15AA87F10017DCD5 /* ViewController_iPhone.xib */; };
 		FA9B166615AA8B200017DCD5 /* test_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164B15AA80C10017DCD5 /* test_shader.fsh */; };
 		FA9B166715AA8B200017DCD5 /* test_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = FA9B164C15AA80C10017DCD5 /* test_shader.vsh */; };
-		FA9EA5A61AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9EA5A51AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib */; };
 		FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA0733116F1826700015F1D /* libaft-macosx.a */; };
 		FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */; };
 		FAA8DB76185AB6FB00B6B263 /* util_convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */; };
@@ -159,6 +159,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63A8E1B61DB46C7300BFFB2D /* libGLEW.1.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.13.0.dylib; path = ../../../../../../../../usr/local/Cellar/glew/1.13.0/lib/libGLEW.1.13.0.dylib; sourceTree = "<group>"; };
 		FA04E1B015C4AFC100F7D2F1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FA04E1D015C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = ../../../resources/mac/en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FA04E1D215C4B4D700F7D2F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ../../../resources/mac/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -243,12 +244,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
 				FA963E201AE29A5A00E0C312 /* libact-macosx.a in Frameworks */,
-				FA9EA5A61AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib in Frameworks */,
+				FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */,
+				63A8E1B71DB46C7300BFFB2D /* libGLEW.1.13.0.dylib in Frameworks */,
 				FAED4A771A0F2A4D00B1B685 /* libz.dylib in Frameworks */,
 				FAED4A711A0E70B400B1B685 /* libpng.dylib in Frameworks */,
-				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
-				FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */,
 				FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */,
 				FAF9E4DC15CB267F00601463 /* OpenGL.framework in Frameworks */,
 				FAF9E4C515C9CCFC00601463 /* Cocoa.framework in Frameworks */,
@@ -376,6 +377,7 @@
 		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63A8E1B61DB46C7300BFFB2D /* libGLEW.1.13.0.dylib */,
 				FA9EA5A51AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib */,
 				FAED4A761A0F2A4D00B1B685 /* libz.dylib */,
 				FAED4A741A0F2A2B00B1B685 /* libz.dylib */,
@@ -549,7 +551,7 @@
 		FA9B160815AA78B20017DCD5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Sophic Studios";
 			};
 			buildConfigurationList = FA9B160B15AA78B20017DCD5 /* Build configuration list for PBXProject "bugger" */;
@@ -781,10 +783,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(CONFIGURATION_BUILD_DIR)/**",
 					/opt/local/include,
@@ -794,6 +812,7 @@
 					/opt/local/lib,
 					/usr/local/lib,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -802,11 +821,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(CONFIGURATION_BUILD_DIR)/**",
 					/opt/local/include,
@@ -823,7 +857,6 @@
 		FA9B163E15AA79B40017DCD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -841,12 +874,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/bugger-ios/bugger-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(SDKROOT)/**",
-					/Users/fizban/development/sdks/lib/ios/,
-					/opt/local/lib,
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/**";
+				PRODUCT_BUNDLE_IDENTIFIER = "Sophic-Studios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "bugger-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -857,7 +887,6 @@
 		FA9B163F15AA79B40017DCD5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -868,13 +897,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/bugger-ios/bugger-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(SDKROOT)/**",
-					/Users/fizban/development/sdks/lib/ios/,
-					/opt/local/lib,
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/**";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_BUNDLE_IDENTIFIER = "Sophic-Studios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "bugger-ios";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -888,10 +914,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/fizban/development/sdks/boost_1_55_0/osx/framework,
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -906,12 +929,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/bugger-macosx/bugger-macosx-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					/Users/fizban/development/sdks/lib/macosx,
-					"$(inherited)",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sophic-Studios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "bugger-macosx";
 				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
 				WRAPPER_EXTENSION = app;
@@ -924,10 +944,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/fizban/development/sdks/boost_1_55_0/osx/framework,
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../../src/app/appmac/appmac_prefix.pch;
@@ -935,11 +952,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/bugger-macosx/bugger-macosx-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					/Users/fizban/development/sdks/lib/macosx,
-					"$(inherited)",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Sophic-Studios.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "bugger-macosx";
 				PUBLIC_HEADERS_FOLDER_PATH = "wrangler-macosx/wrangler-macosx-Info.plist";
 				WRAPPER_EXTENSION = app;

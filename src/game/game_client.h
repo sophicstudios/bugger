@@ -1,9 +1,8 @@
 #ifndef INCLUDED_ATTA_GAME_CLIENT_H
 #define INCLUDED_ATTA_GAME_CLIENT_H
 
-#include <agta_componentmanager.h>
-#include <agta_engine.h>
-#include <agtui_window.h>
+#include <agte_engine.h>
+#include <agtui_glview.h>
 #include <aftfs_filesystem.h>
 
 #include <memory>
@@ -32,7 +31,7 @@ private:
     Client(Client const&);
     Client& operator=(Client const&);
 
-    std::shared_ptr<agta::Engine> m_engine;
+    std::shared_ptr<agte::Engine> m_engine;
 };
 
 } // namespace

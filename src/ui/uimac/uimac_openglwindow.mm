@@ -2,6 +2,8 @@
 #import <uimac_renderingcontext.h>
 #import <uimac_displaytimer.h>
 #import <agtg_gl.h>
+#import <agtm_rect.h>
+#import <agtui_glview.h>
 #import <aftt_systemtime.h>
 #import <aftu_exception.h>
 #import <Cocoa/Cocoa.h>
@@ -10,16 +12,18 @@
 #import <string>
 #import <vector>
 
+namespace uimac { class OpenGLView; }
+
 // uimac_OpenGLView
 @interface uimac_OpenGLView : NSView {
-    uimac::OpenGLWindow::Impl* m_windowImpl;
+    uimac::OpenGLView* m_glView;
     NSOpenGLContext* m_context;
     NSRect m_bounds;
 }
 
 - (id) initWithFrame: (NSRect)frame
     context: (NSOpenGLContext*)context
-    windowImpl: (uimac::OpenGLWindow::Impl*)windowImpl;
+    glView: (uimac::OpenGLView*)glView;
 
 - (void)resizeView;
 
@@ -81,7 +85,7 @@ public:
         // to the refresh rate of the active display
         m_displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(m_renderingContext->nativeContext(), m_pixelFormat));
 
-        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() windowImpl: m_impl];
+        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() glView:this];
     }
 
     virtual ~OpenGLView()
@@ -100,17 +104,35 @@ public:
         return m_bounds;
     }
 
-    virtual DisplayTimerPtr displayTimer() const;
+    virtual agtui::GLView::DisplayTimerPtr displayTimer() const
+    {
+        return m_displayTimer;
+    }
     
-    virtual RenderingContextPtr renderingContext() const;
+    virtual agtui::GLView::RenderingContextPtr renderingContext() const
+    {
+        return m_renderingContext;
+    }
 
-    void onViewResize(agtm::Rect<float> const& rect);
+    void onViewResize(agtm::Rect<float> const& rect)
+    {
+        std::cout << "OpenGLView::onViewResize" << std::endl;
+    }
     
-    void onViewDraw(agtm::Rect<float> const& dirtyRect);
+    void onViewDraw(agtm::Rect<float> const& dirtyRect)
+    {
+        std::cout << "OpenGLView::onViewDraw" << std::endl;
+    }
     
-    void onViewMouseEvent(agtui::MouseEvent const& event);
+    void onViewMouseEvent(agtui::MouseEvent const& event)
+    {
+        std::cout << "OpenGLView::onViewMouseEvent" << std::endl;
+    }
     
-    void onViewKeyEvent();
+    void onViewKeyEvent()
+    {
+        std::cout << "OpenGLView::onViewKeyEvent" << std::endl;
+    }
     
     CVReturn onDisplayRefresh(CVDisplayLinkRef displayLink,
         const CVTimeStamp *inNow,
@@ -160,7 +182,7 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
 
     NSRect contentRect = [m_impl->window contentRectForFrameRect:windowFrame];
 
-    m_impl->glView = new uimac::OpenGLView(contentRect);
+    m_impl->glView = std::shared_ptr<uimac::OpenGLView>(new uimac::OpenGLView(contentRect));
 
     [m_impl->window setOpaque:YES];
     [m_impl->window setContentView:m_impl->glView->nativeView()];
@@ -180,52 +202,16 @@ void OpenGLWindow::show()
 {
     [m_impl->window makeKeyAndOrderFront:NSApp];
 
-    m_impl->onViewResize(m_impl->bounds);
+    //m_glView->onViewResize(m_impl->bounds);
 }
 
 void OpenGLWindow::hide()
 {
 }
-agtm::Rect<float> OpenGLWindow::bounds() const
-{
-    return m_impl->bounds;
-}
 
-void OpenGLWindow::resizeEventHandler(agtm::Rect<float> const& bounds)
+std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 {
-    onResize(bounds);
-}
-
-void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
-{
-    std::cout << "Impl::onViewResize" << std::endl;
-    if (resizeEventHandler) {
-        resizeEventHandler(rect);
-    }
-}
-
-void OpenGLWindow::Impl::onViewDraw(agtm::Rect<float> const& dirtyRect)
-{
-    std::cout << "Impl::onViewDraw" << std::endl;
-    if (drawEventHandler) {
-        drawEventHandler();
-    }
-}
-
-void OpenGLWindow::Impl::onViewMouseEvent(agtui::MouseEvent const& event)
-{
-    std::cout << "Impl::onViewMouseEvent" << std::endl;
-    if (mouseEventHandler) {
-        mouseEventHandler(event);
-    }
-}
-
-void OpenGLWindow::Impl::onViewKeyEvent()
-{
-    std::cout << "Impl::onViewKeyEvent" << std::endl;
-    if (keyEventHandler) {
-        keyEventHandler();
-    }
+    return m_impl->glView;
 }
 
 } // namespace
@@ -234,12 +220,12 @@ void OpenGLWindow::Impl::onViewKeyEvent()
 
 - (id)initWithFrame:(NSRect)frame
     context:(NSOpenGLContext *)context
-    windowImpl: (uimac::OpenGLWindow::Impl*)windowImpl
+    glView: (uimac::OpenGLView*)glView
 {
     self = [super initWithFrame:frame];
 
     if (self) {
-        m_windowImpl = windowImpl;
+        m_glView = glView;
         m_context = [context retain];
         m_bounds = [self bounds];
     }
@@ -293,7 +279,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
         agtm::Point2d<float>(m_bounds.origin.x, m_bounds.origin.y),
         agtm::Size2d<float>(m_bounds.size.width, m_bounds.size.height));
 
-    m_windowImpl->onViewResize(rect);
+    m_glView->onViewResize(rect);
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -320,7 +306,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
             agtm::Point2d<float>(m_bounds.origin.x, m_bounds.origin.y),
             agtm::Size2d<float>(m_bounds.size.width, m_bounds.size.height));
 
-        m_windowImpl->onViewDraw(rect);
+        m_glView->onViewDraw(rect);
     }
 }
 
@@ -338,7 +324,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)rightMouseDown:(NSEvent*)event
@@ -350,7 +336,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)mouseUp:(NSEvent *)event
@@ -362,7 +348,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)rightMouseUp:(NSEvent*)event
@@ -374,7 +360,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)mouseMoved:(NSEvent *)event
@@ -386,7 +372,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)mouseDragged:(NSEvent *)event
@@ -398,7 +384,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)rightMouseDragged:(NSEvent*)event
@@ -410,7 +396,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)mouseEntered:(NSEvent *)event
@@ -422,7 +408,7 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)mouseExited:(NSEvent *)event
@@ -434,21 +420,21 @@ void OpenGLWindow::Impl::onViewKeyEvent()
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
-    m_windowImpl->onViewMouseEvent(mouseEvent);
+    m_glView->onViewMouseEvent(mouseEvent);
 }
 
 - (void)keyDown:(NSEvent *)event
 {
     NSLog(@"uimac_OpenGLView: keyDown: %@", event);
 
-    m_windowImpl->onViewKeyEvent();
+    m_glView->onViewKeyEvent();
 }
 
 - (void)keyUp:(NSEvent *)event
 {
     NSLog(@"uimac_OpenGLView: keyUp: %@", event);
 
-    m_windowImpl->onViewKeyEvent();
+    m_glView->onViewKeyEvent();
 }
 
 @end
