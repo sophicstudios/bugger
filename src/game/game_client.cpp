@@ -32,15 +32,6 @@ namespace {
 //static float MAX_SPREAD = 360.0f; // angles
 //static float PI = 3.14159265f;
 
-agtm::Matrix4<float> createMatrix(float x, float y)
-{
-    return agtm::Matrix4<float>(
-        1.0f, 0.0f, 0.0f,    x,
-        0.0f, 1.0f, 0.0f,    y,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f);
-}
-
 bool createShaderProgram(GLuint* program, aftfs::Filesystem& filesystem,
                          std::vector<std::pair<std::string, GLenum> > const& shaders)
 {
@@ -172,7 +163,7 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     //m_engine->registerSystem(eventSystem);
 
     // create the RenderSystem and add it to the engine
-    std::shared_ptr<agte::System> renderSystem(new agte::RenderSystem(platform));
+    std::shared_ptr<agte::RenderSystem> renderSystem(new agte::RenderSystem(platform));
     m_engine->registerSystem(renderSystem);
 
     // create the main space and add it to the engine
@@ -188,8 +179,8 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     glView->addChild(surface);
 
-    //std::shared_ptr<agtg::Camera> camera(new agtg::OrthographicCamera(glSurface->bounds()));
-    //space->addCamera(camera);
+    std::shared_ptr<agte::Camera> camera(new agte::OrthographicCamera(surface));
+    renderSystem->addCamera(space, camera);
 
     //***** PHYSICS SYSTEM *****
     // A PhysicsSystem works on entities with components of type:
@@ -242,16 +233,15 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     }
     */
 
-    //std::function<void (agtm::Rect<float> const&, agtg::RenderingContext&)> resizeEventHandler
-    //    = std::bind(&RenderSystem::onResizeEvent, this, std::placeholders::_1, std::placeholders::_2);
+    std::function<void (agtm::Rect<float> const&)> resizeEventHandler
+        = std::bind(&Client::onResize, this, std::placeholders::_1);
 
-    //platform->glWindow()->registerResizeEventHandler(resizeEventHandler);
+    glView->addResizeEventHandler("client", resizeEventHandler);
 
-    //std::function<void (agtg::RenderingContext&)> drawEventHandler
-    //    = std::bind(&Client::onDrawEvent, this, std::placeholders::_1);
+    std::function<void ()> drawEventHandler
+        = std::bind(&Client::onDraw, this);
 
-    // show the window
-    //window->show();
+    glView->addDrawEventHandler("client", drawEventHandler);
 }
 
 Client::~Client()
@@ -265,6 +255,16 @@ void Client::run()
 void Client::stop()
 {
     std::cout << "Client::stop" << std::endl;
+}
+
+void Client::onDraw()
+{
+    m_engine->update();
+}
+
+void Client::onResize(agtm::Rect<float> const& bounds)
+{
+    m_engine->update();
 }
 
 /*

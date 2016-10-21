@@ -117,11 +117,13 @@ public:
     void onViewResize(agtm::Rect<float> const& rect)
     {
         std::cout << "OpenGLView::onViewResize" << std::endl;
+        this->onResize(rect);
     }
     
     void onViewDraw(agtm::Rect<float> const& dirtyRect)
     {
         std::cout << "OpenGLView::onViewDraw" << std::endl;
+        this->onDraw(dirtyRect);
     }
     
     void onViewMouseEvent(agtui::MouseEvent const& event)
@@ -169,16 +171,16 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     NSRect windowFrame = NSMakeRect(0.0f, 0.0f, static_cast<float>(frame.width()), static_cast<float>(frame.height()));
 
     m_impl->window = [[NSWindow alloc] initWithContentRect:windowFrame
-        styleMask:NSTitledWindowMask
-            | NSClosableWindowMask
-            | NSMiniaturizableWindowMask
-            | NSResizableWindowMask
-            | NSTexturedBackgroundWindowMask
+        styleMask:NSWindowStyleMaskTitled
+            | NSWindowStyleMaskClosable
+            | NSWindowStyleMaskMiniaturizable
+            | NSWindowStyleMaskResizable
+            | NSWindowStyleMaskTexturedBackground
         backing:NSBackingStoreBuffered
         defer:NO];
     
     [m_impl->window setTitle:[NSString stringWithUTF8String: title.c_str()]];
-    [m_impl->window setReleasedWhenClosed:YES];
+    [m_impl->window setReleasedWhenClosed:NO];
 
     NSRect contentRect = [m_impl->window contentRectForFrameRect:windowFrame];
 

@@ -21,9 +21,9 @@ public:
     
     void stop();
 
-    void onDrawFrame(agtg::RenderingContext& renderingContext);
+    void onDraw();
     
-    void onResizeEvent(agtm::Rect<float> const& rect);
+    void onResize(agtm::Rect<float> const& bounds);
     
     //void onMouseEvent(agtui::MouseEvent const& event);
     
