@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63A8E1B71DB46C7300BFFB2D /* libGLEW.1.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A8E1B61DB46C7300BFFB2D /* libGLEW.1.13.0.dylib */; };
 		FA223AF817618818000FE3E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF717618817000FE3E9 /* UIKit.framework */; };
 		FA223AFA17618825000FE3E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AF917618825000FE3E9 /* Foundation.framework */; };
 		FA223AFC17618832000FE3E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA223AFB17618832000FE3E9 /* CoreGraphics.framework */; };
@@ -22,6 +21,7 @@
 		FA2318EF179328140050DE3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2318EE179328140050DE3A /* QuartzCore.framework */; };
 		FA50F6121A87FCE5002B9028 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = FA50F6111A87FCE5002B9028 /* shaders */; };
 		FA50F6131A87FCE5002B9028 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = FA50F6111A87FCE5002B9028 /* shaders */; };
+		FA57D99E1DBBAE3400264358 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA57D99D1DBBAE3400264358 /* libGLEW.a */; };
 		FA963E201AE29A5A00E0C312 /* libact-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB3A4817ADE207002510F9 /* libact-macosx.a */; };
 		FA9B164615AA7E180017DCD5 /* appios_appdelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */; };
 		FA9B164715AA7E180017DCD5 /* appios_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA9B164315AA7E180017DCD5 /* appios_main.mm */; };
@@ -184,6 +184,7 @@
 		FA4CC9A315C4C08A0014BA87 /* appmac_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appmac_main.mm; path = ../../../src/app/appmac/appmac_main.mm; sourceTree = "<group>"; };
 		FA4CC9A415C4C08A0014BA87 /* appmac_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appmac_prefix.pch; path = ../../../src/app/appmac/appmac_prefix.pch; sourceTree = "<group>"; };
 		FA50F6111A87FCE5002B9028 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = ../../../resources/shaders; sourceTree = "<group>"; };
+		FA57D99D1DBBAE3400264358 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = ../../../../../../../../../usr/local/lib/libGLEW.a; sourceTree = "<group>"; };
 		FA9B161615AA79B40017DCD5 /* bugger-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bugger-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA9B164115AA7E180017DCD5 /* appios_appdelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appios_appdelegate.h; path = ../../../src/app/appios/appios_appdelegate.h; sourceTree = "<group>"; };
 		FA9B164215AA7E180017DCD5 /* appios_appdelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = appios_appdelegate.mm; path = ../../../src/app/appios/appios_appdelegate.mm; sourceTree = "<group>"; };
@@ -244,10 +245,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA57D99E1DBBAE3400264358 /* libGLEW.a in Frameworks */,
 				FACBACA316FFD2EA008B2004 /* libagt-macosx.a in Frameworks */,
 				FA963E201AE29A5A00E0C312 /* libact-macosx.a in Frameworks */,
 				FAA0734416F183CF00015F1D /* libaft-macosx.a in Frameworks */,
-				63A8E1B71DB46C7300BFFB2D /* libGLEW.1.13.0.dylib in Frameworks */,
 				FAED4A771A0F2A4D00B1B685 /* libz.dylib in Frameworks */,
 				FAED4A711A0E70B400B1B685 /* libpng.dylib in Frameworks */,
 				FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */,
@@ -377,6 +378,7 @@
 		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA57D99D1DBBAE3400264358 /* libGLEW.a */,
 				63A8E1B61DB46C7300BFFB2D /* libGLEW.1.13.0.dylib */,
 				FA9EA5A51AD9FBA600B9F4B9 /* libGLEW.1.12.0.dylib */,
 				FAED4A761A0F2A4D00B1B685 /* libz.dylib */,
