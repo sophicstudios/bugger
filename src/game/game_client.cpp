@@ -11,6 +11,7 @@
 #include <agtui_boxsizer.h>
 #include <agtm_matrix3.h>
 #include <agtm_vector2.h>
+#include <agtm_vector3.h>
 #include <agtr_image.h>
 #include <agtr_imageloaderpng.h>
 #include <aftt_datetimeinterval.h>
@@ -201,17 +202,24 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     std::shared_ptr<TransformComponents> transformComponents(new TransformComponents(space));
     
     // register the component managers with the respective systems
+    renderSystem->addTransformComponents(space, transformComponents);
     //renderSystem->registerTransform2dComponents(mainSpace, transform2dManager);
     //renderSystem->registerVisual2dComponents(mainSpace, visual2dManager);
 
     // create the entities and related components
-    agte::Entity circle = space->createEntity();
+    agte::Entity e1 = space->createEntity();
 
-    agtc::TransformComponent& pos = transformComponents->createComponent(circle);
-    pos.x(10);
-    pos.y(20);
+    agtc::TransformComponent& p1 = transformComponents->createComponent(e1);
+    p1.translate(agtm::Vector3<float>(50.0f, 100.0f, 0.0f));
+    p1.scale(agtm::Vector3<float>(16.0f, 16.0f, 0.0f));
 
-    space->destroyEntity(circle);
+    agte::Entity e2 = space->createEntity();
+
+    agtc::TransformComponent& p2 = transformComponents->createComponent(e2);
+    p2.translate(agtm::Vector3<float>(-50.0f, -50.0f, 0.0f));
+    p2.scale(agtm::Vector3<float>(64.0f, 64.0f, 0.0f));
+
+    //space->destroyEntity(circle);
 
     // create the image for the ant sprite
     //aftu::URL imageUrl("images/antsprites.png");

@@ -10,7 +10,7 @@ in vec3 position;
 // varying vec2 texcoord;
 void main()
 {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    gl_Position = transpose(projectionMatrix) * transpose(modelViewMatrix) * vec4(position, 1.0);
     // texcoord = position * vec2(0.5) + vec2(0.5);
 }
 

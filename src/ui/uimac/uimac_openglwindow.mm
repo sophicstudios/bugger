@@ -168,9 +168,9 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     // create window and OpenGL view
     //NSRect screenRect = [[NSScreen mainScreen] visibleFrame]; // get dimensions of screen
     
-    NSRect windowFrame = NSMakeRect(0.0f, 0.0f, static_cast<float>(frame.width()), static_cast<float>(frame.height()));
+    NSRect contentRect = NSMakeRect(0.0f, 0.0f, static_cast<float>(frame.width()), static_cast<float>(frame.height()));
 
-    m_impl->window = [[NSWindow alloc] initWithContentRect:windowFrame
+    m_impl->window = [[NSWindow alloc] initWithContentRect:contentRect
         styleMask:NSWindowStyleMaskTitled
             | NSWindowStyleMaskClosable
             | NSWindowStyleMaskMiniaturizable
@@ -181,8 +181,6 @@ OpenGLWindow::OpenGLWindow(std::string const& title, agtm::Rect<float> const& fr
     
     [m_impl->window setTitle:[NSString stringWithUTF8String: title.c_str()]];
     [m_impl->window setReleasedWhenClosed:NO];
-
-    NSRect contentRect = [m_impl->window contentRectForFrameRect:windowFrame];
 
     m_impl->glView = std::shared_ptr<uimac::OpenGLView>(new uimac::OpenGLView(contentRect));
 
