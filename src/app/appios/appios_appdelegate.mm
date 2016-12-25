@@ -19,15 +19,11 @@ struct appios_AppDelegateImpl
 {
     self = [super init];
     
-    m_impl = new appios_AppDelegateImpl();
-
     return self;
 }
 
 - (void)dealloc
 {
-    delete m_impl;
-    
     [super dealloc];
 }
 
@@ -35,11 +31,15 @@ struct appios_AppDelegateImpl
 {
     std::cout << "appios_AppDelegate::didFinishLaunchingWithOptions" << std::endl;
     
-    m_impl->window = new uiios::OpenGLWindow("Wrangler");
-    
-    util::BundleFilesystem filesystem;
-    m_impl->client = new game::Client(m_impl->window, filesystem);
+    m_impl = new appios_AppDelegateImpl();
 
+    m_impl->window = std::shared_ptr<uiios::OpenGLWindow>(new uiios::OpenGLWindow("Wrangler"));
+    
+    std::shared_ptr<util::BundleFileSystem> filesystem(new util::BundleFileSystem());
+    m_impl->client = std::shared_ptr<game::Client>(new game::Client(m_impl->window->glView(), filesystem));
+
+    m_impl->window->show();
+    
     return YES;
 }
 
@@ -70,11 +70,10 @@ struct appios_AppDelegateImpl
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive
+    // Called as part of the transition from the background to the active
     // state; here you can undo many of the changes made on entering the background.
 
     std::cout << "appios_AppDelegate::applicationWillEnterForeground" << std::endl;
-    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -84,7 +83,7 @@ struct appios_AppDelegateImpl
     // background, optionally refresh the user interface.
 
     std::cout << "appios_AppDelegate::applicationDidBecomeActive" << std::endl;
-    
+
     m_impl->client->run();
 }
 
@@ -94,14 +93,8 @@ struct appios_AppDelegateImpl
     // appropriate. See also applicationDidEnterBackground:.
 
     std::cout << "appios_AppDelegate::applicationWillTerminate" << std::endl;
-    
-    if (m_impl->client) {
-        delete m_impl->client;
-    }
 
-    if (m_impl->window) {
-        delete m_impl->window;
-    }
+    delete m_impl;
 }
 
 @end

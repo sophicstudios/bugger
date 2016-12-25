@@ -1,6 +1,7 @@
 #include <util_bundlefilesystem.h>
 #include <util_convert.h>
 #include <aftio_reader.h>
+#include <aftfs_directoryentry.h>
 #include <aftu_exception.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -21,7 +22,7 @@ long getPathMaxLength(std::string const& path)
 
 } // nmaespace
 
-struct BundleFilesystem::Priv
+struct BundleFileSystem::Priv
 {
     CFBundleRef bundle;
     CFURLRef rootUrl;
@@ -79,8 +80,8 @@ private:
 };
 
 
-BundleFilesystem::BundleFilesystem()
-: m_priv(new BundleFilesystem::Priv())
+BundleFileSystem::BundleFileSystem()
+: m_priv(new BundleFileSystem::Priv())
 {
     m_priv->bundle = CFBundleGetMainBundle();
     if (!m_priv->bundle) {
@@ -95,8 +96,8 @@ BundleFilesystem::BundleFilesystem()
     m_priv->resourcesUrl = CFBundleCopyResourcesDirectoryURL(m_priv->bundle);
 }
 
-BundleFilesystem::BundleFilesystem(Root root)
-: m_priv(new BundleFilesystem::Priv())
+BundleFileSystem::BundleFileSystem(Root root)
+: m_priv(new BundleFileSystem::Priv())
 {
     m_priv->bundle = CFBundleGetMainBundle();
     if (!m_priv->bundle) {
@@ -109,35 +110,35 @@ BundleFilesystem::BundleFilesystem(Root root)
     }
 }
 
-BundleFilesystem::~BundleFilesystem()
+BundleFileSystem::~BundleFileSystem()
 {
     if (m_priv->rootUrl) {
         CFRelease(m_priv->rootUrl);
     }
 }
 
-aftu::URL BundleFilesystem::getCurrentDirectory(aftfs::Filesystem::Status* status)
+aftu::URL BundleFileSystem::getCurrentDirectory(aftfs::FileSystem::Status* status)
 {
     aftu::URL result = Convert::toURL(m_priv->rootUrl);
     if (status) {
-        *status = aftfs::Filesystem::Status_OK;
+        *status = aftfs::FileSystem::Status_OK;
     }
     return result;
 }
 
-aftfs::Filesystem::Status BundleFilesystem::setCurrentDirectory(aftu::URL const& url)
+aftfs::FileSystem::Status BundleFileSystem::setCurrentDirectory(aftu::URL const& url)
 {
-    return aftfs::Filesystem::Status_UNKNOWN;
+    return aftfs::FileSystem::Status_UNKNOWN;
 }
 
-aftfs::Filesystem::Status BundleFilesystem::listCurrentDirectory(std::vector<aftu::URL>& results)
+aftfs::FileSystem::Status BundleFileSystem::listCurrentDirectory(std::vector<aftu::URL>& results)
 {
     aftu::URL baseUrl = Convert::toURL(m_priv->rootUrl);
     std::string path = baseUrl.path();
     
     DIR* dir = opendir(path.empty() ? "/" : path.c_str());
     if (!dir) {
-        return Filesystem::Status_DIRECTORY_NOT_FOUND;
+        return FileSystem::Status_DIRECTORY_NOT_FOUND;
     }
 
     long name_max = getPathMaxLength(path);
@@ -151,20 +152,20 @@ aftfs::Filesystem::Status BundleFilesystem::listCurrentDirectory(std::vector<aft
     }
     
     if (result != 0) {
-        return Filesystem::Status_ERROR;
+        return FileSystem::Status_ERROR;
     }
     
     free(entry);
     
-    return Filesystem::Status_OK;
+    return FileSystem::Status_OK;
 }
 
-aftfs::Filesystem::Status BundleFilesystem::listDirectory(std::vector<aftu::URL>& results, aftu::URL const& url)
+aftfs::FileSystem::Status BundleFileSystem::listDirectory(std::vector<aftu::URL>& results, aftu::URL const& url)
 {
-    return aftfs::Filesystem::Status_UNKNOWN;
+    return aftfs::FileSystem::Status_UNKNOWN;
 }
 
-aftfs::Filesystem::DirectoryEntryPtr BundleFilesystem::directoryEntry(aftu::URL const& url, aftfs::Filesystem::Status* status)
+aftfs::FileSystem::DirectoryEntryPtr BundleFileSystem::directoryEntry(aftu::URL const& url, aftfs::FileSystem::Status* status)
 {
     std::string path = url.path();
     if (path.empty()) {
@@ -181,10 +182,10 @@ aftfs::Filesystem::DirectoryEntryPtr BundleFilesystem::directoryEntry(aftu::URL 
     
     stat(path.c_str(), &info);
 
-    return Filesystem::DirectoryEntryPtr(new BundleDirectoryEntry(url, info));
+    return FileSystem::DirectoryEntryPtr(new BundleDirectoryEntry(url, info));
 }
 
-aftfs::Filesystem::FileReaderPtr BundleFilesystem::openFileReader(aftu::URL const& url, aftfs::Filesystem::Status* status)
+aftfs::FileSystem::FileReaderPtr BundleFileSystem::openFileReader(aftu::URL const& url, aftfs::FileSystem::Status* status)
 {
     std::string path = url.path();
     
@@ -196,13 +197,13 @@ aftfs::Filesystem::FileReaderPtr BundleFilesystem::openFileReader(aftu::URL cons
     FILE* fileHandle = fopen(path.c_str(), "r");
     if (!fileHandle) {
         if (status) {
-            *status = Filesystem::Status_FILE_NOT_FOUND;
+            *status = FileSystem::Status_FILE_NOT_FOUND;
         }
 
-        return Filesystem::FileReaderPtr();
+        return FileSystem::FileReaderPtr();
     }
     
-    return aftfs::Filesystem::FileReaderPtr(new BundleFileReader(fileHandle));
+    return aftfs::FileSystem::FileReaderPtr(new BundleFileReader(fileHandle));
 }
 
 BundleDirectoryEntry::BundleDirectoryEntry(aftu::URL const& url, struct stat const& info)

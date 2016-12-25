@@ -13,7 +13,7 @@ class Client
 {
 public:
     Client(std::shared_ptr<agtui::GLView> glView,
-           std::shared_ptr<aftfs::Filesystem> filesystem);
+           std::shared_ptr<aftfs::FileSystem> fileSystem);
     
     ~Client();
     
@@ -31,6 +31,8 @@ private:
     Client(Client const&);
     Client& operator=(Client const&);
 
+    void createAnts();
+    
     std::shared_ptr<agte::Engine> m_engine;
 };
 

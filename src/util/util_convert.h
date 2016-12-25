@@ -1,9 +1,9 @@
-#ifndef INCLUDED_ATTA_UTIL_CONVERT_H
-#define INCLUDED_ATTA_UTIL_CONVERT_H
+#ifndef INCLUDED_UTIL_CONVERT_H
+#define INCLUDED_UTIL_CONVERT_H
 
+#include <aftu_url.h>
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFURL.h>
-#include <aftu_url.h>
 #include <string>
 
 namespace util {

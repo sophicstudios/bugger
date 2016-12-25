@@ -10,15 +10,20 @@ RenderingContext::RenderingContext(CAEAGLLayer* layer)
   m_colorRenderBuffer(0),
   m_depthRenderBuffer(0)
 {
-    m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+    m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
     if (!m_context) {
-        std::cerr << "Could not allocate EAGLContext (ES1)" << std::endl;
+        std::cerr << "Could not allocate EAGLContext (ES3)" << std::endl;
         throw std::exception();
     }
+
+    makeCurrent();
+    createRenderBuffers();
 }
 
 RenderingContext::~RenderingContext()
 {
+    makeCurrent();
+    destroyRenderBuffers();
     [m_context release];
 }
 
@@ -26,15 +31,14 @@ void RenderingContext::preRender()
 {
     makeCurrent();
     glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
 void RenderingContext::postRender()
 {
     const GLenum discards[] = { GL_DEPTH_ATTACHMENT };
     glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
-    glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, discards);
-    //glInvalidateFramebuffer(GL_FRAMEBUFFER, 1, discards);
+    //glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, discards);
+    glInvalidateFramebuffer(GL_FRAMEBUFFER, 1, discards);
     
     glBindRenderbuffer(GL_RENDERBUFFER, m_colorRenderBuffer);
     [m_context presentRenderbuffer:GL_RENDERBUFFER];
@@ -85,6 +89,11 @@ void RenderingContext::createRenderBuffers()
     glBindRenderbuffer(GL_RENDERBUFFER, m_depthRenderBuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthRenderBuffer);
+
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER) ;
+    if(status != GL_FRAMEBUFFER_COMPLETE) {
+        std::cout << "Failed to make a complete framebuffer object. status: " << status << std::endl;
+    }
 }
 
 agtm::Size2d<int> RenderingContext::getRenderBufferSize()

@@ -1,30 +1,44 @@
+#import <uiios_openglwindow.h>
+#import <uiios_renderingcontext.h>
+#import <uiios_displaytimer.h>
+#import <aftt_systemtime.h>
 #import <UIKit/UIKit.h>
 #import <QuartzCore/CAEAGLLayer.h>
 #import <QuartzCore/CADisplayLink.h>
 #import <OpenGLES/EAGL.h>
-#import <uiios_openglwindow.h>
-#import <uiios_renderingcontext.h>
-#import <aftt_systemtime.h>
 #import <iostream>
 
 //////////
 // uiios_OpenGLView
 
-@interface uiios_OpenGLView : UIView {
-    uiios::OpenGLWindow::Impl* m_windowImpl;
+namespace {
+
+agtm::Rect<float> fromCGRect(CGRect rect)
+{
+    return agtm::Rect<float>(
+        agtm::Point2d<float>(rect.origin.x, rect.origin.y),
+        agtm::Size2d<float>(rect.size.width, rect.size.height));
 }
 
-- (id) initWithFrame:(CGRect)frame windowImpl:(uiios::OpenGLWindow::Impl*)windowImpl;
+} // namespace
+
+namespace uiios { class OpenGLView; }
+
+@interface uiios_OpenGLView : UIView {
+    uiios::OpenGLView* m_view;
+}
+
+- (id) initWithFrame:(CGRect)frame View:(uiios::OpenGLView*)view;
 
 @end
 
 //////////
 // uiios_OpenGLViewController
 @interface uiios_OpenGLViewController: UIViewController {
-    uiios::OpenGLWindow::Impl* m_windowImpl;
+    uiios::OpenGLView* m_view;
 }
 
-- (id) initWithWindowImpl:(uiios::OpenGLWindow::Impl*)windowImpl;
+- (id) initWithView:(uiios::OpenGLView*)view;
 
 @end
 
@@ -34,38 +48,104 @@
     uiios::OpenGLWindow::Impl* m_windowImpl;
 }
 
-//@property (nonatomic, strong) CADisplayLink* displayLink;
-
 - (id) initWithFrame:(CGRect)frame windowImpl:(uiios::OpenGLWindow::Impl*)windowImpl;
+
 - (void) windowBecameVisible:(NSNotification*)notification;
+
 - (void) windowBecameHidden:(NSNotification*)notification;
-- (void) onDisplayLinkUpdate:(CADisplayLink*)displayLink;
 
 @end
 
 namespace uiios {
 
+class OpenGLView : public agtui::GLView
+{
+public:
+    OpenGLView(CGRect bounds)
+    : m_bounds(fromCGRect(bounds))
+    {
+        // create the view
+        m_view = [[uiios_OpenGLView alloc] initWithFrame:bounds View:this];
+
+        m_viewController = [[uiios_OpenGLViewController alloc] initWithView:this];
+        m_viewController.view = m_view;
+
+        // create the OpenGL Context
+        m_renderingContext = std::shared_ptr<uiios::RenderingContext>(new uiios::RenderingContext((CAEAGLLayer*)[m_view layer]));
+
+        m_displayTimer = std::shared_ptr<uiios::DisplayTimer>(new uiios::DisplayTimer());
+    }
+
+    virtual ~OpenGLView()
+    {
+        [m_viewController release];
+        [m_view release];
+    }
+
+    uiios_OpenGLView* nativeView() const
+    {
+        return m_view;
+    }
+
+    uiios_OpenGLViewController* nativeViewController() const
+    {
+        return m_viewController;
+    }
+
+    virtual agtm::Rect<float> bounds() const
+    {
+        return m_bounds;
+    }
+
+    virtual agtui::GLView::DisplayTimerPtr displayTimer() const
+    {
+        return m_displayTimer;
+    }
+    
+    virtual agtui::GLView::RenderingContextPtr renderingContext() const
+    {
+        return m_renderingContext;
+    }
+
+    void onViewResize(agtm::Rect<float> const& rect)
+    {
+        std::cout << "OpenGLView::onViewResize" << std::endl;
+        m_renderingContext->makeCurrent();
+        m_renderingContext->destroyRenderBuffers();
+        m_renderingContext->createRenderBuffers();
+        this->onResize(rect);
+    }
+    
+    void onViewDraw(agtm::Rect<float> const& dirtyRect)
+    {
+        std::cout << "OpenGLView::onViewDraw" << std::endl;
+        this->onDraw(dirtyRect);
+    }
+    
+    void onViewTouchEvent(agtui::MouseEvent const& event)
+    {
+        std::cout << "OpenGLView::onViewMouseEvent" << std::endl;
+    }
+    
+    void onViewKeyEvent()
+    {
+        std::cout << "OpenGLView::onViewKeyEvent" << std::endl;
+    }
+    
+private:
+    uiios_OpenGLView* m_view;
+    uiios_OpenGLViewController* m_viewController;
+    agtm::Rect<float> m_bounds;
+    std::shared_ptr<uiios::RenderingContext> m_renderingContext;
+    std::shared_ptr<uiios::DisplayTimer> m_displayTimer;
+};
+
 //////////
 // OpenGLWindow::Impl
 struct OpenGLWindow::Impl
 {
-    void onDisplayLinkUpdate(CADisplayLink* displayLink);
-    void onViewResize(agtm::Rect<float> const& rect);
-    void onViewTouchEvent(agtui::TouchEvent const& event);
-
     uiios_OpenGLWindow* window;
-    uiios_OpenGLView* view;
-    uiios_OpenGLViewController* viewController;
-    agtm::Rect<float> bounds;
-    RenderingContext* renderingContext;
-    CADisplayLink* displayLink;
-    double timeFreq;
-    uint64_t baseTime;
-    uigen::GLWindow::ResizeEventHandler resizeEventHandler;
-    uigen::GLWindow::MouseEventHandler mouseEventHandler;
-    uigen::GLWindow::KeyEventHandler keyEventHandler;
-    uigen::GLWindow::TouchEventHandler touchEventHandler;
-    uigen::GLWindow::DisplayRefreshHandler displayRefreshHandler;
+    std::shared_ptr<uiios::OpenGLView> view;
 };
 
 //////////
@@ -74,48 +154,18 @@ struct OpenGLWindow::Impl
 OpenGLWindow::OpenGLWindow(std::string const& title)
 : m_impl(new OpenGLWindow::Impl())
 {
-    m_impl->resizeEventHandler = std::bind(
     // get the screen bounds
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-    agtm::Rect<float> bounds(
-        agtm::Point2d<float>(screenBounds.origin.x, screenBounds.origin.y),
-        agtm::Size2d<float>(screenBounds.size.width, screenBounds.size.height));
 
     // create the window object
     m_impl->window = [[uiios_OpenGLWindow alloc] initWithFrame:screenBounds windowImpl:m_impl];
 
-    // create the view
-    m_impl->view = [[uiios_OpenGLView alloc] initWithFrame:screenBounds windowImpl:m_impl];
-
-    m_impl->viewController = [[uiios_OpenGLViewController alloc] initWithWindowImpl:m_impl];
-    m_impl->viewController.view = m_impl->view;
-
-    [m_impl->window setRootViewController:m_impl->viewController];
-
-    // create the OpenGL Context
-    m_impl->renderingContext = new uiios::RenderingContext((CAEAGLLayer*)[m_impl->view layer]);
-
-    m_impl->renderingContext->makeCurrent();
-    
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-        
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-    
-    m_impl->displayLink = [[CADisplayLink displayLinkWithTarget:m_impl->window selector:@selector(onDisplayLinkUpdate:)] retain];
+    m_impl->view = std::shared_ptr<uiios::OpenGLView>(new uiios::OpenGLView(screenBounds));
+    [m_impl->window setRootViewController:m_impl->view->nativeViewController()];
 }
 
 OpenGLWindow::~OpenGLWindow()
 {
-    delete m_impl->renderingContext;
-    
-    std::cout << "~OpenGLWindow displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
-    [m_impl->displayLink release];
-    [m_impl->viewController release];
-    [m_impl->view release];
     [m_impl->window release];
 
     delete m_impl;
@@ -132,125 +182,9 @@ void OpenGLWindow::hide()
     std::cout << "OpenGLWindow::hide()" << std::endl;
 }
 
-void OpenGLWindow::startDisplayTimer()
+std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 {
-    std::cout << "OpenGLWindow::startDisplayTimer()" << std::endl;
-    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
-    [m_impl->displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
-}
-
-void OpenGLWindow::pauseDisplayTimer()
-{
-    [m_impl->displayLink setPaused:TRUE];
-}
-
-void OpenGLWindow::resumeDisplayTimer()
-{
-    [m_impl->displayLink setPaused:FALSE];
-}
-
-void OpenGLWindow::stopDisplayTimer()
-{
-    std::cout << "OpenGLWindow::stopDisplayTimer()" << std::endl;
-    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
-    [m_impl->displayLink invalidate];
-    std::cout << "displayLink retainCount: " << [m_impl->displayLink retainCount] << std::endl;
-}
-
-agtm::Rect<float> OpenGLWindow::bounds()
-{
-    return m_impl->bounds;
-}
-
-agtg::RenderingContext& OpenGLWindow::context()
-{
-    return *m_impl->renderingContext;
-}
-
-void OpenGLWindow::registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler)
-{
-    m_impl->sizeHandler = handler;
-}
-
-void OpenGLWindow::registerKeyEventHandler(KeyEventHandler const& handler)
-{
-    m_impl->keyHandler = handler;
-}
-
-void OpenGLWindow::registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler)
-{
-    // no mouse events currently
-}
-
-void OpenGLWindow::registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler)
-{
-    m_impl->touchHandler = handler;
-}
-
-void OpenGLWindow::registerDisplayRefreshHandler(uigen::GLWindow::DisplayRefreshHandler const& handler)
-{
-    m_impl->displayRefreshHandler = handler;
-}
-
-void OpenGLWindow::Impl::onDisplayLinkUpdate(CADisplayLink* displayLink)
-{
-    std::cout << "onDisplayLinkUpdate" << std::endl;
-    
-    if (displayRefreshHandler) {
-        //CFTimeInterval timestamp = [displayLink timestamp];
-        aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();
-        renderingContext->preRender();
-        displayRefreshHandler(now);
-        renderingContext->postRender();
-    }
-}
-
-void OpenGLWindow::Impl::onViewResize(agtm::Rect<float> const& rect)
-{
-    std::cout << "onViewResize rect:" << rect << std::endl;
-    
-    bounds = rect;
-    
-    renderingContext->destroyRenderBuffers();
-    renderingContext->createRenderBuffers();
-    
-    agtm::Size2d<int> bufferSize = renderingContext->getRenderBufferSize();
-
-    GLfloat width = static_cast<GLfloat>(bufferSize.width());
-    GLfloat height = static_cast<GLfloat>(bufferSize.height());
-
-    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
-
-    std::cout << "width: " << width << std::endl;
-    std::cout << "height: " << height << std::endl;
-
-    GLfloat right = width / 2;
-    GLfloat left = -right;
-    GLfloat top = height / 2;
-    GLfloat bottom = -top;
-    
-    std::cout << "left: " << left << std::endl;
-    std::cout << "right: " << right << std::endl;
-    std::cout << "top: " << top << std::endl;
-    std::cout << "bottom: " << bottom << std::endl;
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    glOrthof(left, right, bottom, top, -1.0f, 1.0f);
-
-    if (displayRefreshHandler) {
-        //CFTimeInterval timestamp = [displayLink timestamp];
-        aftt::Datetime now = aftt::SystemTime::nowAsDatetimeUTC();
-        renderingContext->preRender();
-        displayRefreshHandler(now);
-        renderingContext->postRender();
-    }
-}
-
-void OpenGLWindow::Impl::onViewTouchEvent(agtui::TouchEvent const& event)
-{
+    return m_impl->view;
 }
 
 } // namespace
@@ -263,8 +197,7 @@ void OpenGLWindow::Impl::onViewTouchEvent(agtui::TouchEvent const& event)
     return [CAEAGLLayer class];
 }
 
-- (id) initWithFrame:(CGRect)frame
-    windowImpl:(uiios::OpenGLWindow::Impl*)windowImpl
+- (id) initWithFrame:(CGRect)frame View:(uiios::OpenGLView*)view
 {
     std::cout << "uiios_OpenGLView::initWithFrame" << std::endl;
     
@@ -276,7 +209,7 @@ void OpenGLWindow::Impl::onViewTouchEvent(agtui::TouchEvent const& event)
             [NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking,
             kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
                 
-        m_windowImpl = windowImpl;
+        m_view = view;
     }
     
     return self;
@@ -306,13 +239,13 @@ void OpenGLWindow::Impl::onViewTouchEvent(agtui::TouchEvent const& event)
 
 @implementation uiios_OpenGLViewController
 
-- (id) initWithWindowImpl:(uiios::OpenGLWindow::Impl*)windowImpl
+- (id) initWithView:(uiios::OpenGLView *)view
 {
-    std::cout << "uiios_OpenGLViewController::initWithWindowImpl" << std::endl;
+    std::cout << "uiios_OpenGLViewController::initWithView" << std::endl;
     
     self = [super init];
     if (self) {
-        m_windowImpl = windowImpl;
+        m_view = view;
     }
     
     return self;
@@ -339,7 +272,7 @@ void OpenGLWindow::Impl::onViewTouchEvent(agtui::TouchEvent const& event)
         agtm::Point2d<float>(viewBounds.origin.x, viewBounds.origin.y),
         agtm::Size2d<float>(viewBounds.size.width, viewBounds.size.height));
 
-    m_windowImpl->onViewResize(bounds);
+    m_view->onViewResize(bounds);
 }
 
 @end
@@ -376,11 +309,6 @@ void OpenGLWindow::Impl::onViewTouchEvent(agtui::TouchEvent const& event)
 - (void) windowBecameHidden:(NSNotification*)notification
 {
     std::cout << "uiios_OpenGLWindow::windowBecameHidden" << std::endl;
-}
-
-- (void) onDisplayLinkUpdate:(CADisplayLink *)displayLink
-{
-    m_windowImpl->onDisplayLinkUpdate(displayLink);
 }
 
 @end

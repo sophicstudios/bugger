@@ -1,10 +1,9 @@
-#ifndef INCLUDED_ATTA_UIIOS_RENDERINGCONTEXT_H
-#define INCLUDED_ATTA_UIIOS_RENDERINGCONTEXT_H
+#ifndef INCLUDED_UIIOS_RENDERINGCONTEXT_H
+#define INCLUDED_UIIOS_RENDERINGCONTEXT_H
 
 #import <GLKit/GLKit.h>
 #import <QuartzCore/CAEAGLLayer.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#import <agtg_gl.h>
 #import <agtg_renderingcontext.h>
 #import <agtm_size2d.h>
 

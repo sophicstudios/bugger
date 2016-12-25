@@ -66,6 +66,16 @@ public:
             throw std::exception();
         }
 
+        m_renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_pixelFormat));
+
+        // setup the display link to get a timer linked
+        // to the refresh rate of the active display
+        m_displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(m_renderingContext->nativeContext(), m_pixelFormat));
+
+        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() glView:this];
+
+        m_renderingContext->makeCurrent();
+
         if (oldVersionCheck) {
             const GLubyte* glVersion = glGetString(GL_VERSION);
             std::cout << "OpenGL version (glGetString): " << glVersion << std::endl;
@@ -78,14 +88,6 @@ public:
 
             std::cout << "OpenGL version: " << glMajorVersion << "." << glMinorVersion << std::endl;
         }
-
-        m_renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_pixelFormat));
-
-        // setup the display link to get a timer linked
-        // to the refresh rate of the active display
-        m_displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(m_renderingContext->nativeContext(), m_pixelFormat));
-
-        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() glView:this];
     }
 
     virtual ~OpenGLView()

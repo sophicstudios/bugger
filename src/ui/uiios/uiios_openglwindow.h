@@ -1,17 +1,13 @@
-#ifndef INCLUDED_ATTA_UIIOS_OPENGLWINDOW_H
-#define INCLUDED_ATTA_UIIOS_OPENGLWINDOW_H
+#ifndef INCLUDED_UIIOS_OPENGLWINDOW_H
+#define INCLUDED_UIIOS_OPENGLWINDOW_H
 
-#include <uigen_glwindow.h>
-#include <agtg_renderingcontext.h>
-#include <agtm_rect.h>
-#include <agtm_point2d.h>
-#include <agtui_mouseevent.h>
-#include <aftt_datetime.h>
-#include <boost/function.hpp>
+#include <agtui_glview.h>
+#include <memory>
+#include <string>
 
 namespace uiios {
 
-class OpenGLWindow : public uigen::GLWindow
+class OpenGLWindow
 {
 public:
     struct Impl;
@@ -24,27 +20,7 @@ public:
     
     virtual void hide();
     
-    virtual void startDisplayTimer();
-    
-    virtual void pauseDisplayTimer();
-    
-    virtual void resumeDisplayTimer();
-    
-    virtual void stopDisplayTimer();
-    
-    virtual agtm::Rect<float> bounds();
-
-    virtual agtg::RenderingContext& context();
-    
-    virtual void registerResizeEventHandler(uigen::GLWindow::ResizeEventHandler const& handler);
-    
-    virtual void registerKeyEventHandler(KeyEventHandler const& handler);
-
-    virtual void registerMouseEventHandler(uigen::GLWindow::MouseEventHandler const& handler);
-    
-    virtual void registerTouchEventHandler(uigen::GLWindow::TouchEventHandler const& handler);
-
-    virtual void registerDisplayRefreshHandler(uigen::GLWindow::DisplayRefreshHandler const& handler);
+    virtual std::shared_ptr<agtui::GLView> glView();
 
 private:
     OpenGLWindow(OpenGLWindow const&);

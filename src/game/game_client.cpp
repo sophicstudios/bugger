@@ -7,7 +7,11 @@
 #include <agte_surface.h>
 #include <agte_orthographiccamera.h>
 #include <agtc_transformcomponent.h>
+#include <agtc_visual2dcomponent.h>
+#include <agta_sprite2dmaterial.h>
+#include <agta_mesh.h>
 #include <agtg_colorrgba.h>
+#include <agtg_vertex.h>
 #include <agtui_boxsizer.h>
 #include <agtm_matrix3.h>
 #include <agtm_vector2.h>
@@ -25,136 +29,11 @@
 
 namespace game {
 
-namespace {
-
-//static const size_t NUM_PARTICLES = 20;
-//static const float  PARTICLE_ACCEL_RATE = 800.0f; // feet/second
-//static const float  MAX_SPEED = 1000.0f; // feet/second
-//static float MAX_SPREAD = 360.0f; // angles
-//static float PI = 3.14159265f;
-
-bool createShaderProgram(GLuint* program, aftfs::Filesystem& filesystem,
-                         std::vector<std::pair<std::string, GLenum> > const& shaders)
-{
-    if (shaders.empty()) {
-        return false;
-    }
-
-    // Create the shader program object
-    *program = glCreateProgram();
-
-    std::vector<GLuint> attachedShaders;
-
-    std::vector<std::pair<std::string, GLenum> >::const_iterator it = shaders.begin(), end = shaders.end();
-    for (; it != end; ++it) {
-        // Create a url of the shader source file location for use in the Filesystem calls
-        aftu::URL shaderUrl(it->first);
-
-        // Create filesystem entry and reader to read the file contents
-        aftfs::Filesystem::DirectoryEntryPtr entry = filesystem.directoryEntry(shaderUrl);
-        aftfs::Filesystem::FileReaderPtr fileReader = filesystem.openFileReader(shaderUrl);
-
-        // Read the file contents into a character buffer
-        char* buffer = new char[entry->size()];
-        size_t bytesRead = 0;
-        fileReader->read(buffer, entry->size(), &bytesRead);
-
-        // Create a shader object
-        GLuint shader = glCreateShader(it->second);
-
-        // Assign the shader source to the shader object
-        glShaderSource(shader, 1, &buffer, NULL);
-
-        delete [] buffer;
-
-        // Compile the shader
-        glCompileShader(shader);
-
-        // Check for compile errors
-        GLint compileStatus = 0;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
-
-        if (compileStatus != GL_TRUE) {
-            GLint logLength = 0;
-            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
-
-            if (logLength > 0) {
-                char* log = new char[logLength + 1];
-                glGetShaderInfoLog(shader, logLength + 1, NULL, log);
-
-                std::cout << "Shader compiler error ["
-                    << " file: " << it->first
-                    << " error: " << log
-                    << " ]" << std::endl;
-
-                delete [] log;
-            }
-
-            std::vector<GLuint>::iterator jit = attachedShaders.begin(), jend = attachedShaders.end();
-            for (; jit != jend; ++jit) {
-                glDetachShader(*program, *jit);
-                glDeleteShader(*jit);
-            }
-
-            glDeleteProgram(*program);
-
-            return false;
-        }
-
-        // Attach the compiled shader to the program
-        glAttachShader(*program, shader);
-
-        attachedShaders.push_back(shader);
-    }
-
-    // Link the shader program
-    glLinkProgram(*program);
-
-    // Check for link errors
-    GLint linkStatus = 0;
-    glGetProgramiv(*program, GL_LINK_STATUS, &linkStatus);
-
-    if (linkStatus != GL_TRUE) {
-        GLint logLength = 0;
-        glGetProgramiv(*program, GL_INFO_LOG_LENGTH, &logLength);
-
-        if (logLength > 0) {
-            char* log = new char[logLength + 1];
-            glGetProgramInfoLog(*program, logLength, NULL, log);
-
-            std::cout << "Shader program link error ["
-                << " log: " << log
-                << " ]" << std::endl;
-
-            std::vector<GLuint>::iterator jit = attachedShaders.begin(), jend = attachedShaders.end();
-            for (; jit != jend; ++jit) {
-                glDetachShader(*program, *jit);
-                glDeleteShader(*jit);
-            }
-
-            glDeleteProgram(*program);
-
-            return false;
-        }
-    }
-
-    // Detach shaders as we don't need them anymore after successful link
-    std::vector<GLuint>::iterator jit = attachedShaders.begin(), jend = attachedShaders.end();
-    for (; jit != jend; ++jit) {
-        glDetachShader(*program, *jit);
-    }
-
-    // Shader program is loaded and ready to use!
-    return true;
-}
-
-} // namespace
-
 Client::Client(std::shared_ptr<agtui::GLView> glView,
-               std::shared_ptr<aftfs::Filesystem> filesystem)
+               std::shared_ptr<aftfs::FileSystem> fileSystem)
 {
     // initialize the platform object
-    std::shared_ptr<agte::Platform> platform(new agte::Platform(filesystem, glView));
+    std::shared_ptr<agte::Platform> platform(new agte::Platform(fileSystem, glView));
 
     // create the engine
     m_engine = std::shared_ptr<agte::Engine>(new agte::Engine(platform));
@@ -203,22 +82,45 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     
     // register the component managers with the respective systems
     renderSystem->addTransformComponents(space, transformComponents);
-    //renderSystem->registerTransform2dComponents(mainSpace, transform2dManager);
-    //renderSystem->registerVisual2dComponents(mainSpace, visual2dManager);
+
+    typedef agte::ComponentPool<agtc::Visual2dComponent> Visual2dComponents;
+    std::shared_ptr<Visual2dComponents> visual2dComponents(new Visual2dComponents(space));
+
+    renderSystem->addVisual2dComponents(space, visual2dComponents);
+
+    // create the sprite material for the entities
+    glView->renderingContext()->makeCurrent();
+    std::shared_ptr<agta::Sprite2dMaterial> sprite(new agta::Sprite2dMaterial(fileSystem));
+
+    std::vector<agtg::Vertex<float> > vertices;
+    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>(-1.0f, -1.0f, 0.0f)));
+    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>( 1.0f, -1.0f, 0.0f)));
+    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>(-1.0f,  1.0f, 0.0f)));
+    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>( 1.0f,  1.0f, 0.0f)));
+
+    std::shared_ptr<agta::Mesh> mesh(new agta::Mesh(vertices));
 
     // create the entities and related components
     agte::Entity e1 = space->createEntity();
 
     agtc::TransformComponent& p1 = transformComponents->createComponent(e1);
-    p1.translate(agtm::Vector3<float>(50.0f, 100.0f, 0.0f));
+    p1.translate(agtm::Vector3<float>(50.0f, 0.0f, 0.0f));
     p1.scale(agtm::Vector3<float>(16.0f, 16.0f, 0.0f));
+
+    agtc::Visual2dComponent& v1 = visual2dComponents->createComponent(e1);
+    v1.material(sprite);
+    v1.mesh(mesh);
 
     agte::Entity e2 = space->createEntity();
 
     agtc::TransformComponent& p2 = transformComponents->createComponent(e2);
-    p2.translate(agtm::Vector3<float>(-50.0f, -50.0f, 0.0f));
+    p2.translate(agtm::Vector3<float>(-50.0f, 0.0f, 0.0f));
     p2.scale(agtm::Vector3<float>(64.0f, 64.0f, 0.0f));
 
+    agtc::Visual2dComponent& v2 = visual2dComponents->createComponent(e2);
+    v2.material(sprite);
+    v2.mesh(mesh);
+    
     //space->destroyEntity(circle);
 
     // create the image for the ant sprite
@@ -246,8 +148,7 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     glView->addResizeEventHandler("client", resizeEventHandler);
 
-    std::function<void ()> drawEventHandler
-        = std::bind(&Client::onDraw, this);
+    std::function<void ()> drawEventHandler = std::bind(&Client::onDraw, this);
 
     glView->addDrawEventHandler("client", drawEventHandler);
 }
@@ -258,6 +159,7 @@ Client::~Client()
 void Client::run()
 {
     std::cout << "Client::run" << std::endl;
+    //onDraw();
 }
 
 void Client::stop()

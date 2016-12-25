@@ -2,11 +2,9 @@
 #define INCLUDED_UIMAC_OPENGLWINDOW_H
 
 #include <agtui_glview.h>
-#include <agtg_renderingcontext.h>
 #include <agtm_rect.h>
-#include <agtm_point2d.h>
-#include <agtui_mouseevent.h>
-#include <aftt_datetime.h>
+#include <memory>
+#include <string>
 
 namespace uimac {
 

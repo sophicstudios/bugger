@@ -8,7 +8,7 @@
 
 namespace util {
 
-class BundleFilesystem : public aftfs::Filesystem
+class BundleFileSystem : public aftfs::FileSystem
 {
 public:
     enum Root {
@@ -17,23 +17,23 @@ public:
         Root_SUPPORT
     };
     
-    BundleFilesystem();
+    BundleFileSystem();
 
-    BundleFilesystem(Root root);
+    BundleFileSystem(Root root);
     
-    virtual ~BundleFilesystem();
+    virtual ~BundleFileSystem();
     
-    virtual aftu::URL getCurrentDirectory(aftfs::Filesystem::Status* status = NULL);
+    virtual aftu::URL getCurrentDirectory(aftfs::FileSystem::Status* status = NULL);
     
-    virtual aftfs::Filesystem::Status setCurrentDirectory(aftu::URL const& url);
+    virtual aftfs::FileSystem::Status setCurrentDirectory(aftu::URL const& url);
     
-    virtual aftfs::Filesystem::Status listCurrentDirectory(std::vector<aftu::URL>& results);
+    virtual aftfs::FileSystem::Status listCurrentDirectory(std::vector<aftu::URL>& results);
     
-    virtual aftfs::Filesystem::Status listDirectory(std::vector<aftu::URL>& results, aftu::URL const& url);
+    virtual aftfs::FileSystem::Status listDirectory(std::vector<aftu::URL>& results, aftu::URL const& url);
     
-    virtual aftfs::Filesystem::DirectoryEntryPtr directoryEntry(aftu::URL const& url, aftfs::Filesystem::Status* status = NULL);
+    virtual aftfs::FileSystem::DirectoryEntryPtr directoryEntry(aftu::URL const& url, aftfs::FileSystem::Status* status = NULL);
     
-    virtual aftfs::Filesystem::FileReaderPtr openFileReader(aftu::URL const& url, aftfs::Filesystem::Status* status = NULL);
+    virtual aftfs::FileSystem::FileReaderPtr openFileReader(aftu::URL const& url, aftfs::FileSystem::Status* status = NULL);
     
 private:
     struct Priv;
