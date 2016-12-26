@@ -3,14 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		630989AC1E04CDFF00CF638D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630989AB1E04CDFF00CF638D /* Default-568h@2x.png */; };
-		63098A501E04D62D00CF638D /* libaft-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CA9A401E037175002240BE /* libaft-ios.a */; };
-		63098A511E04D63300CF638D /* libact-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63098A4F1E04D5E100CF638D /* libact-ios.a */; };
-		63098A521E04D63800CF638D /* libagt-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CA9A461E037175002240BE /* libagt-ios.a */; };
 		63098A551E04E11200CF638D /* uiios_displaytimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 63098A531E04E11200CF638D /* uiios_displaytimer.mm */; };
 		63098A581E0F311600CF638D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 63098A571E0F311600CF638D /* shaders */; };
 		63098A5A1E0F313D00CF638D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 63098A591E0F313D00CF638D /* shaders */; };
@@ -43,6 +40,9 @@
 		FAC788721A19352A0037CA1C /* uimac_displaytimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAC788701A19352A0037CA1C /* uimac_displaytimer.mm */; };
 		FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACBACA016FF5B7A008B2004 /* game_client.cpp */; };
 		FACBACA216FF5B7A008B2004 /* game_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACBACA016FF5B7A008B2004 /* game_client.cpp */; };
+		FAE081A31E10A51000C28730 /* libaft-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CA9A401E037175002240BE /* libaft-ios.a */; };
+		FAE081A41E10A51600C28730 /* libact-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63098A4F1E04D5E100CF638D /* libact-ios.a */; };
+		FAE081A51E10A51B00C28730 /* libagt-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CA9A461E037175002240BE /* libagt-ios.a */; };
 		FAED4A711A0E70B400B1B685 /* libpng.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAED4A701A0E70B400B1B685 /* libpng.dylib */; };
 		FAED4A751A0F2A2B00B1B685 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAED4A741A0F2A2B00B1B685 /* libz.dylib */; };
 		FAED4A771A0F2A4D00B1B685 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAED4A761A0F2A4D00B1B685 /* libz.dylib */; };
@@ -244,9 +244,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63098A521E04D63800CF638D /* libagt-ios.a in Frameworks */,
-				63098A511E04D63300CF638D /* libact-ios.a in Frameworks */,
-				63098A501E04D62D00CF638D /* libaft-ios.a in Frameworks */,
+				FAE081A31E10A51000C28730 /* libaft-ios.a in Frameworks */,
+				FAE081A41E10A51600C28730 /* libact-ios.a in Frameworks */,
+				FAE081A51E10A51B00C28730 /* libagt-ios.a in Frameworks */,
 				FAED4A751A0F2A2B00B1B685 /* libz.dylib in Frameworks */,
 				FA2318EF179328140050DE3A /* QuartzCore.framework in Frameworks */,
 				FA223B0017618842000FE3E9 /* OpenGLES.framework in Frameworks */,
@@ -577,7 +577,7 @@
 				ORGANIZATIONNAME = "Sophic Studios";
 			};
 			buildConfigurationList = FA9B160B15AA78B20017DCD5 /* Build configuration list for PBXProject "bugger" */;
-			compatibilityVersion = "Xcode 6.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
