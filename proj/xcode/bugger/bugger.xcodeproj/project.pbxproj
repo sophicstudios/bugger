@@ -33,8 +33,6 @@
 		FAA6CD8D15D83C2300F480F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */; };
 		FAA8DB76185AB6FB00B6B263 /* util_convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */; };
 		FAA8DB77185AB6FB00B6B263 /* util_convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */; };
-		FABC66191A36B3E900D3EBCB /* game_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FABC66171A36B3E900D3EBCB /* game_sprite.cpp */; };
-		FABC661A1A36B3E900D3EBCB /* game_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FABC66171A36B3E900D3EBCB /* game_sprite.cpp */; };
 		FABDD7C917E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */; };
 		FABDD7CA17E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */; };
 		FAC788721A19352A0037CA1C /* uimac_displaytimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAC788701A19352A0037CA1C /* uimac_displaytimer.mm */; };
@@ -218,8 +216,6 @@
 		FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		FAA8DB74185AAD2100B6B263 /* util_convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_convert.h; path = ../../../src/util/util_convert.h; sourceTree = "<group>"; };
 		FAA8DB75185AB6FB00B6B263 /* util_convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_convert.cpp; path = ../../../src/util/util_convert.cpp; sourceTree = "<group>"; };
-		FABC66171A36B3E900D3EBCB /* game_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game_sprite.cpp; path = ../../../src/game/game_sprite.cpp; sourceTree = "<group>"; };
-		FABC66181A36B3E900D3EBCB /* game_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_sprite.h; path = ../../../src/game/game_sprite.h; sourceTree = "<group>"; };
 		FABDD7C817E4A2D00092F79B /* util_bundlefilesystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_bundlefilesystem.cpp; path = ../../../src/util/util_bundlefilesystem.cpp; sourceTree = "<group>"; };
 		FAC788681A16AB4E0037CA1C /* bugger-ios-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "bugger-ios-Info.plist"; path = "bugger-ios/bugger-ios-Info.plist"; sourceTree = "<group>"; };
 		FAC7886E1A16AB830037CA1C /* bugger-macosx-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "bugger-macosx-Info.plist"; path = "bugger-macosx/bugger-macosx-Info.plist"; sourceTree = "<group>"; };
@@ -304,14 +300,14 @@
 			name = appmac;
 			sourceTree = "<group>";
 		};
-		FA04E1CD15C4B40200F7D2F1 /* mac */ = {
+		FA04E1CD15C4B40200F7D2F1 /* osx */ = {
 			isa = PBXGroup;
 			children = (
 				63098A571E0F311600CF638D /* shaders */,
 				FAC7886E1A16AB830037CA1C /* bugger-macosx-Info.plist */,
 				FA04E1CE15C4B40A00F7D2F1 /* lang.en */,
 			);
-			name = mac;
+			name = osx;
 			sourceTree = "<group>";
 		};
 		FA04E1CE15C4B40A00F7D2F1 /* lang.en */ = {
@@ -364,15 +360,15 @@
 			children = (
 				630989AB1E04CDFF00CF638D /* Default-568h@2x.png */,
 				63CA9A311E037174002240BE /* aegis.xcodeproj */,
-				FA9B164F15AA82E10017DCD5 /* Resources */,
-				FA9B164915AA80470017DCD5 /* Shaders */,
-				FA9B160F15AA78BF0017DCD5 /* Source */,
-				FA9B161915AA79B40017DCD5 /* Frameworks */,
-				FA9B161715AA79B40017DCD5 /* Products */,
+				FA9B164F15AA82E10017DCD5 /* resources */,
+				FA9B164915AA80470017DCD5 /* shaders */,
+				FA9B160F15AA78BF0017DCD5 /* src */,
+				FA9B161915AA79B40017DCD5 /* frameworks */,
+				FA9B161715AA79B40017DCD5 /* products */,
 			);
 			sourceTree = "<group>";
 		};
-		FA9B160F15AA78BF0017DCD5 /* Source */ = {
+		FA9B160F15AA78BF0017DCD5 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				FAFB3A6417C1330E002510F9 /* util */,
@@ -380,7 +376,7 @@
 				FA9B161015AA78C50017DCD5 /* app */,
 				FA9B161115AA79210017DCD5 /* game */,
 			);
-			name = Source;
+			name = src;
 			sourceTree = "<group>";
 		};
 		FA9B161015AA78C50017DCD5 /* app */ = {
@@ -397,22 +393,20 @@
 			children = (
 				FACBAC9F16FF58E1008B2004 /* game_client.h */,
 				FACBACA016FF5B7A008B2004 /* game_client.cpp */,
-				FABC66181A36B3E900D3EBCB /* game_sprite.h */,
-				FABC66171A36B3E900D3EBCB /* game_sprite.cpp */,
 			);
 			name = game;
 			sourceTree = "<group>";
 		};
-		FA9B161715AA79B40017DCD5 /* Products */ = {
+		FA9B161715AA79B40017DCD5 /* products */ = {
 			isa = PBXGroup;
 			children = (
 				FA9B161615AA79B40017DCD5 /* bugger-ios.app */,
 				FAF9E4C315C9CCFC00601463 /* bugger-macosx.app */,
 			);
-			name = Products;
+			name = products;
 			sourceTree = "<group>";
 		};
-		FA9B161915AA79B40017DCD5 /* Frameworks */ = {
+		FA9B161915AA79B40017DCD5 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				FA57D99D1DBBAE3400264358 /* libGLEW.a */,
@@ -422,11 +416,11 @@
 				FAED4A741A0F2A2B00B1B685 /* libz.dylib */,
 				FAED4A721A0E70CB00B1B685 /* libpng.a */,
 				FAED4A701A0E70B400B1B685 /* libpng.dylib */,
-				FAC45A8B19E99F8500329DAB /* macosx */,
+				FAC45A8B19E99F8500329DAB /* osx */,
 				FAC45A8419E99F4B00329DAB /* ios */,
 				FA14A0A319DF6F9A0058A4CA /* libpng16.a */,
 			);
-			name = Frameworks;
+			name = frameworks;
 			sourceTree = "<group>";
 		};
 		FA9B164015AA7A0A0017DCD5 /* appios */ = {
@@ -440,12 +434,12 @@
 			name = appios;
 			sourceTree = "<group>";
 		};
-		FA9B164915AA80470017DCD5 /* Shaders */ = {
+		FA9B164915AA80470017DCD5 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
 				FA9B164A15AA807B0017DCD5 /* test */,
 			);
-			name = Shaders;
+			name = shaders;
 			sourceTree = "<group>";
 		};
 		FA9B164A15AA807B0017DCD5 /* test */ = {
@@ -457,14 +451,14 @@
 			name = test;
 			sourceTree = "<group>";
 		};
-		FA9B164F15AA82E10017DCD5 /* Resources */ = {
+		FA9B164F15AA82E10017DCD5 /* resources */ = {
 			isa = PBXGroup;
 			children = (
 				FAFB3A6117C120AC002510F9 /* images */,
-				FA04E1CD15C4B40200F7D2F1 /* mac */,
+				FA04E1CD15C4B40200F7D2F1 /* osx */,
 				FA9B165015AA83870017DCD5 /* ios */,
 			);
-			name = Resources;
+			name = resources;
 			sourceTree = "<group>";
 		};
 		FA9B165015AA83870017DCD5 /* ios */ = {
@@ -501,7 +495,7 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
-		FAC45A8B19E99F8500329DAB /* macosx */ = {
+		FAC45A8B19E99F8500329DAB /* osx */ = {
 			isa = PBXGroup;
 			children = (
 				FA04E1B015C4AFC100F7D2F1 /* Cocoa.framework */,
@@ -509,7 +503,7 @@
 				FAA6CD8C15D83C2300F480F0 /* QuartzCore.framework */,
 				FAFD77BC1895887200734186 /* boost.framework */,
 			);
-			name = macosx;
+			name = osx;
 			sourceTree = "<group>";
 		};
 		FAFB3A6417C1330E002510F9 /* util */ = {
@@ -584,7 +578,7 @@
 				en,
 			);
 			mainGroup = FA9B160615AA78B20017DCD5;
-			productRefGroup = FA9B161715AA79B40017DCD5 /* Products */;
+			productRefGroup = FA9B161715AA79B40017DCD5 /* products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -730,7 +724,6 @@
 				FABDD7C917E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */,
 				FAA8DB76185AB6FB00B6B263 /* util_convert.cpp in Sources */,
 				FACBACA116FF5B7A008B2004 /* game_client.cpp in Sources */,
-				FABC66191A36B3E900D3EBCB /* game_sprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,7 +739,6 @@
 				FABDD7CA17E4A2D00092F79B /* util_bundlefilesystem.cpp in Sources */,
 				FAA8DB77185AB6FB00B6B263 /* util_convert.cpp in Sources */,
 				FACBACA216FF5B7A008B2004 /* game_client.cpp in Sources */,
-				FABC661A1A36B3E900D3EBCB /* game_sprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,7 +830,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(CONFIGURATION_BUILD_DIR)/**",
+					"$(TARGET_BUILD_DIR)/**",
 					/opt/local/include,
 					/usr/local/include,
 				);
@@ -874,7 +866,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(CONFIGURATION_BUILD_DIR)/**",
+					"$(TARGET_BUILD_DIR)/**",
 					/opt/local/include,
 					/usr/local/include,
 				);
@@ -889,6 +881,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = ZV6Z2UYZAZ;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -922,6 +915,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = ZV6Z2UYZAZ;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../../src/app/appios/appios_prefix.pch;

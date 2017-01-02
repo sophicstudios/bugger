@@ -1,5 +1,4 @@
 #include <game_client.h>
-#include <game_sprite.h>
 
 #include <agte_platform.h>
 #include <agte_rendersystem.h>
