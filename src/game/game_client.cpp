@@ -10,6 +10,7 @@
 #include <agta_sprite2dmaterial.h>
 #include <agta_mesh.h>
 #include <agtg_colorrgba.h>
+#include <agtg_shaderprogram.h>
 #include <agtg_vertex.h>
 #include <agtui_boxsizer.h>
 #include <agtm_matrix3.h>
@@ -89,6 +90,9 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     // create the sprite material for the entities
     glView->renderingContext()->makeCurrent();
+
+    std::shared_ptr<agtg::ShaderProgram> shaderProgram(new agtg::ShaderProgram());
+    
     std::shared_ptr<agta::Sprite2dMaterial> sprite(new agta::Sprite2dMaterial(fileSystem));
 
     std::vector<agtg::Vertex<float> > vertices;
@@ -98,6 +102,9 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>( 1.0f,  1.0f, 0.0f)));
 
     std::shared_ptr<agta::Mesh> mesh(new agta::Mesh(vertices));
+    // mesh->vertices(vertices);
+    // mesh->textureCoordinates(texCoords);
+    // mesh->normals(normals);
 
     // create the entities and related components
     agte::Entity e1 = space->createEntity();
