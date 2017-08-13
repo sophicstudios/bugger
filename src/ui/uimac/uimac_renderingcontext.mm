@@ -26,6 +26,21 @@ void RenderingContext::makeCurrent()
     [m_context makeCurrentContext];
 }
 
+
+agtg::RenderingContext::ShaderProgramPtr RenderingContext::createShader()
+{
+    return agtg::RenderingContext::ShaderProgramPtr(new agtg::ShaderProgram());
+}
+
+void RenderingContext::useShader(agtg::RenderingContext::ShaderProgramPtr shaderProgram)
+{
+    GLuint program = shaderProgram->id();
+    if (program != m_currentProgram)
+    {
+        glUseProgram(program);
+    }
+}
+
 void RenderingContext::preRender()
 {
     CGLContextObj cglContext = (CGLContextObj)[m_context CGLContextObj];

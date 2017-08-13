@@ -2,6 +2,7 @@
 #define INCLUDED_UIMAC_OPENGLRENDERINGCONTEXT_H
 
 #include <agtg_gl.h>
+#include <agtg_shaderprogram.h>
 #include <AppKit/NSOpenGL.h>
 #include <agtg_renderingcontext.h>
 
@@ -15,7 +16,11 @@ public:
     virtual ~RenderingContext();
     
     virtual void makeCurrent();
-    
+
+    virtual agtg::RenderingContext::ShaderProgramPtr createShader();
+
+    virtual void useShader(agtg::RenderingContext::ShaderProgramPtr shaderProgram);
+
     virtual void preRender();
     
     virtual void postRender();
@@ -30,6 +35,7 @@ public:
 
 private:
     NSOpenGLContext* m_context;
+    GLuint m_currentProgram;
 };
 
 } // namespace

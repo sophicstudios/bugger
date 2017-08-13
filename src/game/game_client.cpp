@@ -29,6 +29,10 @@
 
 namespace game {
 
+namespace {
+
+} // namespace
+
 Client::Client(std::shared_ptr<agtui::GLView> glView,
                std::shared_ptr<aftfs::FileSystem> fileSystem)
 {
@@ -88,12 +92,13 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     renderSystem->addVisual2dComponents(space, visual2dComponents);
 
-    // create the sprite material for the entities
-    glView->renderingContext()->makeCurrent();
+    std::shared_ptr<agtg::RenderingContext> context = glView->renderingContext();
 
-    std::shared_ptr<agtg::ShaderProgram> shaderProgram(new agtg::ShaderProgram());
-    
-    std::shared_ptr<agta::Sprite2dMaterial> sprite(new agta::Sprite2dMaterial(fileSystem));
+    context->makeCurrent();
+
+    std::shared_ptr<agtg::ShaderProgram> shaderProgram = context->createShader();
+    shaderProgram->addVertexShader(*fileSystem, "shaders/sprite.vsh");
+    shaderProgram->addFragmentShader(*fileSystem, "shaders/sprite.fsh");
 
     std::vector<agtg::Vertex<float> > vertices;
     vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>(-1.0f, -1.0f, 0.0f)));
@@ -102,9 +107,9 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>( 1.0f,  1.0f, 0.0f)));
 
     std::shared_ptr<agta::Mesh> mesh(new agta::Mesh(vertices));
-    // mesh->vertices(vertices);
-    // mesh->textureCoordinates(texCoords);
-    // mesh->normals(normals);
+
+    // create the sprite material for the entities
+    //std::shared_ptr<agta::Sprite2dMaterial> sprite(new agta::Sprite2dMaterial(shaderProgram));
 
     // create the entities and related components
     agte::Entity e1 = space->createEntity();
