@@ -2,6 +2,7 @@
 #define INCLUDED_UIMAC_DISPLAYTIMER_H
 
 #include <agtui_displaytimer.h>
+#include <AppKit/AppKit.h>
 
 namespace uimac {
 

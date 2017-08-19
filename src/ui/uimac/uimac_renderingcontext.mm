@@ -1,5 +1,6 @@
 #import <uimac_renderingcontext.h>
 #import <iostream>
+#import <Quartz/Quartz.h>
 
 namespace uimac {
 

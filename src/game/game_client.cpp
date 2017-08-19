@@ -7,7 +7,7 @@
 #include <agte_orthographiccamera.h>
 #include <agtc_transformcomponent.h>
 #include <agtc_visual2dcomponent.h>
-#include <agta_sprite2dmaterial.h>
+#include <agta_material.h>
 #include <agta_mesh.h>
 #include <agtg_colorrgba.h>
 #include <agtg_shaderprogram.h>
@@ -119,8 +119,8 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     p1.scale(agtm::Vector3<float>(16.0f, 16.0f, 0.0f));
 
     agtc::Visual2dComponent& v1 = visual2dComponents->createComponent(e1);
-    v1.material(sprite);
-    v1.mesh(mesh);
+    //v1.material(sprite);
+    //v1.mesh(mesh);
 
     agte::Entity e2 = space->createEntity();
 
@@ -129,8 +129,8 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     p2.scale(agtm::Vector3<float>(64.0f, 64.0f, 0.0f));
 
     agtc::Visual2dComponent& v2 = visual2dComponents->createComponent(e2);
-    v2.material(sprite);
-    v2.mesh(mesh);
+    //v2.material(sprite);
+    //v2.mesh(mesh);
     
     //space->destroyEntity(circle);
 

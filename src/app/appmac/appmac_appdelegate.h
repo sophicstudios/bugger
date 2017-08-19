@@ -1,6 +1,8 @@
 #ifndef INCLUDED_ATTA_APPMAC_APPDELEGATE_H
 #define INCLUDED_ATTA_APPMAC_APPDELEGATE_H
 
+#include <AppKit/AppKit.h>
+
 struct appmac_AppDelegateImpl;
 
 @interface appmac_AppDelegate : NSObject <NSApplicationDelegate> {
