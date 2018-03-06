@@ -1,5 +1,5 @@
-#ifndef INCLUDED_ATTA_GAME_CLIENT_H
-#define INCLUDED_ATTA_GAME_CLIENT_H
+#ifndef INCLUDED_BUGGER_GAME_CLIENT_H
+#define INCLUDED_BUGGER_GAME_CLIENT_H
 
 #include <agte_engine.h>
 #include <agtui_glview.h>

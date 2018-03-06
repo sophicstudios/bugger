@@ -37,7 +37,7 @@ set(${PROJECT_NAME}_CMAKE_MODULE_SOURCES
 source_group(cmake/modules FILES ${${PROJECT_NAME}_CMAKE_MODULE_SOURCES})
 
 ################################################################################
-# appmac
+# Source: appmac
 ################################################################################
 
 set(${PROJECT_NAME}_APPMAC_SOURCES
@@ -49,7 +49,7 @@ set(${PROJECT_NAME}_APPMAC_SOURCES
 source_group(app/appmac FILES ${${PROJECT_NAME}_APPMAC_SOURCES})
 
 ################################################################################
-# game
+# Source: game
 ################################################################################
 
 set(${PROJECT_NAME}_GAME_SOURCES
@@ -60,7 +60,7 @@ set(${PROJECT_NAME}_GAME_SOURCES
 source_group(game FILES ${${PROJECT_NAME}_GAME_SOURCES})
 
 ################################################################################
-# uimac
+# Source: uimac
 ################################################################################
 
 set(${PROJECT_NAME}_UIMAC_SOURCES
@@ -75,7 +75,7 @@ set(${PROJECT_NAME}_UIMAC_SOURCES
 source_group(ui/uimac FILES ${${PROJECT_NAME}_UIMAC_SOURCES})
 
 ################################################################################
-# util
+# Source: util
 ################################################################################
 
 set(${PROJECT_NAME}_UTIL_SOURCES
@@ -88,7 +88,7 @@ set(${PROJECT_NAME}_UTIL_SOURCES
 source_group(util FILES ${${PROJECT_NAME}_UTIL_SOURCES})
 
 ################################################################################
-# shader
+# Resources: shader
 ################################################################################
 
 set(${PROJECT_NAME}_SHADER_RESOURCES
@@ -96,11 +96,16 @@ set(${PROJECT_NAME}_SHADER_RESOURCES
     resources/mac/shaders/sprite.vsh
 )
 
-source_group(resources/shaders FILES ${${PROJECT_NAME}_SHADER_RESOURCES})
+source_group(Resources/shaders FILES ${${PROJECT_NAME}_SHADER_RESOURCES})
 
 set_property(SOURCE ${${PROJECT_NAME}_SHADER_RESOURCES}
     PROPERTY MACOSX_PACKAGE_LOCATION "Resources/shaders"
 )
+
+# create an empty list of files for the Resources folder to be referenced
+# by set_target_properties. Actual resource files will be placed in
+# subfolders using MACOSX_PACKAGE_LOCATION
+set(${PROJECT_NAME}_RESOURCES)
 
 set(${PROJECT_NAME}_SOURCES
     ${${PROJECT_NAME}_APPMAC_SOURCES}
@@ -121,7 +126,6 @@ set(${PROJECT_NAME}_INCLUDE_DIRS
 include_directories(
     ${${PROJECT_NAME}_INCLUDE_DIRS}
     ${agt_INCLUDE_DIRS}
-    ${act_INCLUDE_DIRS}
     ${aft_INCLUDE_DIRS}
 )
 
@@ -136,7 +140,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_MODULE_PATH}/Info.plist.in"
 )
 
-target_link_libraries(${PROJECT_NAME} agt act aft ${APPKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+target_link_libraries(${PROJECT_NAME} agt aft ${APPKIT_LIBRARY} ${COREVIDEO_LIBRARY})
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_11)
 

@@ -1,6 +1,6 @@
 #import <uimac_renderingcontext.h>
-#import <iostream>
-#import <Quartz/Quartz.h>
+#import <aftl_logger.h>
+#import <AppKit/AppKit.h>
 
 namespace uimac {
 
@@ -8,7 +8,7 @@ RenderingContext::RenderingContext(NSOpenGLPixelFormat* pixelFormat)
 {
     m_context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
     if (!m_context) {
-        std::cerr << "Could not allocate context" << std::endl;
+        throw aftu::Exception("Could not allocate context");
     }
     
     GLint sync = 1;
@@ -31,15 +31,6 @@ void RenderingContext::makeCurrent()
 agtg::RenderingContext::ShaderProgramPtr RenderingContext::createShader()
 {
     return agtg::RenderingContext::ShaderProgramPtr(new agtg::ShaderProgram());
-}
-
-void RenderingContext::useShader(agtg::RenderingContext::ShaderProgramPtr shaderProgram)
-{
-    GLuint program = shaderProgram->id();
-    if (program != m_currentProgram)
-    {
-        glUseProgram(program);
-    }
 }
 
 void RenderingContext::preRender()

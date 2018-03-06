@@ -7,6 +7,7 @@
 #include <agte_orthographiccamera.h>
 #include <agtc_transformcomponent.h>
 #include <agtc_visual2dcomponent.h>
+#include <agta_assetpool.h>
 #include <agta_material.h>
 #include <agta_mesh.h>
 #include <agtg_colorrgba.h>
@@ -20,10 +21,10 @@
 #include <agtr_imageloaderpng.h>
 #include <aftt_datetimeinterval.h>
 #include <aftt_systemtime.h>
-
-#include <iostream>
+#include <aftl_logger.h>
 #include <functional>
 #include <algorithm>
+#include <string>
 #include <cmath>
 #include <cstdlib>
 
@@ -31,16 +32,28 @@ namespace game {
 
 namespace {
 
+const size_t MAX_MATERIALS = 2048;
+const size_t MAX_MESHES = 1024;
+const size_t MAX_SHADERS = 8;
+
 } // namespace
 
 Client::Client(std::shared_ptr<agtui::GLView> glView,
                std::shared_ptr<aftfs::FileSystem> fileSystem)
 {
+    AFTL_LOG_INFO << "Client::Client()" << AFTL_LOG_END;
+    
+    //aftl::log_info() << "Client::Client()" << aftl::log_end();
+
     // initialize the platform object
     std::shared_ptr<agte::Platform> platform(new agte::Platform(fileSystem, glView));
 
     // create the engine
     m_engine = std::shared_ptr<agte::Engine>(new agte::Engine(platform));
+
+    // create the main space and add it to the engine
+    std::shared_ptr<agte::Space> space(new agte::Space());
+    m_engine->addSpace("main", space);
 
     // create the EventSystem and add it to the engine
     //std::shared_ptr<agta::System> eventSystem(new agta::EventSystem());
@@ -49,10 +62,6 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     // create the RenderSystem and add it to the engine
     std::shared_ptr<agte::RenderSystem> renderSystem(new agte::RenderSystem(platform));
     m_engine->registerSystem(renderSystem);
-
-    // create the main space and add it to the engine
-    std::shared_ptr<agte::Space> space(new agte::Space());
-    m_engine->addSpace("main", space);
 
     std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer(agtui::BoxSizer::Direction_VERTICAL));
     glView->setSizer(sizer);
@@ -65,6 +74,21 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     std::shared_ptr<agte::Camera> camera(new agte::OrthographicCamera(surface));
     renderSystem->addCamera(space, camera);
+
+    // Create an AssetPool for Materials
+    typedef agta::AssetPool<agta::Material> MaterialAssets;
+    std::shared_ptr<MaterialAssets> materialAssets(new MaterialAssets(MAX_MATERIALS));
+    renderSystem->addMaterialAssets(space, materialAssets);
+
+    // Create an AssetPool for Meshes
+    typedef agta::AssetPool<agta::Mesh> MeshPool;
+    std::shared_ptr<MeshPool> meshAssets(new MeshPool(MAX_MESHES));
+    renderSystem->addMeshAssets(space, meshAssets);
+
+    // Create an AssetPool for Shaders
+    typedef agta::AssetPool<agtg::ShaderProgram> ShaderPool;
+    std::shared_ptr<ShaderPool> shaderAssets(new ShaderPool(MAX_SHADERS));
+    renderSystem->addShaderAssets(space, shaderAssets);
 
     //***** PHYSICS SYSTEM *****
     // A PhysicsSystem works on entities with components of type:
@@ -83,31 +107,40 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     // create the component managers for the main space
     typedef agte::ComponentPool<agtc::TransformComponent> TransformComponents;
     std::shared_ptr<TransformComponents> transformComponents(new TransformComponents(space));
-    
-    // register the component managers with the respective systems
-    renderSystem->addTransformComponents(space, transformComponents);
 
     typedef agte::ComponentPool<agtc::Visual2dComponent> Visual2dComponents;
     std::shared_ptr<Visual2dComponents> visual2dComponents(new Visual2dComponents(space));
 
+    // register the component managers with the respective systems
+    renderSystem->addTransformComponents(space, transformComponents);
     renderSystem->addVisual2dComponents(space, visual2dComponents);
 
+    // Load the current rendering context
     std::shared_ptr<agtg::RenderingContext> context = glView->renderingContext();
-
     context->makeCurrent();
 
-    std::shared_ptr<agtg::ShaderProgram> shaderProgram = context->createShader();
-    shaderProgram->addVertexShader(*fileSystem, "shaders/sprite.vsh");
-    shaderProgram->addFragmentShader(*fileSystem, "shaders/sprite.fsh");
+    // Load the sprite shader
+    std::pair<size_t, agtg::ShaderProgram&> spriteShaderAsset = shaderAssets->createAsset();
+    agtg::ShaderProgram& spriteShader = spriteShaderAsset.second;
+    spriteShader.addVertexShader(*fileSystem, "shaders/sprite.vsh");
+    spriteShader.addFragmentShader(*fileSystem, "shaders/sprite.fsh");
+    spriteShader.link();
 
-    std::vector<agtg::Vertex<float> > vertices;
-    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>(-1.0f, -1.0f, 0.0f)));
-    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>( 1.0f, -1.0f, 0.0f)));
-    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>(-1.0f,  1.0f, 0.0f)));
-    vertices.push_back(agtg::Vertex<float>(agtm::Vector3<float>( 1.0f,  1.0f, 0.0f)));
+    // Create a square mesh
+    std::vector<agtm::Vector3<float> > coords;
+    coords.push_back(agtm::Vector3<float>(-1.0f, -1.0f, 0.0f));
+    coords.push_back(agtm::Vector3<float>( 1.0f, -1.0f, 0.0f));
+    coords.push_back(agtm::Vector3<float>(-1.0f,  1.0f, 0.0f));
+    coords.push_back(agtm::Vector3<float>( 1.0f,  1.0f, 0.0f));
 
-    std::shared_ptr<agta::Mesh> mesh(new agta::Mesh(vertices));
+    // Create an mesh asset for rendering the vertices
+    std::pair<size_t, agta::Mesh&> meshAsset = meshAssets->createAsset();
+    agta::Mesh& mesh = meshAsset.second;
+    mesh.coords(coords);
+    //mesh.bind(spriteShader);
 
+    // Create a basic color material
+    
     // create the sprite material for the entities
     //std::shared_ptr<agta::Sprite2dMaterial> sprite(new agta::Sprite2dMaterial(shaderProgram));
 
@@ -115,12 +148,12 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     agte::Entity e1 = space->createEntity();
 
     agtc::TransformComponent& p1 = transformComponents->createComponent(e1);
-    p1.translate(agtm::Vector3<float>(50.0f, 0.0f, 0.0f));
-    p1.scale(agtm::Vector3<float>(16.0f, 16.0f, 0.0f));
+    p1.translate(agtm::Vector3<float>(100.0f, 0.0f, 0.0f));
+    p1.scale(agtm::Vector3<float>(32.0f, 32.0f, 0.0f));
 
     agtc::Visual2dComponent& v1 = visual2dComponents->createComponent(e1);
-    //v1.material(sprite);
-    //v1.mesh(mesh);
+    v1.shaderId(spriteShaderAsset.first);
+    v1.meshId(meshAsset.first);
 
     agte::Entity e2 = space->createEntity();
 
@@ -129,9 +162,9 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     p2.scale(agtm::Vector3<float>(64.0f, 64.0f, 0.0f));
 
     agtc::Visual2dComponent& v2 = visual2dComponents->createComponent(e2);
-    //v2.material(sprite);
-    //v2.mesh(mesh);
-    
+    v2.shaderId(spriteShaderAsset.first);
+    v2.meshId(meshAsset.first);
+
     //space->destroyEntity(circle);
 
     // create the image for the ant sprite
@@ -169,13 +202,12 @@ Client::~Client()
 
 void Client::run()
 {
-    std::cout << "Client::run" << std::endl;
-    //onDraw();
+    AFTL_LOG_INFO << "Client::run" << AFTL_LOG_END;
 }
 
 void Client::stop()
 {
-    std::cout << "Client::stop" << std::endl;
+    AFTL_LOG_INFO << "Client::stop" << AFTL_LOG_END;
 }
 
 void Client::onDraw()

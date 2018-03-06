@@ -5,8 +5,9 @@
 #import <aftfs_localfilesystem.h>
 #import <util_bundlefilesystem.h>
 #import <agtm_rect.h>
-#import <agtm_point2d.h>
+#import <agtm_vector2.h>
 #import <agtm_size2d.h>
+#import <aftl_logger.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreFoundation/CFURL.h>
 #import <memory>
@@ -49,16 +50,16 @@ struct appmac_AppDelegateImpl
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
-    NSLog(@"applicationWillFinishLaunching: %@", notification);
+    AFTL_LOG_INFO << "applicationWillFinishLaunching" << AFTL_LOG_END;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    NSLog(@"applicationDidFinishLaunching: %@", notification);
-    
+    AFTL_LOG_INFO << "applicationDidFinishLaunhing" << AFTL_LOG_END;
+
     m_impl = new appmac_AppDelegateImpl();
 
-    agtm::Rect<float> bounds(agtm::Point2d<float>(0.0f, 0.0f), agtm::Size2d<float>(568, 320));
+    agtm::Rect<float> bounds(agtm::Vector2<float>(0.0f, 0.0f), agtm::Size2d<float>(568, 320));
     m_impl->window = std::shared_ptr<uimac::OpenGLWindow>(new uimac::OpenGLWindow("Bugger", bounds));
 
     [self createMainMenu];
@@ -72,49 +73,49 @@ struct appmac_AppDelegateImpl
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification
 {
-    NSLog(@"applicationWillBecomeActive");
+    AFTL_LOG_INFO << "applicationWillBecomeActive" << AFTL_LOG_END;
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
-    NSLog(@"applicationDidBecomeActive");
+    AFTL_LOG_INFO << "applicationDidBecomeActive" << AFTL_LOG_END;
     m_impl->client->run();
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
-    NSLog(@"applicationWillResignActive");
+    AFTL_LOG_INFO << "applicationWillResignActive" << AFTL_LOG_END;
 }
 
 - (void)applicationDidResignActive:(NSNotification *)notification
 {
-    NSLog(@"applicationDidResignActive");
+    AFTL_LOG_INFO << "applicationDidResignActive" << AFTL_LOG_END;
     m_impl->client->stop();
 }
 
 - (void)applicationWillHide:(NSNotification *)notification
 {
-    NSLog(@"applicationWillHide");
+    AFTL_LOG_INFO << "applicationWillHide" << AFTL_LOG_END;
 }
 
 - (void)applicationDidHide:(NSNotification *)notification
 {
-    NSLog(@"applicationDidHide");
+    AFTL_LOG_INFO << "applicationDidHide" << AFTL_LOG_END;
 }
 
 - (void)applicationWillUnhide:(NSNotification *)notification
 {
-    NSLog(@"applicationWillUnhide");
+    AFTL_LOG_INFO << "applicationWillUnhide" << AFTL_LOG_END;
 }
 
 - (void)applicationDidUnhide:(NSNotification *)notification
 {
-    NSLog(@"applicationDidUnhide");
+    AFTL_LOG_INFO << "applicationDidUnhide" << AFTL_LOG_END;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
-    NSLog(@"applicationWillTerminate: %@", notification);
+    AFTL_LOG_INFO << "applicationWillTerminate" << AFTL_LOG_END;
 
     delete m_impl;
 }

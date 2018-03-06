@@ -2,8 +2,8 @@
 #import <aftt_datetime.h>
 #import <aftt_systemtime.h>
 #import <aftu_exception.h>
+#import <aftl_logger.h>
 #import <QuartzCore/QuartzCore.h>
-#import <iostream>
 
 namespace uimac {
 
@@ -49,7 +49,7 @@ DisplayTimer::DisplayTimer(NSOpenGLContext* openglContext, NSOpenGLPixelFormat* 
     // Check the refresh period
     double refreshPeriod = CVDisplayLinkGetActualOutputVideoRefreshPeriod(m_impl->displayLink);
 
-    std::cout << "DisplayTimer: refreshPeriod: " << refreshPeriod << std::endl;
+    AFTL_LOG_INFO << "DisplayTimer: refreshPeriod: " << refreshPeriod << AFTL_LOG_END;
 
     // set the callback for the display link
     CVReturn cvResult = CVDisplayLinkSetOutputCallback(m_impl->displayLink, displayLinkCallback, &(m_impl->context));

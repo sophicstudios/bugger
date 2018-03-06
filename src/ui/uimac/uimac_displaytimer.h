@@ -1,5 +1,5 @@
-#ifndef INCLUDED_UIMAC_DISPLAYTIMER_H
-#define INCLUDED_UIMAC_DISPLAYTIMER_H
+#ifndef INCLUDED_BUGGER_UIMAC_DISPLAYTIMER_H
+#define INCLUDED_BUGGER_UIMAC_DISPLAYTIMER_H
 
 #include <agtui_displaytimer.h>
 #include <AppKit/AppKit.h>

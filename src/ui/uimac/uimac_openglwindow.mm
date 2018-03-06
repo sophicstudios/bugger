@@ -3,12 +3,13 @@
 #import <uimac_displaytimer.h>
 #import <agtg_gl.h>
 #import <agtm_rect.h>
+#import <agtm_vector2.h>
 #import <agtui_glview.h>
 #import <aftt_systemtime.h>
 #import <aftu_exception.h>
+#import <aftl_logger.h>
 #import <Cocoa/Cocoa.h>
 #import <Foundation/NSGeometry.h>
-#import <iostream>
 #import <string>
 #import <vector>
 
@@ -37,7 +38,7 @@ public:
     OpenGLView(NSRect bounds)
     {
         m_bounds = agtm::Rect<float>(
-            agtm::Point2d<float>(bounds.origin.x, bounds.origin.y),
+            agtm::Vector2<float>(bounds.origin.x, bounds.origin.y),
             agtm::Size2d<float>(bounds.size.width, bounds.size.height));
         
         // setup pixel format and rendering context
@@ -62,8 +63,7 @@ public:
 
         m_pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:&(attrs[0])];
         if (!m_pixelFormat) {
-            std::cerr << "Could not allocate pixel format! MAC_OS_X_VERSION_MAX_ALLOWED: " << MAC_OS_X_VERSION_MAX_ALLOWED << std::endl;
-            throw std::exception();
+            throw aftu::Exception() << "Could not allocate pixel format! MAC_OS_X_VERSION_MAX_ALLOWED: " << MAC_OS_X_VERSION_MAX_ALLOWED;
         }
 
         m_renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_pixelFormat));
@@ -78,7 +78,7 @@ public:
 
         if (oldVersionCheck) {
             const GLubyte* glVersion = glGetString(GL_VERSION);
-            std::cout << "OpenGL version (glGetString): " << glVersion << std::endl;
+            AFTL_LOG_INFO << "OpenGL version (glGetString): " << glVersion << AFTL_LOG_END;
         } else {
             GLint glMajorVersion;
             GLint glMinorVersion;
@@ -86,7 +86,7 @@ public:
             glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
             glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
 
-            std::cout << "OpenGL version: " << glMajorVersion << "." << glMinorVersion << std::endl;
+            AFTL_LOG_INFO << "OpenGL version: " << glMajorVersion << "." << glMinorVersion << AFTL_LOG_END;
         }
     }
 
@@ -118,24 +118,29 @@ public:
 
     void onViewResize(agtm::Rect<float> const& rect)
     {
-        std::cout << "OpenGLView::onViewResize" << std::endl;
+        AFTL_LOG_TRACE << "OpenGLView::onViewResize ["
+            << " rect: " << rect
+            << " ]" << AFTL_LOG_END;
+
         this->onResize(rect);
     }
     
     void onViewDraw(agtm::Rect<float> const& dirtyRect)
     {
-        std::cout << "OpenGLView::onViewDraw" << std::endl;
+        AFTL_LOG_TRACE << "OpenGLView::onViewDraw ["
+            << " dirtyRect: " << dirtyRect
+            << " ]" << AFTL_LOG_END;
         this->onDraw(dirtyRect);
     }
     
     void onViewMouseEvent(agtui::MouseEvent const& event)
     {
-        std::cout << "OpenGLView::onViewMouseEvent" << std::endl;
+        AFTL_LOG_TRACE << "OpenGLView::onViewMouseEvent" << AFTL_LOG_END;
     }
     
     void onViewKeyEvent()
     {
-        std::cout << "OpenGLView::onViewKeyEvent" << std::endl;
+        AFTL_LOG_TRACE << "OpenGLView::onViewKeyEvent" << AFTL_LOG_END;
     }
     
     CVReturn onDisplayRefresh(CVDisplayLinkRef displayLink,
@@ -248,11 +253,11 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 
 - (void)lockFocus
 {
-    std::cout << "lockFocus" << std::endl;
+    AFTL_LOG_TRACE << "lockFocus" << AFTL_LOG_END;
     [super lockFocus];
     
     if ([m_context view] != self) {
-        std::cout << "uimac_OpenGLView: setting context view to self" << std::endl;
+        AFTL_LOG_TRACE << "uimac_OpenGLView: setting context view to self" << AFTL_LOG_END;
         [m_context setView:self];
     }
 }
@@ -266,19 +271,19 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 {
     NSRect resizeBounds = [self bounds];
     
-    std::cout << "uimac_OpenGLView: resizeView ["
+    AFTL_LOG_TRACE << "uimac_OpenGLView: resizeView ["
         << " resizeBounds: ["
         << resizeBounds.origin.x << " " << resizeBounds.origin.y << " "
         << resizeBounds.size.width << " " << resizeBounds.size.height
         << " ] bounds: ["
         << m_bounds.origin.x << " " << m_bounds.origin.y << " "
         << m_bounds.size.width << " " << m_bounds.size.height
-        << " ]" << " ]" << std::endl;
+        << " ]" << " ]" << AFTL_LOG_END;
 
     m_bounds = resizeBounds;
     
     agtm::Rect<float> rect(
-        agtm::Point2d<float>(m_bounds.origin.x, m_bounds.origin.y),
+        agtm::Vector2<float>(m_bounds.origin.x, m_bounds.origin.y),
         agtm::Size2d<float>(m_bounds.size.width, m_bounds.size.height));
 
     m_glView->onViewResize(rect);
@@ -288,24 +293,24 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 {
     @autoreleasepool {
         if ([self inLiveResize]) {
-            std::cout << "uimac_OpenGLView: drawRect (inLiveResize) ["
+            AFTL_LOG_TRACE << "uimac_OpenGLView: drawRect (inLiveResize) ["
                 << " dirtyRect: ["
                 << dirtyRect.origin.x << " " << dirtyRect.origin.y << " "
                 << dirtyRect.size.width << " " << dirtyRect.size.height
-                << " ]" << " ]" << std::endl;
+                << " ]" << " ]" << AFTL_LOG_END;
 
             [self resizeView];
         }
         else {
-            std::cout << "drawRect ["
+            AFTL_LOG_TRACE << "drawRect ["
                 << " dirtyRect: ["
                 << dirtyRect.origin.x << " " << dirtyRect.origin.y << " "
                 << dirtyRect.size.width << " " << dirtyRect.size.height
-                << " ]" << " ]" << std::endl;
+                << " ]" << " ]" << AFTL_LOG_END;
         }
 
         agtm::Rect<float> rect(
-            agtm::Point2d<float>(m_bounds.origin.x, m_bounds.origin.y),
+            agtm::Vector2<float>(m_bounds.origin.x, m_bounds.origin.y),
             agtm::Size2d<float>(m_bounds.size.width, m_bounds.size.height));
 
         m_glView->onViewDraw(rect);
@@ -322,7 +327,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEDOWN;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_LEFT;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -334,7 +339,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEDOWN;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_RIGHT;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -346,7 +351,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEUP;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_LEFT;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -358,7 +363,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEUP;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_RIGHT;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -370,7 +375,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEMOVE;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_NONE;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -382,7 +387,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEDRAG;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_LEFT;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -394,7 +399,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEDRAG;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_RIGHT;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -406,7 +411,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSEENTER;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_NONE;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -418,7 +423,7 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     NSPoint location = [event locationInWindow];
     agtui::MouseEvent::Type type = agtui::MouseEvent::Type_MOUSELEAVE;
     agtui::MouseEvent::Button button = agtui::MouseEvent::Button_NONE;
-    agtm::Point2d<float> point(location.x, location.y);
+    agtm::Vector2<float> point(location.x, location.y);
     
     agtui::MouseEvent mouseEvent(type, button, point);
     
@@ -427,14 +432,14 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 
 - (void)keyDown:(NSEvent *)event
 {
-    NSLog(@"uimac_OpenGLView: keyDown: %@", event);
+    AFTL_LOG_TRACE << "uimac_OpenGLView:keyDown" << AFTL_LOG_END;
 
     m_glView->onViewKeyEvent();
 }
 
 - (void)keyUp:(NSEvent *)event
 {
-    NSLog(@"uimac_OpenGLView: keyUp: %@", event);
+    AFTL_LOG_TRACE << "uimac_OpenGLView:keyUp" << AFTL_LOG_END;
 
     m_glView->onViewKeyEvent();
 }

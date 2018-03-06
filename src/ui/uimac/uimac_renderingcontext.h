@@ -1,5 +1,5 @@
-#ifndef INCLUDED_UIMAC_OPENGLRENDERINGCONTEXT_H
-#define INCLUDED_UIMAC_OPENGLRENDERINGCONTEXT_H
+#ifndef INCLUDED_BUGGER_UIMAC_OPENGLRENDERINGCONTEXT_H
+#define INCLUDED_BUGGER_UIMAC_OPENGLRENDERINGCONTEXT_H
 
 #include <agtg_gl.h>
 #include <agtg_shaderprogram.h>
@@ -18,8 +18,6 @@ public:
     virtual void makeCurrent();
 
     virtual agtg::RenderingContext::ShaderProgramPtr createShader();
-
-    virtual void useShader(agtg::RenderingContext::ShaderProgramPtr shaderProgram);
 
     virtual void preRender();
     
