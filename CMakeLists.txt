@@ -102,6 +102,20 @@ set_property(SOURCE ${${PROJECT_NAME}_SHADER_RESOURCES}
     PROPERTY MACOSX_PACKAGE_LOCATION "Resources/shaders"
 )
 
+################################################################################
+# Resources images
+################################################################################
+
+set (${PROJECT_NAME}_IMAGE_RESOURCES
+    resources/images/antsprites.png
+)
+
+source_group(Resources/images FILES ${${PROJECT_NAME}_IMAGE_RESOURCES})
+
+set_property(SOURCE ${${PROJECT_NAME}_IMAGE_RESOURCES}
+    PROPERTY MACOSX_PACKAGE_LOCATION "Resources/images"
+)
+
 # create an empty list of files for the Resources folder to be referenced
 # by set_target_properties. Actual resource files will be placed in
 # subfolders using MACOSX_PACKAGE_LOCATION
@@ -113,6 +127,7 @@ set(${PROJECT_NAME}_SOURCES
     ${${PROJECT_NAME}_UIMAC_SOURCES}
     ${${PROJECT_NAME}_UTIL_SOURCES}
     ${${PROJECT_NAME}_SHADER_RESOURCES}
+    ${${PROJECT_NAME}_IMAGE_RESOURCES}
     ${${PROJECT_NAME}_CMAKE_MODULE_SOURCES}
 )
 

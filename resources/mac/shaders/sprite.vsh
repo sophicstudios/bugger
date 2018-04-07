@@ -2,8 +2,11 @@
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
-
+uniform int 
 in vec3 coord;
+in vec2 texCoord;
+out vec2 uv;
+
 // attribute vec4 inputColor;
 
 // varying vec4 outputColor;
@@ -11,6 +14,7 @@ in vec3 coord;
 void main()
 {
     gl_Position = projectionMatrix * modelViewMatrix * vec4(coord, 1.0);
+    uv = texCoord;
     //gl_Position = transpose(projectionMatrix) * transpose(modelViewMatrix) * vec4(coord, 1.0);
     // texcoord = position * vec2(0.5) + vec2(0.5);
 }

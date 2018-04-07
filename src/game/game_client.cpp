@@ -120,8 +120,8 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     context->makeCurrent();
 
     // Load the sprite shader
-    std::pair<size_t, agtg::ShaderProgram&> spriteShaderAsset = shaderAssets->createAsset();
-    agtg::ShaderProgram& spriteShader = spriteShaderAsset.second;
+    size_t spriteShaderId = shaderAssets->createAsset();
+    agtg::ShaderProgram& spriteShader = shaderAssets->assetForId(spriteShaderId);
     spriteShader.addVertexShader(*fileSystem, "shaders/sprite.vsh");
     spriteShader.addFragmentShader(*fileSystem, "shaders/sprite.fsh");
     spriteShader.link();
@@ -133,14 +133,29 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     coords.push_back(agtm::Vector3<float>(-1.0f,  1.0f, 0.0f));
     coords.push_back(agtm::Vector3<float>( 1.0f,  1.0f, 0.0f));
 
-    // Create an mesh asset for rendering the vertices
-    std::pair<size_t, agta::Mesh&> meshAsset = meshAssets->createAsset();
-    agta::Mesh& mesh = meshAsset.second;
-    mesh.coords(coords);
-    //mesh.bind(spriteShader);
+    std::vector<agtm::Vector2<float> > texCoords;
+    texCoords.push_back(agtm::Vector2<float>(0.0f, 0.125f));
+    texCoords.push_back(agtm::Vector2<float>(0.125f, 0.125f));
+    texCoords.push_back(agtm::Vector2<float>(0.0f, 0.0f));
+    texCoords.push_back(agtm::Vector2<float>(0.125f, 0.0f));
 
-    // Create a basic color material
-    
+    // Create an mesh asset for rendering the vertices
+    size_t meshId = meshAssets->createAsset();
+    agta::Mesh& mesh = meshAssets->assetForId(meshId);
+    mesh.coords(coords);
+    mesh.texCoords(texCoords);
+
+    // create the image for the ant sprite
+    aftu::URL imageUrl("images/antsprites.png");
+    agtr::ImageLoaderPNG pngLoader;
+    std::shared_ptr<agtr::Image> antImage = pngLoader.load(*fileSystem, imageUrl);
+
+    //agtg::Texture antTexture(image);
+
+    size_t antMaterialId = materialAssets->createAsset();
+    agta::Material& antMaterial = materialAssets->assetForId(antMaterialId);
+    antMaterial.texture(*antImage);
+
     // create the sprite material for the entities
     //std::shared_ptr<agta::Sprite2dMaterial> sprite(new agta::Sprite2dMaterial(shaderProgram));
 
@@ -152,8 +167,9 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     p1.scale(agtm::Vector3<float>(32.0f, 32.0f, 0.0f));
 
     agtc::Visual2dComponent& v1 = visual2dComponents->createComponent(e1);
-    v1.shaderId(spriteShaderAsset.first);
-    v1.meshId(meshAsset.first);
+    v1.shaderId(spriteShaderId);
+    v1.meshId(meshId);
+    v1.materialId(antMaterialId);
 
     agte::Entity e2 = space->createEntity();
 
@@ -162,15 +178,11 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     p2.scale(agtm::Vector3<float>(64.0f, 64.0f, 0.0f));
 
     agtc::Visual2dComponent& v2 = visual2dComponents->createComponent(e2);
-    v2.shaderId(spriteShaderAsset.first);
-    v2.meshId(meshAsset.first);
+    v2.shaderId(spriteShaderId);
+    v2.meshId(meshId);
+    v2.materialId(antMaterialId);
 
     //space->destroyEntity(circle);
-
-    // create the image for the ant sprite
-    //aftu::URL imageUrl("images/antsprites.png");
-    //agtr::ImageLoaderPNG pngLoader;
-    //std::shared_ptr<agtr::Image> image = pngLoader.load(*filesystem, imageUrl);
 
     // create the Sprite object
     //m_sprite = SpritePtr(new Sprite(image));
