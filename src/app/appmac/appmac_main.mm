@@ -21,7 +21,7 @@ std::string args(int argc, char* argv[])
 int main(int argc, char *argv[])
 {
     // initialize the logger with the default log observer
-     aftl::Logger& logger = aftl::Logger::instance();
+    aftl::Logger& logger = aftl::Logger::instance();
     aftl::Logger::LogObserverPtr observer(new aftl::StdoutObserver());
     logger.addObserver(observer);
     logger.logLevel(aftl::LogLevel_TRACE);
