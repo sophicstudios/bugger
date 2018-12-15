@@ -46,10 +46,13 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     // create the engine
     m_engine = std::make_shared<agte::Engine>(m_platform);
-
+    
     // create the main space and add it to the engine
     m_space = std::make_shared<agte::Space>();
     m_engine->addSpace("main", m_space);
+
+    initSystems();
+    initAssets();
 
     std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer(agtui::BoxSizer::Direction_VERTICAL));
     glView->setSizer(sizer);
@@ -181,11 +184,11 @@ void Client::onResize(agtm::Rect<float> const& bounds)
 
 void Client::initSystems()
 {
-    m_eventSystem = std::make_shared<agte::EventSystem>();
+    //m_eventSystem = std::make_shared<agte::EventSystem>();
     m_spriteSystem = std::make_shared<agte::SpriteSystem>();
     m_renderSystem = std::make_shared<agte::RenderSystem>();
 
-    m_engine->addSystem(m_eventSystem);
+    //m_engine->addSystem(m_eventSystem);
     m_engine->addSystem(m_spriteSystem);
     m_engine->addSystem(m_renderSystem);
 }

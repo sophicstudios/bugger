@@ -21,10 +21,19 @@ project(bugger
         VERSION 0.1.0
         DESCRIPTION "Bugger Game")
 
-add_subdirectory(aegis)
+find_package(PNG REQUIRED)
+message(STATUS "PNG_INCLUDE_DIRS: " ${PNG_INCLUDE_DIRS})
+
+find_package(OpenGL REQUIRED)
+message(STATUS "OPENGL_INCLUDE_DIR: " ${OPENGL_INCLUDE_DIR})
+add_definitions(-DGL_SILENCE_DEPRECATION)
 
 find_library(COREVIDEO_LIBRARY CoreVideo)
 find_library(APPKIT_LIBRARY AppKit)
+find_library(AEGIS_LIBRARY aegis PATH_SUFFIXES aegis)
+find_path(AEGIS_INCLUDE_DIR afts_assert.h PATH_SUFFIXES aegis)
+message(STATUS "AEGIS_LIBRARY: ${AEGIS_LIBRARY}")
+message(STATUS "AEGIS_INCLUDE_DIR: ${AEGIS_INCLUDE_DIR}")
 
 ################################################################################
 # cmake/modules
@@ -140,8 +149,9 @@ set(${PROJECT_NAME}_INCLUDE_DIRS
 
 include_directories(
     ${${PROJECT_NAME}_INCLUDE_DIRS}
-    ${agt_INCLUDE_DIRS}
-    ${aft_INCLUDE_DIRS}
+    ${PNG_INCLUDE_DIRS}
+    ${OPENGL_INCLUDE_DIR}
+    ${AEGIS_INCLUDE_DIR}
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
@@ -155,7 +165,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_MODULE_PATH}/Info.plist.in"
 )
 
-target_link_libraries(${PROJECT_NAME} agt aft ${APPKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${AEGIS_LIBRARY} ${APPKIT_LIBRARY} ${COREVIDEO_LIBRARY} ${PNG_LIBRARIES} ${OPENGL_LIBRARIES})
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_11)
 
