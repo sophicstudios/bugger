@@ -75,6 +75,7 @@ public:
         m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() glView:this];
 
         m_renderingContext->makeCurrent();
+        m_renderingContext->setView(m_view);
 
         if (oldVersionCheck) {
             const GLubyte* glVersion = glGetString(GL_VERSION);
