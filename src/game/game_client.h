@@ -26,6 +26,8 @@ public:
     
     void stop();
 
+    void onTimer();
+
     void onDraw();
     
     void onResize(agtm::Rect<float> const& bounds);
@@ -45,6 +47,7 @@ private:
 
     void createAnts();
     
+    std::shared_ptr<agtui::GLView> m_glView;
     std::shared_ptr<agte::Platform> m_platform;
     std::shared_ptr<agte::Engine> m_engine;
     std::shared_ptr<agte::Space> m_space;

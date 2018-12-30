@@ -4,6 +4,7 @@
 #include <agte_orthographiccamera.h>
 #include <agtc_transformcomponent.h>
 #include <agtc_visual2dcomponent.h>
+#include <agtc_spriteanimationcomponent.h>
 #include <agta_assetpool.h>
 #include <agta_material.h>
 #include <agta_mesh.h>
@@ -38,11 +39,12 @@ const size_t MAX_SHADERS = 8;
 
 Client::Client(std::shared_ptr<agtui::GLView> glView,
                std::shared_ptr<aftfs::FileSystem> fileSystem)
+: m_glView(glView)
 {
     AFTL_LOG_INFO << "Client::Client()" << AFTL_LOG_END;
 
     // initialize the platform object
-    m_platform = std::make_shared<agte::Platform>(fileSystem, glView);
+    m_platform = std::make_shared<agte::Platform>(fileSystem, m_glView);
 
     // create the engine
     m_engine = std::make_shared<agte::Engine>(m_platform);
@@ -55,19 +57,19 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     initAssets();
 
     std::shared_ptr<agtui::BoxSizer> sizer(new agtui::BoxSizer(agtui::BoxSizer::Direction_VERTICAL));
-    glView->setSizer(sizer);
+    m_glView->setSizer(sizer);
     
     // create the Surface widget
-    std::shared_ptr<agte::Surface> surface(new agte::Surface(glView->renderingContext()));
+    std::shared_ptr<agte::Surface> surface(new agte::Surface(m_glView->renderingContext()));
     sizer->push_back(surface, agtui::BoxSizer::Flags().sizeMode(agtui::BoxSizer::SizeMode_RELATIVE).size(1.0f));
 
-    glView->addChild(surface);
+    m_glView->addChild(surface);
 
     std::shared_ptr<agte::Camera> camera(new agte::OrthographicCamera(surface));
     m_renderSystem->addCamera(m_space, camera);
 
     // Load the current rendering context
-    std::shared_ptr<agtg::RenderingContext> context = glView->renderingContext();
+    std::shared_ptr<agtg::RenderingContext> context = m_glView->renderingContext();
     context->makeCurrent();
 
     // Load the sprite shader
@@ -105,10 +107,10 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
     agta::Material& antMaterial = m_materialAssets->assetForId(antMaterialId);
     antMaterial.texture(*antImage);
 
-    for (size_t i = 0; i < 10; ++i)
+    for (size_t i = 0; i < 10000; ++i)
     {
         // create the entities and related components
-        agte::Entity e = m_space->createEntity();
+        agte::Space::Entity e = m_space->createEntity();
         std::stringstream s;
         s << "Entity" << i;
         e.name(s.str());
@@ -116,8 +118,8 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
         agtc::TransformComponent p1;
         float xneg = rand() > (RAND_MAX / 2) ? 1.0f : -1.0f;
         float yneg = rand() > (RAND_MAX / 2) ? 1.0f : -1.0f;
-        float x = xneg * 100.0f * (static_cast<float>(rand()) / static_cast<float>(RAND_MAX));
-        float y = yneg * 100.0f * (static_cast<float>(rand()) / static_cast<float>(RAND_MAX));
+        float x = xneg * 400.0f * (static_cast<float>(rand()) / static_cast<float>(RAND_MAX));
+        float y = yneg * 400.0f * (static_cast<float>(rand()) / static_cast<float>(RAND_MAX));
         p1.translate(agtm::Vector3<float>(x, y, 0.0f));
         p1.scale(agtm::Vector3<float>(16.0f, 16.0f, 0.0f));
         e.assign(p1);
@@ -126,6 +128,7 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
         v1.shaderId(spriteShaderId);
         v1.meshId(meshId);
         v1.materialId(antMaterialId);
+        v1.spriteSize(agtm::Size2d<float>(0.125f, 0.125f));
         e.assign(v1);
 
         agtc::SpriteAnimationComponent sa1;
@@ -153,10 +156,13 @@ Client::Client(std::shared_ptr<agtui::GLView> glView,
 
     std::function<void (agtm::Rect<float> const&)> resizeEventHandler
         = std::bind(&Client::onResize, this, std::placeholders::_1);
-    glView->addResizeEventHandler("client", resizeEventHandler);
+    m_glView->addResizeEventHandler("client", resizeEventHandler);
 
     std::function<void ()> drawEventHandler = std::bind(&Client::onDraw, this);
-    glView->addDrawEventHandler("client", drawEventHandler);
+    m_glView->addDrawEventHandler("client", drawEventHandler);
+
+    std::function<void ()> timerHandler = std::bind(&Client::onTimer, this);
+    m_glView->displayTimer()->registerCallback(timerHandler);
 }
 
 Client::~Client()
@@ -165,11 +171,20 @@ Client::~Client()
 void Client::run()
 {
     AFTL_LOG_INFO << "Client::run" << AFTL_LOG_END;
+    m_glView->displayTimer()->start();
+
 }
 
 void Client::stop()
 {
-    AFTL_LOG_INFO << "Client::stop" << AFTL_LOG_END;
+    AFTL_LOG_TRACE << "Client::stop" << AFTL_LOG_END;
+    m_glView->displayTimer()->stop();
+}
+
+void Client::onTimer()
+{
+    AFTL_LOG_TRACE << "Client::onTimer" << AFTL_LOG_END;
+    m_engine->update();
 }
 
 void Client::onDraw()
