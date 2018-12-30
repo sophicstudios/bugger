@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     aftl::Logger& logger = aftl::Logger::instance();
     aftl::Logger::LogObserverPtr observer(new aftl::StdoutObserver());
     logger.addObserver(observer);
-    logger.logLevel(aftl::LogLevel_TRACE);
+    logger.logLevel(aftl::LogLevel_DEBUG);
 
     AFTL_LOG_INFO << "Starting application ["
         << " args: " << args(argc, argv)
