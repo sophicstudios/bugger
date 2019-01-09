@@ -16,14 +16,13 @@
 namespace uimac { class OpenGLView; }
 
 // uimac_OpenGLView
-@interface uimac_OpenGLView : NSView {
+@interface uimac_OpenGLView : NSOpenGLView {
     uimac::OpenGLView* m_glView;
-    NSOpenGLContext* m_context;
     NSRect m_bounds;
 }
 
 - (id) initWithFrame: (NSRect)frame
-    context: (NSOpenGLContext*)context
+    pixelFormat: (NSOpenGLPixelFormat*)pixelFormat
     glView: (uimac::OpenGLView*)glView;
 
 - (void)resizeView;
@@ -66,16 +65,15 @@ public:
             throw aftu::Exception() << "Could not allocate pixel format! MAC_OS_X_VERSION_MAX_ALLOWED: " << MAC_OS_X_VERSION_MAX_ALLOWED;
         }
 
-        m_renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext(m_pixelFormat));
+        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds pixelFormat:m_pixelFormat glView:this];
+
+        m_renderingContext = std::shared_ptr<uimac::RenderingContext>(new uimac::RenderingContext([m_view openGLContext]));
 
         // setup the display link to get a timer linked
         // to the refresh rate of the active display
         m_displayTimer = std::shared_ptr<uimac::DisplayTimer>(new uimac::DisplayTimer(m_renderingContext->nativeContext(), m_pixelFormat));
 
-        m_view = [[uimac_OpenGLView alloc] initWithFrame:bounds context:m_renderingContext->nativeContext() glView:this];
-
         m_renderingContext->makeCurrent();
-        m_renderingContext->setView(m_view);
 
         if (oldVersionCheck) {
             const GLubyte* glVersion = glGetString(GL_VERSION);
@@ -227,14 +225,13 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 @implementation uimac_OpenGLView
 
 - (id)initWithFrame:(NSRect)frame
-    context:(NSOpenGLContext *)context
+    pixelFormat: (NSOpenGLPixelFormat*)pixelFormat
     glView: (uimac::OpenGLView*)glView
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame pixelFormat: pixelFormat];
 
     if (self) {
         m_glView = glView;
-        m_context = [context retain];
         m_bounds = [self bounds];
     }
         
@@ -243,7 +240,6 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
 
 - (void)dealloc
 {
-    [m_context release];
     [super dealloc];
 }
 
@@ -257,9 +253,9 @@ std::shared_ptr<agtui::GLView> OpenGLWindow::glView()
     AFTL_LOG_TRACE << "lockFocus" << AFTL_LOG_END;
     [super lockFocus];
     
-    if ([m_context view] != self) {
+    if ([[self openGLContext] view] != self) {
         AFTL_LOG_TRACE << "uimac_OpenGLView: setting context view to self" << AFTL_LOG_END;
-        [m_context setView:self];
+        [[self openGLContext] setView:self];
     }
 }
 

@@ -4,33 +4,20 @@
 
 namespace uimac {
 
-RenderingContext::RenderingContext(NSOpenGLPixelFormat* pixelFormat)
+RenderingContext::RenderingContext(NSOpenGLContext* context)
+: m_context(context)
 {
-    m_context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
-    if (!m_context) {
-        throw aftu::Exception("Could not allocate context");
-    }
-    
     GLint sync = 1;
-    [m_context setValues:&sync forParameter:NSOpenGLCPSwapInterval];
+    [m_context setValues:&sync forParameter:NSOpenGLContextParameterSwapInterval];
 }
 
 RenderingContext::~RenderingContext()
 {
-    if (m_context) {
-        [m_context release];
-    }
 }
 
 void RenderingContext::makeCurrent()
 {
     [m_context makeCurrentContext];
-}
-
-
-agtg::RenderingContext::ShaderProgramPtr RenderingContext::createShader()
-{
-    return agtg::RenderingContext::ShaderProgramPtr(new agtg::ShaderProgram());
 }
 
 void RenderingContext::preRender()
@@ -48,11 +35,6 @@ void RenderingContext::postRender()
 
     CGLContextObj cglContext = (CGLContextObj)[m_context CGLContextObj];
     CGLUnlockContext(cglContext);
-}
-
-void RenderingContext::setView(NSView* view)
-{
-    [m_context setView:view];
 }
     
 NSOpenGLContext* RenderingContext::nativeContext() const

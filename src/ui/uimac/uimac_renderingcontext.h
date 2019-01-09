@@ -11,13 +11,11 @@ namespace uimac {
 class RenderingContext : public agtg::RenderingContext
 {
 public:
-    RenderingContext(NSOpenGLPixelFormat* pixelFormat);
+    RenderingContext(NSOpenGLContext* context);
     
     virtual ~RenderingContext();
     
     virtual void makeCurrent();
-
-    virtual agtg::RenderingContext::ShaderProgramPtr createShader();
 
     virtual void preRender();
     
@@ -26,14 +24,11 @@ public:
     void lockContext();
     
     void unlockContext();
-    
-    void setView(NSView* view);
-    
+        
     NSOpenGLContext* nativeContext() const;
 
 private:
     NSOpenGLContext* m_context;
-    GLuint m_currentProgram;
 };
 
 } // namespace
