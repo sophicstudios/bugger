@@ -79,7 +79,9 @@ struct appmac_AppDelegateImpl
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
     AFTL_LOG_INFO << "applicationDidBecomeActive" << AFTL_LOG_END;
-    m_impl->client->run();
+    if (m_impl && m_impl->client) {
+        m_impl->client->run();
+    }
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification
@@ -90,7 +92,9 @@ struct appmac_AppDelegateImpl
 - (void)applicationDidResignActive:(NSNotification *)notification
 {
     AFTL_LOG_INFO << "applicationDidResignActive" << AFTL_LOG_END;
-    m_impl->client->stop();
+    if (m_impl && m_impl->client) {
+        m_impl->client->stop();
+    }
 }
 
 - (void)applicationWillHide:(NSNotification *)notification
