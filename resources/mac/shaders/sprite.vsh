@@ -1,10 +1,11 @@
 #version 410
 
 uniform mat4 projectionMatrix;
-uniform mat4 modelViewMatrix;
-uniform vec2 texOffset = vec2(0.0, 0.0);
+uniform mat4 viewMatrix;
 in vec3 coord;
 in vec2 texCoord;
+in vec2 texOffset;
+in mat4 modelMatrix;
 out vec2 uv;
 
 // attribute vec4 inputColor;
@@ -13,7 +14,7 @@ out vec2 uv;
 // varying vec2 texcoord;
 void main()
 {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(coord, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(coord, 1.0);
     uv = texCoord + texOffset;
     //gl_Position = transpose(projectionMatrix) * transpose(modelViewMatrix) * vec4(coord, 1.0);
     // texcoord = position * vec2(0.5) + vec2(0.5);
